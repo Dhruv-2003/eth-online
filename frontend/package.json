@@ -9,11 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@lit-protocol/auth-helpers": "^3",
+    "@lit-protocol/constants": "^3",
+    "@lit-protocol/lit-auth-client": "^3.0.6",
+    "@lit-protocol/lit-node-client": "^3.0.6",
+    "@lit-protocol/lit-node-client-nodejs": "^3.0.6",
+    "@lit-protocol/pkp-ethers": "^3.0.6",
+    "@lit-protocol/types": "^3",
+    "dotenv": "^16.3.1",
+    "next": "13.5.4",
     "@xmtp/xmtp-js": "^11.1.1",
     "ethers": "^5.7.2",
     "next": "13.5.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "stytch": "^9.0.2"
   },
   "devDependencies": {
     "@types/node": "^20",
