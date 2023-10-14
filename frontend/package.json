@@ -16,14 +16,16 @@
     "@lit-protocol/lit-node-client-nodejs": "^3.0.6",
     "@lit-protocol/pkp-ethers": "^3.0.6",
     "@lit-protocol/types": "^3",
-    "dotenv": "^16.3.1",
-    "next": "13.5.4",
+    "@notifi-network/notifi-core": "^0.85.4",
+    "@notifi-network/notifi-frontend-client": "^0.85.4",
     "@xmtp/xmtp-js": "^11.1.1",
+    "dotenv": "^16.3.1",
     "ethers": "^5.7.2",
     "next": "13.5.4",
     "react": "^18",
     "react-dom": "^18",
-    "stytch": "^9.0.2"
+    "stytch": "^9.0.2",
+    "wagmi": "^1.4.3"
   },
   "devDependencies": {
     "@types/node": "^20",
