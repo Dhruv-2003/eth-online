@@ -1,23 +1,17 @@
 import * as stytch from "stytch";
-// import { StytchUIClient } from "@stytch/vanilla-js";
 
 const STYTCH_PROJECT_ID: string | undefined =
   process.env.NEXT_PUBLIC_STYTCH_PROJECT_ID;
 const STYTCH_SECRET: string | undefined = process.env.NEXT_PUBLIC_STYTCH_SECRET;
-const STYTCH_PUBLIC_TOKEN: string | undefined =
-  process.env.NEXT_PUBLIC_STYTCH_PUBLIC_TOKEN;
 
-if (!STYTCH_PROJECT_ID || !STYTCH_SECRET || !STYTCH_PUBLIC_TOKEN) {
+if (!STYTCH_PROJECT_ID || !STYTCH_SECRET) {
   throw Error("Could not find stytch project secret or id in enviorment");
 }
-// console.log(STYTCH_PROJECT_ID, STYTCH_SECRET);
 
 const stytchClient = new stytch.Client({
   project_id: STYTCH_PROJECT_ID,
   secret: STYTCH_SECRET,
 });
-
-// const stytchUI = new StytchUIClient(STYTCH_PUBLIC_TOKEN);
 
 // FLOW
 // 1. Search the User via the mobile , email
