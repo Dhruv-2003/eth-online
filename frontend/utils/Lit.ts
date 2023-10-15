@@ -1,5 +1,6 @@
 import {
   BaseProvider,
+  DiscordProvider,
   LitAuthClient,
   StytchOtpProvider,
 } from "@lit-protocol/lit-auth-client";
@@ -12,27 +13,25 @@ import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { ProviderType } from "@lit-protocol/constants";
 import { AuthMethod } from "@lit-protocol/types";
 
-const STYTCH_PROJECT_ID: string | undefined = process.env.STYTCH_PROJECT_ID;
-const STYTCH_SECRET: string | undefined = process.env.STYTCH_SECRET;
-const LIT_RELAY_API_KEY: string | undefined = process.env.LIT_RELAY_API_KEY;
+const LIT_RELAY_API_KEY: string | undefined =
+  process.env.NEXT_PUBLIC_LIT_RELAY_API_KEY;
+const DISCORD_CLIENT_ID: string | undefined =
+  process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID;
+const STYTCH_PROJECT_ID: string | undefined =
+  process.env.NEXT_PUBLIC_STYTCH_PROJECT_ID;
+const STYTCH_SECRET: string | undefined = process.env.NEXT_PUBLIC_STYTCH_SECRET;
 
 if (!STYTCH_PROJECT_ID || !STYTCH_SECRET) {
   throw Error("Could not find stytch project secret or id in enviorment");
 }
-
-const stytchClient = new stytch.Client({
-  project_id: STYTCH_PROJECT_ID,
-  secret: STYTCH_SECRET,
-});
-
 // const litNodeClient = new LitNodeClientNodeJs({
 //   litNetwork: "cayenne",
-//   debug: false,
+//   debug: true,
 // });
 
 const litNodeClient = new LitNodeClient({
   litNetwork: "cayenne",
-  debug: false,
+  debug: true,
 });
 
 // await litNodeClient.connect();
@@ -56,69 +55,69 @@ const litAuthClient = new LitAuthClient({
  * | Lit Actions | user defined | ipfs cid |
  */
 // We have to find out some ways around how do we get User ID & AppIds
-const computePublicKey = (userId: string, appId: string) => {
-  const keyId = litNodeClient.computeHDKeyId(userId, appId);
-  const publicKey = litNodeClient.computeHDPubKey(keyId);
-  console.log("user public key will be: ", publicKey);
+export const computePublicKey = async (
+  userId: string,
+  appId: string
+): Promise<string | undefined> => {
+  await litNodeClient.connect();
+
+  try {
+    const keyId = litNodeClient.computeHDKeyId(userId, appId);
+    console.log(keyId);
+    const publicKey = litNodeClient.computeHDPubKey(keyId);
+    console.log(publicKey);
+    console.log("user public key will be: ", publicKey);
+    return publicKey;
+  } catch (error) {
+    console.log(error);
+    return;
+  }
 };
 
-const claim = async (authMethod: AuthMethod, authProvider: BaseProvider) => {
+export const prepareDiscordAuthMethod = async (): Promise<{
+  authProvider: BaseProvider;
+}> => {
+  const provider = litAuthClient.initProvider<DiscordProvider>(
+    ProviderType.Discord,
+    {
+      redirectUri: "http://localhost:3000",
+      clientId: DISCORD_CLIENT_ID,
+    }
+  );
+
+  await provider.signIn();
+
+  // console.log
+  return { authProvider: provider };
+};
+
+export const handleDiscordRedirect = async (): Promise<{
+  authMethod: AuthMethod;
+  authProvider: BaseProvider;
+}> => {
+  const provider = litAuthClient.initProvider<DiscordProvider>(
+    ProviderType.Discord,
+    {
+      redirectUri: "http://localhost:3000",
+      clientId: DISCORD_CLIENT_ID,
+    }
+  );
+  const authMethod = await provider.authenticate();
+  console.log(authMethod);
+
+  return { authMethod, authProvider: provider };
+};
+
+export const claim = async (
+  authMethod: AuthMethod,
+  authProvider: BaseProvider
+) => {
   // claim can be custom , and how the key is registered
   let claimResponse = await authProvider.claimKeyId({
     authMethod,
   });
 
   console.log(claimResponse);
-};
-
-// Auth client can be prepared for any method
-const prepareStytchAuthMethod = async (
-  session_jwt: any
-): Promise<{ authMethod: AuthMethod; authProvider: BaseProvider }> => {
-  const provider = litAuthClient.initProvider<StytchOtpProvider>(
-    ProviderType.StytchOtp,
-    {
-      userId: "",
-      appId: STYTCH_PROJECT_ID,
-    }
-  );
-
-  const authMethod = await provider.authenticate({
-    accessToken: session_jwt,
-  });
-
-  return { authMethod, authProvider: provider };
-};
-
-const stytchOtpMethod = async (
-  email: string,
-  otp: string
-): Promise<{ session_jwt: string; user_id: string }> => {
-  // we have all the options stytch offers , Email , Phone, Whatsap
-  const stytchResponse = await stytchClient.otps.email.loginOrCreate({
-    email: email,
-  });
-
-  // get Otp from the user
-  const authResponse = await stytchClient.otps.authenticate({
-    method_id: stytchResponse.email_id,
-    code: otp,
-    session_duration_minutes: 60 * 24 * 7,
-  });
-
-  const session_token = authResponse.session_token;
-
-  const sessionStatus = await stytchClient.sessions.authenticate({
-    session_token: authResponse.session_token,
-  });
-
-  const session_jwt = sessionStatus.session_jwt;
-  const user_id = sessionStatus.session.user_id;
-
-  return {
-    session_jwt,
-    user_id,
-  };
 };
 
 const mintPkp = async (provider: BaseProvider, authMethod: AuthMethod) => {
@@ -140,4 +139,23 @@ const fetchPkps = async (provider: BaseProvider, authMethod: AuthMethod) => {
   } else {
     console.log("Provider and Auth Method not Set");
   }
+};
+
+// Auth client can be prepared for any method
+const prepareStytchAuthMethod = async (
+  session_jwt: any
+): Promise<{ authMethod: AuthMethod; authProvider: BaseProvider }> => {
+  const provider = litAuthClient.initProvider<StytchOtpProvider>(
+    ProviderType.StytchOtp,
+    {
+      userId: "",
+      appId: STYTCH_PROJECT_ID,
+    }
+  );
+
+  const authMethod = await provider.authenticate({
+    accessToken: session_jwt,
+  });
+
+  return { authMethod, authProvider: provider };
 };

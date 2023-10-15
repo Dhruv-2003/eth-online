@@ -16,6 +16,7 @@
     "@lit-protocol/lit-node-client-nodejs": "^3.0.6",
     "@lit-protocol/pkp-ethers": "^3.0.6",
     "@lit-protocol/types": "^3",
+    "@stytch/vanilla-js": "^3.0.1",
     "dotenv": "^16.3.1",
     "next": "13.5.4",
     "react": "^18",
