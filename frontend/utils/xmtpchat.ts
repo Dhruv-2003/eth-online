@@ -94,3 +94,12 @@ export const listConverstaions = async (
   // }
   console.log(allConversations);
 };
+
+
+export const checkIfOnNetwork = async(xmtp_client: any,
+  Address: string,) => {
+  const isOnNetwork = await xmtp_client.canMessage(
+    Address,
+    { env: "production" },
+  );
+}
