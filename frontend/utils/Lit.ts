@@ -4,6 +4,9 @@ import {
   LitAuthClient,
   StytchOtpProvider,
 } from "@lit-protocol/lit-auth-client";
+import { PKPEthersWallet } from "@lit-protocol/pkp-ethers";
+import { PKPWalletConnect } from "@lit-protocol/pkp-walletconnect";
+
 import * as publicKeyToAddress from "ethereum-public-key-to-address";
 //   import prompts from "prompts";
 import dotenv from "dotenv";
@@ -12,7 +15,19 @@ import * as stytch from "stytch";
 import { LitNodeClientNodeJs } from "@lit-protocol/lit-node-client-nodejs";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
 import { ProviderType } from "@lit-protocol/constants";
-import { AuthMethod, IRelayPKP } from "@lit-protocol/types";
+import {
+  AuthCallbackParams,
+  AuthMethod,
+  IRelayPKP,
+  SessionSigs,
+} from "@lit-protocol/types";
+import {
+  LitAbility,
+  LitActionResource,
+  LitPKPResource,
+} from "@lit-protocol/auth-helpers";
+import { BigNumber } from "ethers";
+import { PKPClient } from "@lit-protocol/pkp-client";
 
 const LIT_RELAY_API_KEY: string | undefined =
   process.env.NEXT_PUBLIC_LIT_RELAY_API_KEY;
@@ -95,6 +110,26 @@ export const prepareDiscordAuthMethod = async (): Promise<{
   return { authProvider: provider };
 };
 
+// Auth client can be prepared for any method
+export const prepareStytchAuthMethod = async (
+  session_jwt: string,
+  user_id: string
+): Promise<{ authMethod: AuthMethod; authProvider: BaseProvider }> => {
+  const provider = litAuthClient.initProvider<StytchOtpProvider>(
+    ProviderType.StytchOtp,
+    {
+      userId: user_id,
+      appId: STYTCH_PROJECT_ID,
+    }
+  );
+
+  const authMethod = await provider.authenticate({
+    accessToken: session_jwt,
+  });
+
+  return { authMethod, authProvider: provider };
+};
+
 export const handleDiscordRedirect = async (): Promise<{
   authMethod: AuthMethod;
   authProvider: BaseProvider;
@@ -153,22 +188,157 @@ export const fetchPkps = async (
   }
 };
 
-// Auth client can be prepared for any method
-export const prepareStytchAuthMethod = async (
-  session_jwt: string,
-  user_id: string
-): Promise<{ authMethod: AuthMethod; authProvider: BaseProvider }> => {
-  const provider = litAuthClient.initProvider<StytchOtpProvider>(
-    ProviderType.StytchOtp,
-    {
-      userId: user_id,
-      appId: STYTCH_PROJECT_ID,
-    }
-  );
+export const generateSessionSigs = async (
+  authMethod: AuthMethod,
+  pkp: IRelayPKP
+) => {
+  await litNodeClient.connect();
 
-  const authMethod = await provider.authenticate({
-    accessToken: session_jwt,
+  const resourceAbilities = [
+    {
+      resource: new LitPKPResource("*"), // might need to check the tokenId
+      ability: LitAbility.PKPSigning,
+    },
+  ];
+
+  const sessionKeyPair = litNodeClient.getSessionKey();
+  console.log(sessionKeyPair);
+
+  const authNeededCallback = async (params: AuthCallbackParams) => {
+    console.log(params);
+    const response = await litNodeClient.signSessionKey({
+      sessionKey: sessionKeyPair,
+      statement: params.statement,
+      authMethods: [authMethod],
+      pkpPublicKey: pkp.publicKey,
+      expiration: params.expiration,
+      resources: params.resources,
+      chainId: 1,
+    });
+    return response.authSig;
+  };
+
+  try {
+    const sessionSigs = await litNodeClient
+      .getSessionSigs({
+        chain: "ethereum",
+        expiration: new Date(
+          Date.now() + 1000 * 60 * 60 * 24 * 7
+        ).toISOString(),
+        resourceAbilityRequests: resourceAbilities,
+        sessionKey: sessionKeyPair,
+        authNeededCallback,
+      })
+      .catch((err) => {
+        console.log(
+          "error while attempting to access session signatures: ",
+          err
+        );
+        throw err;
+      });
+
+    console.log(sessionSigs);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const preparePKPWallet = (
+  pkp: IRelayPKP,
+  sessionSigs: SessionSigs,
+  rpc: string
+): PKPEthersWallet => {
+  const pkpWallet = new PKPEthersWallet({
+    pkpPubKey: pkp.publicKey,
+    rpc: rpc, // e.g. https://rpc.ankr.com/eth_goerli
+    controllerSessionSigs: sessionSigs,
   });
 
-  return { authMethod, authProvider: provider };
+  return pkpWallet;
 };
+
+export const preparePKPClientWithWalletConnect = async (
+  pkp: IRelayPKP,
+  sessionSigs: SessionSigs
+) => {
+  const pkpClient = new PKPClient({
+    pkpPubKey: pkp.publicKey,
+    controllerSessionSigs: sessionSigs,
+  });
+  await pkpClient.connect();
+  return pkpClient;
+};
+
+class pkpWalletConnect {
+  pkpClient: PKPClient;
+  pkpWcClient: PKPWalletConnect;
+
+  constructor(pkp: IRelayPKP, sessionSigs: SessionSigs) {
+    const pkpClient = new PKPClient({
+      pkpPubKey: pkp.publicKey,
+      controllerSessionSigs: sessionSigs,
+    });
+    const wcClient = new PKPWalletConnect();
+    this.pkpClient = pkpClient;
+    this.pkpWcClient = wcClient;
+    this.initialise();
+  }
+
+  async initialise() {
+    const config = {
+      projectId: "<Your WalletConnect project ID>",
+      metadata: {
+        name: "Test Lit Wallet",
+        description: "Test Lit Wallet",
+        url: "https://litprotocol.com/",
+        icons: ["https://litprotocol.com/favicon.png"],
+      },
+    };
+    await this.pkpClient.connect();
+    await this.pkpWcClient.initWalletConnect(config);
+    this.pkpWcClient.addPKPClient(this.pkpClient);
+
+    await this.subscribeSessionReq();
+  }
+
+  async subscribeSessionReq() {
+    this.pkpWcClient.on("session_proposal", async (proposal) => {
+      console.log("Received session proposal: ", proposal);
+
+      // Accept session proposal
+      await this.pkpWcClient.approveSessionProposal(proposal);
+
+      // Log active sessions
+      const sessions = Object.values(this.pkpWcClient.getActiveSessions());
+      for (const session of sessions) {
+        const { name, url } = session.peer.metadata;
+        console.log(`Active Session: ${name} (${url})`);
+      }
+    });
+  }
+
+  async pair(uri: string) {
+    await this.pkpWcClient.pair({ uri: uri });
+  }
+
+  async subscribeSigingReq() {
+    this.pkpWcClient.on("session_request", async (requestEvent) => {
+      console.log("Received session request: ", requestEvent);
+      const signClient = this.pkpWcClient.getSignClient();
+
+      const { topic, params } = requestEvent;
+      const { request } = params;
+      const requestSession = signClient.session.get(topic);
+      const { name, url } = requestSession.peer.metadata;
+
+      // Accept session request
+      console.log(
+        `\nApproving ${request.method} request for session ${name} (${url})...\n`
+      );
+      await this.pkpWcClient.approveSessionRequest(requestEvent);
+      console.log(
+        `Check the ${name} dapp to confirm whether the request was approved`
+      );
+    });
+  }
+}

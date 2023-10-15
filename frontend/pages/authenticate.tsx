@@ -2,6 +2,7 @@ import {
   claim,
   computePublicKey,
   fetchPkps,
+  generateSessionSigs,
   prepareStytchAuthMethod,
 } from "@/utils/Lit";
 import { getUser } from "@/utils/Stych";
@@ -123,15 +124,21 @@ export default function authenticate() {
     try {
       if (session && user) {
         const session_jwt = document.cookie;
-        console.log(session_jwt);
+        // console.log(session_jwt);
         const JWT = session_jwt.split("stytch_session_jwt=")[1];
-        console.log(JWT);
+        // console.log(JWT);
         const response = await prepareStytchAuthMethod(JWT, user?.user_id);
         console.log(response);
         if (response) {
           setAuthMethod(response.authMethod);
           setProvider(response.authProvider);
-          fetchPkps(response.authProvider, response.authMethod);
+          const PKPs = await fetchPkps(
+            response.authProvider,
+            response.authMethod
+          );
+          if (PKPs?.length) {
+            generateSessionSigs(response.authMethod, PKPs[0]);
+          }
         }
       }
     } catch (error) {
@@ -170,7 +177,7 @@ export default function authenticate() {
         onChange={(e) => setOTP(e.target.value)}
       ></input>
       <br />
-      <button onClick={completeAuth}>Submit OTP</button>
+      <button onClick={completeStytchAuth}>Submit OTP</button>
     </div>
   );
 }

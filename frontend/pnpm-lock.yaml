@@ -6,7 +6,9 @@ specifiers:
   '@lit-protocol/lit-auth-client': ^3.0.6
   '@lit-protocol/lit-node-client': ^3.0.6
   '@lit-protocol/lit-node-client-nodejs': ^3.0.6
-  '@lit-protocol/pkp-ethers': ^3.0.6
+  '@lit-protocol/pkp-client': ^3
+  '@lit-protocol/pkp-ethers': ^3
+  '@lit-protocol/pkp-walletconnect': ^3
   '@lit-protocol/types': ^3
   '@notifi-network/notifi-core': ^0.85.4
   '@notifi-network/notifi-frontend-client': ^0.85.4
@@ -37,7 +39,9 @@ dependencies:
   '@lit-protocol/lit-auth-client': 3.0.6_react@18.2.0
   '@lit-protocol/lit-node-client': 3.0.6_react@18.2.0
   '@lit-protocol/lit-node-client-nodejs': 3.0.6
+  '@lit-protocol/pkp-client': 3.0.6_react@18.2.0
   '@lit-protocol/pkp-ethers': 3.0.6_react@18.2.0
+  '@lit-protocol/pkp-walletconnect': 3.0.6_react@18.2.0
   '@lit-protocol/types': 3.0.6
   '@notifi-network/notifi-core': 0.85.4
   '@notifi-network/notifi-frontend-client': 0.85.4
@@ -1487,6 +1491,117 @@ packages:
       - utf-8-validate
     dev: false
 
+  /@lit-protocol/pkp-client/3.0.6_react@18.2.0:
+    resolution: {integrity: sha512-RspFli8J/Bl8BNrz1fAx0Fk+CAaWpMF/zrx7o8iYAeJ+chKHUvVzahKSBkQ0Oqp/bt85s0BWLVQb5CoMTzjqHg==}
+    dependencies:
+      '@cosmjs/proto-signing': 0.30.1
+      '@cosmjs/stargate': 0.30.1
+      '@lit-protocol/access-control-conditions': 3.0.6
+      '@lit-protocol/auth-browser': 3.0.6_react@18.2.0
+      '@lit-protocol/auth-helpers': 3.0.6_ethers@5.7.2
+      '@lit-protocol/bls-sdk': 3.0.6
+      '@lit-protocol/constants': 3.0.6
+      '@lit-protocol/core': 3.0.6
+      '@lit-protocol/crypto': 3.0.6
+      '@lit-protocol/ecdsa-sdk': 3.0.6
+      '@lit-protocol/encryption': 3.0.6_node-fetch@2.7.0
+      '@lit-protocol/lit-node-client': 3.0.6_react@18.2.0
+      '@lit-protocol/lit-node-client-nodejs': 3.0.6
+      '@lit-protocol/lit-third-party-libs': 3.0.6
+      '@lit-protocol/misc': 3.0.6
+      '@lit-protocol/misc-browser': 3.0.6
+      '@lit-protocol/nacl': 3.0.6
+      '@lit-protocol/pkp-base': 3.0.6_react@18.2.0
+      '@lit-protocol/pkp-cosmos': 3.0.6_react@18.2.0
+      '@lit-protocol/pkp-ethers': 3.0.6_react@18.2.0
+      '@lit-protocol/types': 3.0.6
+      '@lit-protocol/uint8arrays': 3.0.6
+      '@metamask/eth-sig-util': 5.0.2
+      '@walletconnect/ethereum-provider': 2.9.2_@walletconnect+modal@2.6.1
+      '@walletconnect/modal': 2.6.1_react@18.2.0
+      blockstore-core: 3.0.0
+      ethers: 5.7.2
+      ipfs-http-client: 56.0.0_node-fetch@2.7.0
+      ipfs-unixfs-importer: 12.0.1
+      jszip: 3.10.1
+      lit-siwe: 1.1.8
+      node-fetch: 2.7.0
+      secp256k1: 5.0.0
+      siwe: 2.1.4_ethers@5.7.2
+      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
+      tslib: 2.6.2
+      tweetnacl: 1.0.3
+      tweetnacl-util: 0.15.1
+      uint8arrays: 4.0.6
+    transitivePeerDependencies:
+      - '@ethersproject/contracts'
+      - '@ethersproject/hash'
+      - '@ethersproject/providers'
+      - '@ethersproject/wallet'
+      - '@react-native-async-storage/async-storage'
+      - bufferutil
+      - debug
+      - encoding
+      - lokijs
+      - react
+      - supports-color
+      - utf-8-validate
+    dev: false
+
+  /@lit-protocol/pkp-cosmos/3.0.6_react@18.2.0:
+    resolution: {integrity: sha512-+9QifgXgRgyUgkovpgGt5RtWIqpHwRrVb2opVCQZ33MOIZYNUHePtPx8huRKgtBIl/qwbtZx5vc23CXFhL5eJw==}
+    dependencies:
+      '@cosmjs/proto-signing': 0.30.1
+      '@cosmjs/stargate': 0.30.1
+      '@lit-protocol/access-control-conditions': 3.0.6
+      '@lit-protocol/auth-browser': 3.0.6_react@18.2.0
+      '@lit-protocol/auth-helpers': 3.0.6_ethers@5.7.2
+      '@lit-protocol/bls-sdk': 3.0.6
+      '@lit-protocol/constants': 3.0.6
+      '@lit-protocol/core': 3.0.6
+      '@lit-protocol/crypto': 3.0.6
+      '@lit-protocol/ecdsa-sdk': 3.0.6
+      '@lit-protocol/encryption': 3.0.6_node-fetch@2.7.0
+      '@lit-protocol/lit-node-client': 3.0.6_react@18.2.0
+      '@lit-protocol/lit-node-client-nodejs': 3.0.6
+      '@lit-protocol/lit-third-party-libs': 3.0.6
+      '@lit-protocol/misc': 3.0.6
+      '@lit-protocol/misc-browser': 3.0.6
+      '@lit-protocol/nacl': 3.0.6
+      '@lit-protocol/pkp-base': 3.0.6_react@18.2.0
+      '@lit-protocol/types': 3.0.6
+      '@lit-protocol/uint8arrays': 3.0.6
+      '@walletconnect/ethereum-provider': 2.9.2_@walletconnect+modal@2.6.1
+      '@walletconnect/modal': 2.6.1_react@18.2.0
+      blockstore-core: 3.0.0
+      ethers: 5.7.2
+      ipfs-http-client: 56.0.0_node-fetch@2.7.0
+      ipfs-unixfs-importer: 12.0.1
+      jszip: 3.10.1
+      lit-siwe: 1.1.8
+      node-fetch: 2.7.0
+      secp256k1: 5.0.0
+      siwe: 2.1.4_ethers@5.7.2
+      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
+      tslib: 2.6.2
+      tweetnacl: 1.0.3
+      tweetnacl-util: 0.15.1
+      uint8arrays: 4.0.6
+    transitivePeerDependencies:
+      - '@ethersproject/contracts'
+      - '@ethersproject/hash'
+      - '@ethersproject/providers'
+      - '@ethersproject/wallet'
+      - '@react-native-async-storage/async-storage'
+      - bufferutil
+      - debug
+      - encoding
+      - lokijs
+      - react
+      - supports-color
+      - utf-8-validate
+    dev: false
+
   /@lit-protocol/pkp-ethers/3.0.6_react@18.2.0:
     resolution: {integrity: sha512-xXQ+akuWsqJ+MQ+IpwJ5VzsQXbDNVg0Szy1htRYs0x/UUrXADMIt+oh6hbxWH7iXUtVtgllxtdIpPuOsz+9LyQ==}
     dependencies:
@@ -1513,6 +1628,69 @@ packages:
       '@metamask/eth-sig-util': 5.0.2
       '@walletconnect/ethereum-provider': 2.9.2_@walletconnect+modal@2.6.1
       '@walletconnect/modal': 2.6.1_react@18.2.0
+      blockstore-core: 3.0.0
+      ethers: 5.7.2
+      ipfs-http-client: 56.0.0_node-fetch@2.7.0
+      ipfs-unixfs-importer: 12.0.1
+      jszip: 3.10.1
+      lit-siwe: 1.1.8
+      node-fetch: 2.7.0
+      secp256k1: 5.0.0
+      siwe: 2.1.4_ethers@5.7.2
+      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
+      tslib: 2.6.2
+      tweetnacl: 1.0.3
+      tweetnacl-util: 0.15.1
+      uint8arrays: 4.0.6
+    transitivePeerDependencies:
+      - '@ethersproject/contracts'
+      - '@ethersproject/hash'
+      - '@ethersproject/providers'
+      - '@ethersproject/wallet'
+      - '@react-native-async-storage/async-storage'
+      - bufferutil
+      - debug
+      - encoding
+      - lokijs
+      - react
+      - supports-color
+      - utf-8-validate
+    dev: false
+
+  /@lit-protocol/pkp-walletconnect/3.0.6_react@18.2.0:
+    resolution: {integrity: sha512-x8ZJCPc9YpoVd/gwldSnfXn0wG+yDdEk8Bbte79X5GSJxE1ES3zziPVt0kJi2PiIvX1zviRA9++dQ6h3WFHcbg==}
+    dependencies:
+      '@cosmjs/proto-signing': 0.30.1
+      '@cosmjs/stargate': 0.30.1
+      '@lit-protocol/access-control-conditions': 3.0.6
+      '@lit-protocol/auth-browser': 3.0.6_react@18.2.0
+      '@lit-protocol/auth-helpers': 3.0.6_ethers@5.7.2
+      '@lit-protocol/bls-sdk': 3.0.6
+      '@lit-protocol/constants': 3.0.6
+      '@lit-protocol/core': 3.0.6
+      '@lit-protocol/crypto': 3.0.6
+      '@lit-protocol/ecdsa-sdk': 3.0.6
+      '@lit-protocol/encryption': 3.0.6_node-fetch@2.7.0
+      '@lit-protocol/lit-node-client': 3.0.6_react@18.2.0
+      '@lit-protocol/lit-node-client-nodejs': 3.0.6
+      '@lit-protocol/lit-third-party-libs': 3.0.6
+      '@lit-protocol/misc': 3.0.6
+      '@lit-protocol/misc-browser': 3.0.6
+      '@lit-protocol/nacl': 3.0.6
+      '@lit-protocol/pkp-base': 3.0.6_react@18.2.0
+      '@lit-protocol/pkp-client': 3.0.6_react@18.2.0
+      '@lit-protocol/pkp-cosmos': 3.0.6_react@18.2.0
+      '@lit-protocol/pkp-ethers': 3.0.6_react@18.2.0
+      '@lit-protocol/types': 3.0.6
+      '@lit-protocol/uint8arrays': 3.0.6
+      '@metamask/eth-sig-util': 5.0.2
+      '@walletconnect/core': 2.9.2
+      '@walletconnect/ethereum-provider': 2.9.2_@walletconnect+modal@2.6.1
+      '@walletconnect/jsonrpc-utils': 1.0.8
+      '@walletconnect/modal': 2.6.1_react@18.2.0
+      '@walletconnect/types': 2.9.2
+      '@walletconnect/utils': 2.9.2
+      '@walletconnect/web3wallet': 1.8.8
       blockstore-core: 3.0.0
       ethers: 5.7.2
       ipfs-http-client: 56.0.0_node-fetch@2.7.0
@@ -2542,6 +2720,31 @@ packages:
       - zod
     dev: false
 
+  /@walletconnect/auth-client/2.1.1:
+    resolution: {integrity: sha512-rFGBG3pLkmwCc5DcL9JRCsvOAmPjUcHGxm+KlX31yXNOT1QACT8Gyd8ODSOmtvz5CXZS5dPWBuvO03LUSRbPkw==}
+    engines: {node: '>=16'}
+    dependencies:
+      '@ethersproject/hash': 5.7.0
+      '@ethersproject/transactions': 5.7.0
+      '@stablelib/random': 1.0.2
+      '@stablelib/sha256': 1.0.1
+      '@walletconnect/core': 2.10.1
+      '@walletconnect/events': 1.0.1
+      '@walletconnect/heartbeat': 1.2.1
+      '@walletconnect/jsonrpc-utils': 1.0.8
+      '@walletconnect/logger': 2.0.1
+      '@walletconnect/time': 1.0.2
+      '@walletconnect/utils': 2.10.1
+      events: 3.3.0
+      isomorphic-unfetch: 3.1.0
+    transitivePeerDependencies:
+      - '@react-native-async-storage/async-storage'
+      - bufferutil
+      - encoding
+      - lokijs
+      - utf-8-validate
+    dev: false
+
   /@walletconnect/core/2.10.1:
     resolution: {integrity: sha512-WAoXfmj+Zy5q48TnrKUjmHXJCBahzKwbul+noepRZf7JDtUAZ9IOWpUjg+UPRbfK5EiWZ0TF42S6SXidf7EHoQ==}
     dependencies:
@@ -3058,6 +3261,25 @@ packages:
     transitivePeerDependencies:
       - '@react-native-async-storage/async-storage'
       - lokijs
+    dev: false
+
+  /@walletconnect/web3wallet/1.8.8:
+    resolution: {integrity: sha512-/dkP5jOvoRIi5RggoeSoxGvsDfZCYvC0AgwwXpzVURZKcac/h2iN2DbMHnV4L95RmGmrlQ6Jcv59S3EqsVOk5w==}
+    dependencies:
+      '@walletconnect/auth-client': 2.1.1
+      '@walletconnect/core': 2.9.2
+      '@walletconnect/jsonrpc-provider': 1.0.13
+      '@walletconnect/jsonrpc-utils': 1.0.8
+      '@walletconnect/logger': 2.0.1
+      '@walletconnect/sign-client': 2.9.2
+      '@walletconnect/types': 2.9.2
+      '@walletconnect/utils': 2.9.2
+    transitivePeerDependencies:
+      - '@react-native-async-storage/async-storage'
+      - bufferutil
+      - encoding
+      - lokijs
+      - utf-8-validate
     dev: false
 
   /@walletconnect/window-getters/1.0.1:
@@ -5381,6 +5603,15 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
+  /isomorphic-unfetch/3.1.0:
+    resolution: {integrity: sha512-geDJjpoZ8N0kWexiwkX8F9NkTsXhetLPVbZFQ+JTW239QNOwvB0gniuR1Wc6f0AMTn7/mFGyXvHTifrCp/GH8Q==}
+    dependencies:
+      node-fetch: 2.7.0
+      unfetch: 4.2.0
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
   /isomorphic-ws/4.0.1_ws@7.5.9:
     resolution: {integrity: sha512-BhBvN2MBpWTaSHdWRb/bwdZJ1WaehQ2L1KngkCkfLUGF0mAWAT1sQUQacEmQ0jXkFw/czDXPNQSL5u2/Krsz1w==}
     peerDependencies:
@@ -7464,6 +7695,10 @@ packages:
     engines: {node: '>=14.0'}
     dependencies:
       '@fastify/busboy': 2.0.0
+    dev: false
+
+  /unfetch/4.2.0:
+    resolution: {integrity: sha512-F9p7yYCn6cIW9El1zi0HI6vqpeIvBsr3dSuRO6Xuppb1u5rXpCPmMvLSyECLhybr9isec8Ohl0hPekMVrEinDA==}
     dev: false
 
   /update-browserslist-db/1.0.13_browserslist@4.22.1:
