@@ -85,7 +85,7 @@ export default function authenticate() {
     } catch (error) {
       console.log(error);
     }
-
+    // b90d4b2d29f1d0371aa66b94a7f03b29f8d263d13bf2759d44fce5a1ce75f5c3 to 0415e0cf90d23d41465b6d45f4097c6d7a7357e55b88472efa6a4f622386b4c58d1e421170d71471012ce1198fa3d86341a7821f9e7b43299056663f907718457f
     // 0459225a28c164f229c407b9e280c9b917d22234e5a26194770fc6ec6fe86bebd9ef40b1f6c4257929834edb8dbade503f67d237816cfec2ef768d3dc9c4a8e609 derived from key id ef5d8c1828610b5c0bcd86d242381636e627d8dfe62dc4f4bd53cbc7126b616f
   };
 
@@ -115,10 +115,6 @@ export default function authenticate() {
     if (isSignInRedirect("http://localhost:3000/authenticate")) {
       console.log(true);
       handleRedirect();
-      // {
-      //   accessToken: "9BG5xVcEdYJxCpVqYigu4Uj4Y4GPRI";
-      //   authMethodType: 4;
-      // }
     } else {
       console.log(false);
     }
@@ -214,7 +210,7 @@ export default function authenticate() {
       ></input>
       <br />
       <button onClick={getDiscordPubKey}>Get PubKey</button>
-      <button onClick={fetchPKPsDiscord}>Fetch PubKey</button>
+      <button onClick={fetchPKPsStytch}>Fetch PubKey</button>
       <a className="text-white">{pubKey && pubKey}</a>
       <br />
       <button
