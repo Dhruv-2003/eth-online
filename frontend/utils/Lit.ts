@@ -99,7 +99,7 @@ export const prepareDiscordAuthMethod = async (): Promise<{
   const provider = litAuthClient.initProvider<DiscordProvider>(
     ProviderType.Discord,
     {
-      redirectUri: "http://localhost:3000",
+      redirectUri: "http://localhost:3000/authenticate",
       clientId: DISCORD_CLIENT_ID,
     }
   );
@@ -137,7 +137,7 @@ export const handleDiscordRedirect = async (): Promise<{
   const provider = litAuthClient.initProvider<DiscordProvider>(
     ProviderType.Discord,
     {
-      redirectUri: "http://localhost:3000",
+      redirectUri: "http://localhost:3000/authenticate",
       clientId: DISCORD_CLIENT_ID,
     }
   );

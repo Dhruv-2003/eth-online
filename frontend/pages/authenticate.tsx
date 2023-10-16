@@ -12,6 +12,10 @@ import { AuthMethod } from "@lit-protocol/types";
 import { useStytchSession, useStytchUser } from "@stytch/nextjs";
 import { OTPsLoginOrCreateResponse } from "@stytch/vanilla-js";
 import React, { useState } from "react";
+import { prepareDiscordAuthMethod, handleDiscordRedirect } from "@/utils/Lit";
+import { useCallback, useEffect } from "react";
+import { useRouter } from "next/router";
+import { isSignInRedirect } from "@lit-protocol/lit-auth-client";
 
 const STYTCH_PROJECT_ID: string | undefined =
   process.env.NEXT_PUBLIC_STYTCH_PROJECT_ID;
@@ -19,6 +23,7 @@ const DISCORD_CLIENT_ID: string | undefined =
   process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID;
 
 export default function authenticate() {
+  const router = useRouter();
   const { user } = useStytchUser();
   // console.log(user);
   const { session } = useStytchSession();
@@ -80,7 +85,44 @@ export default function authenticate() {
     } catch (error) {
       console.log(error);
     }
+
+    // 0459225a28c164f229c407b9e280c9b917d22234e5a26194770fc6ec6fe86bebd9ef40b1f6c4257929834edb8dbade503f67d237816cfec2ef768d3dc9c4a8e609 derived from key id ef5d8c1828610b5c0bcd86d242381636e627d8dfe62dc4f4bd53cbc7126b616f
   };
+
+  const completeDiscordAuth = async () => {
+    // this will include login first , for now using accessToken
+    if (authMethod && provider) {
+      const PKPs = await fetchPkps(provider, authMethod);
+      if (PKPs?.length) {
+        console.log(PKPs);
+      } else {
+        const claimRes = await claim(authMethod, provider);
+        console.log(claimRes);
+      }
+    }
+  };
+
+  const handleRedirect = useCallback(async () => {
+    console.log("Redirect Called");
+    const response = await handleDiscordRedirect();
+    setAuthMethod(response.authMethod);
+    setProvider(response.authProvider);
+  }, [router]);
+
+  useEffect(() => {
+    // Check if app has been redirected from Lit login server
+    // console.log(isSignInRedirect(REDIRECT_URI));
+    if (isSignInRedirect("http://localhost:3000/authenticate")) {
+      console.log(true);
+      handleRedirect();
+      // {
+      //   accessToken: "9BG5xVcEdYJxCpVqYigu4Uj4Y4GPRI";
+      //   authMethodType: 4;
+      // }
+    } else {
+      console.log(false);
+    }
+  }, [handleRedirect]);
 
   const completeStytchAuth = async () => {
     try {
@@ -120,7 +162,7 @@ export default function authenticate() {
     }
   };
 
-  const fetchPKPs = async () => {
+  const fetchPKPsStytch = async () => {
     try {
       if (session && user) {
         const session_jwt = document.cookie;
@@ -146,6 +188,20 @@ export default function authenticate() {
     }
   };
 
+  const fetchPKPsDiscord = async () => {
+    try {
+      if (authMethod && provider) {
+        const PKPs = await fetchPkps(provider, authMethod);
+        console.log(PKPs);
+        if (PKPs?.length) {
+          generateSessionSigs(authMethod, PKPs[0]);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       authenticate
@@ -157,8 +213,8 @@ export default function authenticate() {
         onChange={(e) => setEmail(e.target.value)}
       ></input>
       <br />
-      <button onClick={getPubKey}>Get PubKey</button>
-      <button onClick={fetchPKPs}>Fetch PubKey</button>
+      <button onClick={getDiscordPubKey}>Get PubKey</button>
+      <button onClick={fetchPKPsDiscord}>Fetch PubKey</button>
       <a className="text-white">{pubKey && pubKey}</a>
       <br />
       <button
@@ -178,6 +234,7 @@ export default function authenticate() {
       ></input>
       <br />
       <button onClick={completeStytchAuth}>Submit OTP</button>
+      <button onClick={completeDiscordAuth}>Submit Discord</button>
     </div>
   );
 }
