@@ -16,13 +16,14 @@ import { prepareDiscordAuthMethod, handleDiscordRedirect } from "@/utils/Lit";
 import { useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 import { isSignInRedirect } from "@lit-protocol/lit-auth-client";
+import Notifi from "@/components/notifi";
 
 const STYTCH_PROJECT_ID: string | undefined =
   process.env.NEXT_PUBLIC_STYTCH_PROJECT_ID;
 const DISCORD_CLIENT_ID: string | undefined =
   process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID;
 
-export default function authenticate() {
+export default function Authenticate() {
   const router = useRouter();
   const { user } = useStytchUser();
   // console.log(user);
@@ -231,6 +232,7 @@ export default function authenticate() {
       <br />
       <button onClick={completeStytchAuth}>Submit OTP</button>
       <button onClick={completeDiscordAuth}>Submit Discord</button>
+      <Notifi/>
     </div>
   );
 }

@@ -7,21 +7,20 @@ import { useMemo, useState } from "react";
 import { arrayify } from "ethers/lib/utils.js";
 import React from "react";
 import { useSignMessage } from "wagmi";
+import { useAccount, useConnect } from 'wagmi';
 
 const Notifi = () => {
   const [userState, setUserState] = useState<UserState | null>(null);
   const [clientData, setClientData] = useState<any>();
-  const { signMessageAsync } = useSignMessage();
-
-  const address = "get address";
-  const isConnected = "check if connected";
+  // const { signMessageAsync } = useSignMessage({message: 'gm wagmi frens',});
+  const { address, isConnected } = useAccount();
 
   const client = useMemo(() => {
     if (address && isConnected) {
       return newFrontendClient({
         walletBlockchain: "ETHEREUM",
         account: { publicKey: address },
-        tenantId: "",
+        tenantId: "9300d12e1dc248fcb2e5f86b1784047d",
         env: "Development",
       });
     }
@@ -31,8 +30,7 @@ const Notifi = () => {
     if (!isConnected) {
       throw new Error("Wallet not connected");
     }
-
-    const signature = await signMessageAsync({
+    const signature = await signMessage({
       message,
     });
 
@@ -45,6 +43,7 @@ const Notifi = () => {
       throw new Error("Client not initialized");
     }
     const newUserState = await client.initialize();
+    console.log(newUserState)
     setUserState(newUserState);
   };
 
@@ -56,6 +55,7 @@ const Notifi = () => {
       walletBlockchain: "ETHEREUM",
       signMessage,
     });
+    console.log(client.userState)
     setUserState(client.userState);
   };
 
@@ -64,10 +64,21 @@ const Notifi = () => {
       throw new Error("Client not initialized or not logged in");
     }
     const data = await client.fetchData();
+    console.log(data)
     setClientData(data);
   };
 
-  return <div>notifi</div>;
+  return <div>
+    <button onClick={() => initClient()}>
+      init
+    </button>
+    <button onClick={() => login()}>
+      login
+    </button>
+    <button onClick={() => fetchData()}>
+      login
+    </button>
+  </div>;
 };
 
 export default Notifi;
