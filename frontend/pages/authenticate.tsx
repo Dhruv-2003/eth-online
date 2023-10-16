@@ -209,8 +209,8 @@ export default function authenticate() {
         onChange={(e) => setEmail(e.target.value)}
       ></input>
       <br />
-      <button onClick={getDiscordPubKey}>Get PubKey</button>
-      <button onClick={fetchPKPsStytch}>Fetch PubKey</button>
+      <button onClick={() => getPubKey()}>Get PubKey</button>
+      <button onClick={() => fetchPKPsStytch()}>Fetch PubKey</button>
       <a className="text-white">{pubKey && pubKey}</a>
       <br />
       <button
