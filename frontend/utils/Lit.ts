@@ -51,10 +51,10 @@ const litNodeClient = new LitNodeClient({
 });
 
 // await litNodeClient.connect();
-
+console.log(LIT_RELAY_API_KEY);
 const litAuthClient = new LitAuthClient({
   litRelayConfig: {
-    relayApiKey: LIT_RELAY_API_KEY,
+    relayApiKey: `${LIT_RELAY_API_KEY}`,
   },
   litNodeClient,
 });

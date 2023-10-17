@@ -30,7 +30,7 @@
     "react": "^18",
     "react-dom": "^18",
     "stytch": "^9.0.2",
-    "wagmi": "^1.4.3"
+    "wagmi": "0.12.7"
   },
   "devDependencies": {
     "@types/node": "^20",

@@ -22,7 +22,7 @@ const STYTCH_PROJECT_ID: string | undefined =
 const DISCORD_CLIENT_ID: string | undefined =
   process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID;
 
-export default function authenticate() {
+export default function Authenticate() {
   const router = useRouter();
   const { user } = useStytchUser();
   // console.log(user);
