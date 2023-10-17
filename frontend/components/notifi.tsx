@@ -6,22 +6,30 @@ import {
 import { useMemo, useState } from "react";
 import { arrayify } from "ethers/lib/utils.js";
 import React from "react";
+// import { useSignMessage } from "wagmi";
+// import { useAccount, useConnect } from 'wagmi';
+import {
+  useNotifiClient,
+  SignMessageParams,
+} from "@notifi-network/notifi-react-hooks";
+import { useConnect, useAccount } from "wagmi";
 import { useSignMessage } from "wagmi";
+import { recoverMessageAddress } from "viem";
 
 const Notifi = () => {
+  const { connect, connectors } = useConnect();
+
   const [userState, setUserState] = useState<UserState | null>(null);
   const [clientData, setClientData] = useState<any>();
   const { signMessageAsync } = useSignMessage();
-
-  const address = "get address";
-  const isConnected = "check if connected";
+  const { address, isConnected } = useAccount();
 
   const client = useMemo(() => {
     if (address && isConnected) {
       return newFrontendClient({
         walletBlockchain: "ETHEREUM",
         account: { publicKey: address },
-        tenantId: "",
+        tenantId: "9300d12e1dc248fcb2e5f86b1784047d",
         env: "Development",
       });
     }
@@ -31,12 +39,12 @@ const Notifi = () => {
     if (!isConnected) {
       throw new Error("Wallet not connected");
     }
-
-    const signature = await signMessageAsync({
-      message,
+    const signature = signMessageAsync({
+      message: "check",
     });
 
-    const signatureBuffer = arrayify(signature);
+    const signatureBuffer = await arrayify(signature);
+    console.log(signatureBuffer);
     return signatureBuffer;
   };
 
@@ -45,29 +53,89 @@ const Notifi = () => {
       throw new Error("Client not initialized");
     }
     const newUserState = await client.initialize();
+    console.log(newUserState);
     setUserState(newUserState);
   };
 
-  const login = async () => {
-    if (!address || !isConnected || !client) {
-      throw new Error("Client or wallet not initialized");
+  const logIn = async () => {
+    const userState = client?.userState;
+    if (userState?.status === "authenticated") {
+      return "User is already logged in";
     }
-    await client.logIn({
+
+    const loginResult = await client?.logIn({
       walletBlockchain: "ETHEREUM",
       signMessage,
-    });
-    setUserState(client.userState);
+    } as SignMessageParams);
+    console.log("loginResult", loginResult);
+    return loginResult;
   };
 
-  const fetchData = async () => {
-    if (!userState || userState.status !== "authenticated" || !client) {
-      throw new Error("Client not initialized or not logged in");
-    }
-    const data = await client.fetchData();
-    setClientData(data);
-  };
-
-  return <div>notifi</div>;
+  return (
+    <div>
+      {connectors.map((connector) => (
+        <button
+          disabled={!connector.ready}
+          key={connector.id}
+          onClick={() => connect({ connector })}
+        >
+          {connector.name}
+          {!connector.ready && " (unsupported)"}
+        </button>
+      ))}
+      <p>{address && address}</p>
+      <button onClick={() => initClient()}>init</button>
+      <button onClick={() => logIn()}>login</button>
+    </div>
+  );
 };
 
 export default Notifi;
+
+// const fetchData = async () => {
+//   if (!userState || userState.status !== "authenticated" || !client) {
+//     throw new Error("Client not initialized or not logged in");
+//   }
+//   const data = await client.fetchData();
+//   console.log(data)
+//   setClientData(data);
+// };
+
+{
+  /* <button onClick={() => initClient()}>
+      init
+    </button>
+    <button onClick={() => login()}>
+      login
+    </button>
+    <button onClick={() => fetchData()}>
+      login
+    </button> */
+}
+
+//   const notifiClient = useNotifiClient({
+//     dappAddress: "9300d12e1dc248fcb2e5f86b1784047d",
+//     walletBlockchain: "ETHEREUM",
+//     env: "Development",
+//     walletPublicKey: address ?? "",
+//   });
+
+//   const { logIn } = notifiClient;
+
+// const handleLogin = async () => {
+//   if (!address) {
+//     throw new Error('no public key');
+//   }
+//   if (!signMessage) {
+//     throw new Error('no sign message');
+//   }
+//   const signer: SignMessageParams = {
+//     walletBlockchain: "ETHEREUM",
+//     signMessage: async (buffer: Uint8Array) => {
+//       const result = signMessage(buffer);
+//       console.log(result)
+//       return arrayify(result);
+//     },
+//   };
+//   await logIn(signer);
+// };

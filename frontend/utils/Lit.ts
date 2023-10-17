@@ -38,7 +38,8 @@ const STYTCH_PROJECT_ID: string | undefined =
 const STYTCH_SECRET: string | undefined = process.env.NEXT_PUBLIC_STYTCH_SECRET;
 
 if (!STYTCH_PROJECT_ID || !STYTCH_SECRET) {
-  throw Error("Could not find stytch project secret or id in enviorment");
+  // throw Error("Could not find stytch project secret or id in enviorment");
+  console.log("Could not find stytch project secret or id in enviorment")
 }
 // const litNodeClient = new LitNodeClientNodeJs({
 //   litNetwork: "cayenne",
