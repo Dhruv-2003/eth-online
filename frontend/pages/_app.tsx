@@ -4,11 +4,34 @@ import { createStytchUIClient } from "@stytch/nextjs/ui";
 import { StytchProvider } from "@stytch/nextjs";
 import { AuthContext } from "@/context/authContext";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-import { WagmiConfig, createConfig, mainnet } from "wagmi";
+import {
+  WagmiConfig,
+  createConfig,
+  mainnet,
+  sepolia,
+  configureChains,
+} from "wagmi";
 import { createPublicClient, http } from "viem";
+import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
+import { InjectedConnector } from "wagmi/connectors/injected";
+
+const { chains, publicClient, webSocketPublicClient } = configureChains(
+  [sepolia],
+  [alchemyProvider({ apiKey: "yourAlchemyApiKey" }), publicProvider()]
+);
 
 const config = createConfig({
   autoConnect: true,
+  connectors: [
+    new InjectedConnector({
+      chains,
+      options: {
+        name: "Injected",
+        shimDisconnect: true,
+      },
+    }),
+  ],
   publicClient: createPublicClient({
     chain: mainnet,
     transport: http(),
