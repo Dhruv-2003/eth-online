@@ -9,15 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@lit-protocol/auth-helpers": "^3.0.6",
-    "@lit-protocol/constants": "^3.0.6",
-    "@lit-protocol/lit-auth-client": "3.0.6",
-    "@lit-protocol/lit-node-client": "3.0.6",
-    "@lit-protocol/lit-node-client-nodejs": "3.0.6",
-    "@lit-protocol/pkp-client": "^3.0.6",
-    "@lit-protocol/pkp-ethers": "^3.0.6",
-    "@lit-protocol/pkp-walletconnect": "^3.0.6",
-    "@lit-protocol/types": "^3.0.6",
+    "@lit-protocol/auth-helpers": "^3.0.7",
+    "@lit-protocol/constants": "^3.0.7",
+    "@lit-protocol/lit-auth-client": "^3.0.7",
+    "@lit-protocol/lit-node-client": "^3.0.7",
+    "@lit-protocol/lit-node-client-nodejs": "^3.0.7",
+    "@lit-protocol/pkp-client": "^3.0.7",
+    "@lit-protocol/pkp-ethers": "^3.0.7",
+    "@lit-protocol/pkp-walletconnect": "^3.0.7",
+    "@lit-protocol/types": "^3.0.7",
     "@notifi-network/notifi-core": "^0.85.4",
     "@notifi-network/notifi-frontend-client": "^0.85.4",
     "@notifi-network/notifi-react-hooks": "^0.85.5",
@@ -36,6 +36,7 @@
     "react-dom": "^18",
     "react-query": "^3.39.3",
     "stytch": "^9.0.2",
+    "twilio": "^4.18.1",
     "wagmi": "0.12.7"
   },
   "devDependencies": {

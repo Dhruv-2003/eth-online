@@ -20,7 +20,11 @@ import {
   IRelayPKP,
   SessionSigs,
 } from "@lit-protocol/types";
-import { LitAbility, LitPKPResource } from "@lit-protocol/auth-helpers";
+import {
+  LitAbility,
+  LitActionResource,
+  LitPKPResource,
+} from "@lit-protocol/auth-helpers";
 import { BigNumber } from "ethers";
 import { PKPClient } from "@lit-protocol/pkp-client";
 import { ProviderType } from "@lit-protocol/constants";
@@ -107,6 +111,22 @@ export const prepareDiscordAuthMethod = async (): Promise<{
   return { authProvider: provider };
 };
 
+export const prepareGoogleAuthMethod = async (): Promise<{
+  authProvider: BaseProvider;
+}> => {
+  const provider = litAuthClient.initProvider<DiscordProvider>(
+    ProviderType.Google,
+    {
+      redirectUri: "http://localhost:3000/authenticate",
+    }
+  );
+
+  await provider.signIn();
+
+  // console.log
+  return { authProvider: provider };
+};
+
 // Auth client can be prepared for any method
 export const prepareStytchAuthMethod = async (
   session_jwt: string,
@@ -136,6 +156,22 @@ export const handleDiscordRedirect = async (): Promise<{
     {
       redirectUri: "http://localhost:3000/authenticate",
       clientId: DISCORD_CLIENT_ID,
+    }
+  );
+  const authMethod = await provider.authenticate();
+  console.log(authMethod);
+
+  return { authMethod, authProvider: provider };
+};
+
+export const handleGoogleRedirect = async (): Promise<{
+  authMethod: AuthMethod;
+  authProvider: BaseProvider;
+}> => {
+  const provider = litAuthClient.initProvider<DiscordProvider>(
+    ProviderType.Google,
+    {
+      redirectUri: "http://localhost:3000/authenticate",
     }
   );
   const authMethod = await provider.authenticate();
@@ -193,7 +229,7 @@ export const generateSessionSigs = async (
 
   const resourceAbilities = [
     {
-      resource: new LitPKPResource(pkp.tokenId), // might need to check the tokenId
+      resource: new LitPKPResource("*"), // might need to check the tokenId
       ability: LitAbility.PKPSigning,
     },
   ];

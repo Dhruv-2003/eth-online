@@ -1,7 +1,7 @@
 import Image from "next/image";
 import * as stytch from "stytch";
 import { Inter } from "next/font/google";
-import { prepareDiscordAuthMethod } from "@/utils/Lit";
+import { prepareDiscordAuthMethod, prepareGoogleAuthMethod } from "@/utils/Lit";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -14,6 +14,7 @@ export default function Home() {
           Get started by editing&nbsp;
           <code className="font-mono font-bold">pages/index.tsx</code>
           <button onClick={prepareDiscordAuthMethod}>login with discord</button>
+          <button onClick={prepareGoogleAuthMethod}>login with google</button>
         </p>
         <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
           <a
