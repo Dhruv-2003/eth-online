@@ -16,7 +16,7 @@ import { prepareDiscordAuthMethod, handleDiscordRedirect } from "@/utils/Lit";
 import { useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 import { isSignInRedirect } from "@lit-protocol/lit-auth-client";
-import Notifi from "@/components/notifi";
+// import Notifi from "@/components/notifi";
 
 const STYTCH_PROJECT_ID: string | undefined =
   process.env.NEXT_PUBLIC_STYTCH_PROJECT_ID;
@@ -144,6 +144,10 @@ export default function Authenticate() {
 
         setAuthMethod(response.authMethod);
         setProvider(response.authProvider);
+        // const mint = await response.authProvider?.mintPKPThroughRelayer(
+        //   response.authMethod
+        // );
+        // console.log(mint);
         if (PKPs?.length) {
           console.log(PKPs);
         } else {
@@ -176,7 +180,7 @@ export default function Authenticate() {
             response.authMethod
           );
           if (PKPs?.length) {
-            generateSessionSigs(response.authMethod, PKPs[0]);
+            await generateSessionSigs(response.authMethod, PKPs[0]);
           }
         }
       }
@@ -232,7 +236,7 @@ export default function Authenticate() {
       <br />
       <button onClick={completeStytchAuth}>Submit OTP</button>
       <button onClick={completeDiscordAuth}>Submit Discord</button>
-      <Notifi/>
+      {/* <Notifi/> */}
     </div>
   );
 }
