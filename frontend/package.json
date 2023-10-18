@@ -34,11 +34,11 @@
     "ethereum-public-key-to-address": "^0.0.5",
     "ethers": "^5.7.2",
     "next": "13.5.4",
-    "nodemailer": "^6.9.6",
     "npm": "^10.2.0",
     "react": "^18",
     "react-dom": "^18",
     "react-query": "^3.39.3",
+    "resend": "^1.1.0",
     "stytch": "^9.0.2",
     "twilio": "^4.18.1",
     "wagmi": "0.12.7"

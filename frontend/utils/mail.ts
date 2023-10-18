@@ -1,31 +1,54 @@
 "use strict";
-import nodemailer from "nodemailer";
+const USER = process.env.NEXT_PUBLIC_USER;
+const PASS = process.env.NEXT_PUBLIC_PASS;
+const RESEND_API_KEY = process.env.NEXT_PUBLIC_RESEND;
+import * as React from "react";
 
 export async function sendEmail() {
   try {
-    const transporter = nodemailer.createTransport({
-      service: "Gmail",
-      host: "​smtp.gmail.com​",
-      port: 587,
-      auth: {
-        user: "",
-        pass: "",
-      },
-    });
-
-    const mailOptions = {
-      from: "",
-      to: "",
-      subject: "Hello",
-      text: "This is the body of the email.",
+    const data = {
+      to: "dhruvagarwal2017@gmail.com",
     };
 
-    const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent:", info.messageId);
+    const response = await fetch("/api/sendEmail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    console.log(response);
   } catch (error) {
-    console.error("Error occurred:", error);
+    console.log(error);
   }
 }
+
+// export async function sendEmail() {
+//   try {
+//     const transporter = nodemailer.createTransport({
+//       service: "Gmail",
+//       host: "​smtp.gmail.com​",
+//       port: 587,
+//       auth: {
+//         user: USER,
+//         pass: PASS,
+//       },
+//     });
+
+//     const mailOptions = {
+//       from: "",
+//       to: "",
+//       subject: "Hello",
+//       text: "This is the body of the email.",
+//     };
+
+//     const info = await transporter.sendMail(mailOptions);
+//     console.log("Email sent:", info.messageId);
+//   } catch (error) {
+//     console.error("Error occurred:", error);
+//   }
+// }
 
 // export async function sendEmail() {
 //   const mailchimp = require("@mailchimp/mailchimp_transactional")(
