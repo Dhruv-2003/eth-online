@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import { GelatoRelayPack } from "@safe-global/relay-kit";
-import Safe, { EthersAdapter } from "@safe-global/protocol-kit";
+import Safe, { EthersAdapter, SafeFactory } from "@safe-global/protocol-kit";
 import {
   MetaTransactionData,
   MetaTransactionOptions,
@@ -8,11 +8,13 @@ import {
   SafeTransactionData,
   SafeTransactionDataPartial,
 } from "@safe-global/safe-core-sdk-types";
+import SafeApiKit from "@safe-global/api-kit";
 
 const GELATO_RELAY_API_KEY = process.env.NEXT_PUBLIC_GELATO_RELAY_API_KEY;
 console.log(GELATO_RELAY_API_KEY);
 const chainId = 5;
 const gasLimit = 100000;
+const SAFE_API_SERVICE_URL = "https://safe-transaction-zkevm.safe.global/";
 
 const options = {
   gasLimit: ethers.BigNumber.from(gasLimit),
@@ -196,4 +198,92 @@ export const sendTokenTransaction1Balance = async (
   console.log(
     `Relay Transaction Task ID: https://relay.gelato.digital/tasks/status/${response.taskId}`
   );
+};
+
+const intializeSafeAPI = (signer: ethers.Signer) => {
+  const ethAdapter = new EthersAdapter({
+    ethers,
+    signerOrProvider: signer,
+  });
+
+  const safeSAPIService = new SafeApiKit({
+    txServiceUrl: "https://safe-transaction-goerli.safe.global",
+    ethAdapter,
+  });
+
+  return safeSAPIService;
+};
+
+export const getUserSafe = async (signer: ethers.Signer) => {
+  const userAddress = await signer.getAddress();
+
+  const safeService = intializeSafeAPI(signer);
+
+  // console.log(userAddress)
+  const safes = await safeService.getSafesByOwner(userAddress);
+  // console.log(safes);
+
+  const safeAddress = safes.safes[0];
+  // console.log(safeAddress)
+  return safeAddress;
+};
+
+export const enableModule = async (safeSdk: Safe, moduleAddress: string) => {
+  const safeTransaction = await safeSdk.createEnableModuleTx(moduleAddress);
+  const txResponse = await safeSdk.executeTransaction(safeTransaction);
+  await txResponse.transactionResponse?.wait();
+
+  console.log(txResponse);
+  return txResponse;
+};
+
+const createSafeWallet = async (
+  signer: ethers.Signer
+): Promise<Safe | undefined> => {
+  try {
+    const ethAdapter = new EthersAdapter({
+      ethers,
+      signerOrProvider: signer,
+    });
+
+    const safeFactory = await SafeFactory.create({
+      ethAdapter: ethAdapter,
+    });
+
+    const safeService = new SafeApiKit({
+      txServiceUrl: SAFE_API_SERVICE_URL,
+      ethAdapter,
+    });
+
+    const owners = [`${await signer.getAddress()}`];
+    const threshold = 1;
+
+    const safeAddress = await getUserSafe(signer);
+    console.log(safeAddress);
+    if (safeAddress) {
+      const safeSDK = await Safe.create({ ethAdapter, safeAddress });
+      return safeSDK;
+    }
+
+    const safeAccountConfig = {
+      owners,
+      threshold,
+    };
+
+    console.log(safeAccountConfig);
+    // / Will it have gas fees to deploy this safe tx
+    const safeSdk = await safeFactory.deploySafe({ safeAccountConfig });
+
+    console.log("Creating and deploying the new safe");
+
+    // / wait for the deployement to be completed
+    const newSafeAddress = safeSdk.getAddress();
+
+    console.log(newSafeAddress);
+
+    /// On Continue, direct to the home page
+    return safeSdk;
+  } catch (error) {
+    console.log(error);
+  }
 };
