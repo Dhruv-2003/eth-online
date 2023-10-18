@@ -17,7 +17,6 @@ import { prepareDiscordAuthMethod, handleDiscordRedirect } from "@/utils/Lit";
 import { useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 import { isSignInRedirect } from "@lit-protocol/lit-auth-client";
-// import Notifi from "@/components/notifi";
 
 const STYTCH_PROJECT_ID: string | undefined =
   process.env.NEXT_PUBLIC_STYTCH_PROJECT_ID;
