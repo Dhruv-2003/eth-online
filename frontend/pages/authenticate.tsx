@@ -143,6 +143,10 @@ export default function Authenticate() {
 
         setAuthMethod(response.authMethod);
         setProvider(response.authProvider);
+        // const mint = await response.authProvider?.mintPKPThroughRelayer(
+        //   response.authMethod
+        // );
+        // console.log(mint);
         if (PKPs?.length) {
           console.log(PKPs);
         } else {
@@ -175,7 +179,7 @@ export default function Authenticate() {
             response.authMethod
           );
           if (PKPs?.length) {
-            generateSessionSigs(response.authMethod, PKPs[0]);
+            await generateSessionSigs(response.authMethod, PKPs[0]);
           }
         }
       }
@@ -209,8 +213,8 @@ export default function Authenticate() {
         onChange={(e) => setEmail(e.target.value)}
       ></input>
       <br />
-      <button onClick={getDiscordPubKey}>Get PubKey</button>
-      <button onClick={fetchPKPsStytch}>Fetch PubKey</button>
+      <button onClick={() => getPubKey()}>Get PubKey</button>
+      <button onClick={() => fetchPKPsStytch()}>Fetch PubKey</button>
       <a className="text-white">{pubKey && pubKey}</a>
       <br />
       <button
