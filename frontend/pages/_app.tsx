@@ -3,9 +3,15 @@ import type { AppProps } from "next/app";
 import { createStytchUIClient } from "@stytch/nextjs/ui";
 import { StytchProvider } from "@stytch/nextjs";
 import { AuthContext } from "@/context/authContext";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-import { WagmiConfig, createConfig, mainnet } from "wagmi";
-import { createPublicClient, http } from "viem";
+// import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+// import {
+//   WagmiConfig,
+//   createConfig,
+//   mainnet,
+//   sepolia,
+//   configureChains,
+// } from "wagmi";
+// import { createPublicClient, http } from "viem";
 import { Lato as FontLato } from "next/font/google";
 import { Navbar } from "@/components/ui/Navbar";
 import { ThemeProvider } from "@/components/ui/theme-provider";
@@ -16,26 +22,44 @@ export const font = FontLato({
   subsets: ["latin"],
   variable: "--font-lato",
 });
+// import { alchemyProvider } from "wagmi/providers/alchemy";
+// import { publicProvider } from "wagmi/providers/public";
+// import { InjectedConnector } from "wagmi/connectors/injected";
 
-const config = createConfig({
-  autoConnect: true,
+// const { chains, publicClient, webSocketPublicClient } = configureChains(
+//   [sepolia],
+//   [alchemyProvider({ apiKey: "yourAlchemyApiKey" }), publicProvider()]
+// );
+
+// const config = createConfig({
+//   autoConnect: true,
   // @ts-ignore
-  publicClient: createPublicClient({
+//   connectors: [
+//     new InjectedConnector({
+//       chains,
+//       options: {
+//         name: "Injected",
+//         shimDisconnect: true,
+//       },
+//     }),
+//   ],
+//   publicClient: createPublicClient({
     // @ts-ignore
-    chain: mainnet,
-    transport: http(),
-  }),
-});
+//     chain: mainnet,
+//     transport: http(),
+//   }),
+// });
 
 const STYTCH_PUBLIC_TOKEN: string | undefined =
   process.env.NEXT_PUBLIC_STYTCH_PUBLIC_TOKEN;
 
 if (!STYTCH_PUBLIC_TOKEN) {
-  // throw Error("Could not find stytch project secret or id in enviorment");
-  console.log("Could not find stytch project secret or id in enviorment");
+  throw Error("Could not find stytch project secret or id in enviorment");
+  // console.log("Could not find stytch project secret or id in enviorment");
 }
 
-const queryClient = new QueryClient();
+const stytchClient = createStytchUIClient(STYTCH_PUBLIC_TOKEN);
+// const queryClient = new QueryClient();
 
 // const stytchClient = new StytchUIClient(STYTCH_PUBLIC_TOKEN);
 const stytchClient = createStytchUIClient(STYTCH_PUBLIC_TOKEN as string);
@@ -43,10 +67,10 @@ const stytchClient = createStytchUIClient(STYTCH_PUBLIC_TOKEN as string);
 export default function App({ Component, pageProps }: AppProps) {
   const value = {};
   return (
-    <QueryClientProvider client={queryClient}>
-      <WagmiConfig config={config}>
-        <AuthContext.Provider value={value}>
-          <StytchProvider stytch={stytchClient}>
+    // <QueryClientProvider client={queryClient}>
+    // <WagmiConfig config={config}>
+    <AuthContext.Provider value={value}>
+      <StytchProvider stytch={stytchClient}>
             <ThemeProvider
               attribute="class"
               defaultTheme="system"
@@ -55,12 +79,12 @@ export default function App({ Component, pageProps }: AppProps) {
             >
               <div className={`${font.className}`}>
                 <Navbar />
-                <Component {...pageProps} />
+            <Component {...pageProps} />
               </div>
             </ThemeProvider>
-          </StytchProvider>
-        </AuthContext.Provider>
-      </WagmiConfig>
-    </QueryClientProvider>
+      </StytchProvider>
+    </AuthContext.Provider>
+    // </WagmiConfig>
+    // </QueryClientProvider>
   );
 }

@@ -14,7 +14,6 @@ dotenv.config();
 import * as stytch from "stytch";
 import { LitNodeClientNodeJs } from "@lit-protocol/lit-node-client-nodejs";
 import { LitNodeClient } from "@lit-protocol/lit-node-client";
-import { ProviderType } from "@lit-protocol/constants";
 import {
   AuthCallbackParams,
   AuthMethod,
@@ -28,6 +27,7 @@ import {
 } from "@lit-protocol/auth-helpers";
 import { BigNumber } from "ethers";
 import { PKPClient } from "@lit-protocol/pkp-client";
+import { ProviderType } from "@lit-protocol/constants";
 
 const LIT_RELAY_API_KEY: string | undefined =
   process.env.NEXT_PUBLIC_LIT_RELAY_API_KEY;
@@ -38,8 +38,8 @@ const STYTCH_PROJECT_ID: string | undefined =
 const STYTCH_SECRET: string | undefined = process.env.NEXT_PUBLIC_STYTCH_SECRET;
 
 if (!STYTCH_PROJECT_ID || !STYTCH_SECRET) {
-  // throw Error("Could not find stytch project secret or id in enviorment");
-  console.log("Could not find stytch project secret or id in enviorment")
+  throw Error("Could not find stytch project secret or id in enviorment");
+  // console.log("Could not find stytch project secret or id in enviorment")
 }
 // const litNodeClient = new LitNodeClientNodeJs({
 //   litNetwork: "cayenne",
@@ -52,10 +52,10 @@ const litNodeClient = new LitNodeClient({
 });
 
 // await litNodeClient.connect();
-
+console.log(LIT_RELAY_API_KEY);
 const litAuthClient = new LitAuthClient({
   litRelayConfig: {
-    relayApiKey: LIT_RELAY_API_KEY,
+    relayApiKey: `${LIT_RELAY_API_KEY}`,
   },
   litNodeClient,
 });
@@ -111,6 +111,22 @@ export const prepareDiscordAuthMethod = async (): Promise<{
   return { authProvider: provider };
 };
 
+export const prepareGoogleAuthMethod = async (): Promise<{
+  authProvider: BaseProvider;
+}> => {
+  const provider = litAuthClient.initProvider<DiscordProvider>(
+    ProviderType.Google,
+    {
+      redirectUri: "http://localhost:3000/authenticate",
+    }
+  );
+
+  await provider.signIn();
+
+  // console.log
+  return { authProvider: provider };
+};
+
 // Auth client can be prepared for any method
 export const prepareStytchAuthMethod = async (
   session_jwt: string,
@@ -140,6 +156,22 @@ export const handleDiscordRedirect = async (): Promise<{
     {
       redirectUri: "http://localhost:3000/authenticate",
       clientId: DISCORD_CLIENT_ID,
+    }
+  );
+  const authMethod = await provider.authenticate();
+  console.log(authMethod);
+
+  return { authMethod, authProvider: provider };
+};
+
+export const handleGoogleRedirect = async (): Promise<{
+  authMethod: AuthMethod;
+  authProvider: BaseProvider;
+}> => {
+  const provider = litAuthClient.initProvider<DiscordProvider>(
+    ProviderType.Google,
+    {
+      redirectUri: "http://localhost:3000/authenticate",
     }
   );
   const authMethod = await provider.authenticate();
