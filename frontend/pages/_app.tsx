@@ -6,10 +6,22 @@ import { AuthContext } from "@/context/authContext";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { WagmiConfig, createConfig, mainnet } from "wagmi";
 import { createPublicClient, http } from "viem";
+import { Lato as FontLato } from "next/font/google";
+import { Navbar } from "@/components/ui/Navbar";
+import { ThemeProvider } from "@/components/ui/theme-provider";
+
+export const font = FontLato({
+  weight: ["300", "400", "700"],
+  style: "normal",
+  subsets: ["latin"],
+  variable: "--font-lato",
+});
 
 const config = createConfig({
   autoConnect: true,
+  // @ts-ignore
   publicClient: createPublicClient({
+    // @ts-ignore
     chain: mainnet,
     transport: http(),
   }),
@@ -26,7 +38,7 @@ if (!STYTCH_PUBLIC_TOKEN) {
 const queryClient = new QueryClient();
 
 // const stytchClient = new StytchUIClient(STYTCH_PUBLIC_TOKEN);
-const stytchClient = createStytchUIClient(STYTCH_PUBLIC_TOKEN);
+const stytchClient = createStytchUIClient(STYTCH_PUBLIC_TOKEN as string);
 
 export default function App({ Component, pageProps }: AppProps) {
   const value = {};
@@ -35,7 +47,17 @@ export default function App({ Component, pageProps }: AppProps) {
       <WagmiConfig config={config}>
         <AuthContext.Provider value={value}>
           <StytchProvider stytch={stytchClient}>
-            <Component {...pageProps} />
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <div className={`${font.className}`}>
+                <Navbar />
+                <Component {...pageProps} />
+              </div>
+            </ThemeProvider>
           </StytchProvider>
         </AuthContext.Provider>
       </WagmiConfig>
