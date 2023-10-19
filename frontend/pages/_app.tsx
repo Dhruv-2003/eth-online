@@ -33,7 +33,7 @@ export const font = FontLato({
 
 // const config = createConfig({
 //   autoConnect: true,
-  // @ts-ignore
+// @ts-ignore
 //   connectors: [
 //     new InjectedConnector({
 //       chains,
@@ -44,7 +44,7 @@ export const font = FontLato({
 //     }),
 //   ],
 //   publicClient: createPublicClient({
-    // @ts-ignore
+// @ts-ignore
 //     chain: mainnet,
 //     transport: http(),
 //   }),
@@ -58,7 +58,6 @@ if (!STYTCH_PUBLIC_TOKEN) {
   // console.log("Could not find stytch project secret or id in enviorment");
 }
 
-const stytchClient = createStytchUIClient(STYTCH_PUBLIC_TOKEN);
 // const queryClient = new QueryClient();
 
 // const stytchClient = new StytchUIClient(STYTCH_PUBLIC_TOKEN);
@@ -71,17 +70,17 @@ export default function App({ Component, pageProps }: AppProps) {
     // <WagmiConfig config={config}>
     <AuthContext.Provider value={value}>
       <StytchProvider stytch={stytchClient}>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <div className={`${font.className}`}>
-                <Navbar />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className={`${font.className}`}>
+            <Navbar />
             <Component {...pageProps} />
-              </div>
-            </ThemeProvider>
+          </div>
+        </ThemeProvider>
       </StytchProvider>
     </AuthContext.Provider>
     // </WagmiConfig>
