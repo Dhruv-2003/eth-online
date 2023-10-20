@@ -35,6 +35,7 @@
     "@stytch/vanilla-js": "^3.0.1",
     "@usedapp/core": "^1.2.5",
     "@xmtp/xmtp-js": "^11.1.1",
+    "axios": "^1.5.1",
     "chatgpt": "^5.2.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
