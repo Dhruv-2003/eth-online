@@ -3,7 +3,7 @@ import {
   UserState,
   newFrontendClient,
 } from "@notifi-network/notifi-frontend-client";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef } from "react";
 import { arrayify } from "ethers/lib/utils.js";
 import React from "react";
 // import { useSignMessage } from "wagmi";
@@ -14,10 +14,12 @@ import {
 } from "@notifi-network/notifi-react-hooks";
 import { useConnect, useAccount } from "wagmi";
 import { useSignMessage } from "wagmi";
-import { recoverMessageAddress } from "viem";
+import { initXmtp } from "@/utils/xmtpchat";
 
 const Notifi = () => {
   const { connect, connectors } = useConnect();
+  const convRef = useRef<any>(null);
+  const clientRef = useRef<any>(null);
 
   const [userState, setUserState] = useState<UserState | null>(null);
   const [clientData, setClientData] = useState<any>();
@@ -86,6 +88,7 @@ const Notifi = () => {
       <p>{address && address}</p>
       <button onClick={() => initClient()}>init</button>
       <button onClick={() => logIn()}>login</button>
+      <button onClick={() => initXmtp("0xA4EF08B30D31b32ba74531B00F82cDD2D3F0a2A3", convRef, clientRef)}>initxmtp</button>
     </div>
   );
 };
