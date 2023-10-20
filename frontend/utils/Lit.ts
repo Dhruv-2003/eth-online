@@ -1,6 +1,7 @@
 import {
   BaseProvider,
   DiscordProvider,
+  GoogleProvider,
   LitAuthClient,
   StytchOtpProvider,
 } from "@lit-protocol/lit-auth-client";
@@ -114,7 +115,7 @@ export const prepareDiscordAuthMethod = async (): Promise<{
 export const prepareGoogleAuthMethod = async (): Promise<{
   authProvider: BaseProvider;
 }> => {
-  const provider = litAuthClient.initProvider<DiscordProvider>(
+  const provider = litAuthClient.initProvider<GoogleProvider>(
     ProviderType.Google,
     {
       redirectUri: "http://localhost:3000/authenticate",
@@ -224,7 +225,7 @@ export const fetchPkps = async (
 export const generateSessionSigs = async (
   authMethod: AuthMethod,
   pkp: IRelayPKP
-) => {
+): Promise<SessionSigs | undefined> => {
   await litNodeClient.connect();
 
   const resourceAbilities = [
@@ -271,21 +272,23 @@ export const generateSessionSigs = async (
       });
 
     console.log(sessionSigs);
+    return sessionSigs;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const preparePKPWallet = (
+export const preparePKPWallet = async (
   pkp: IRelayPKP,
   sessionSigs: SessionSigs,
   rpc: string
-): PKPEthersWallet => {
+): Promise<PKPEthersWallet> => {
   const pkpWallet = new PKPEthersWallet({
     pkpPubKey: pkp.publicKey,
     rpc: rpc, // e.g. https://rpc.ankr.com/eth_goerli
     controllerSessionSigs: sessionSigs,
   });
+  await pkpWallet.init();
 
   return pkpWallet;
 };
@@ -302,7 +305,7 @@ export const preparePKPClientWithWalletConnect = async (
   return pkpClient;
 };
 
-class pkpWalletConnect {
+export class pkpWalletConnect {
   pkpClient: PKPClient;
   pkpWcClient: PKPWalletConnect;
 
@@ -314,12 +317,11 @@ class pkpWalletConnect {
     const wcClient = new PKPWalletConnect();
     this.pkpClient = pkpClient;
     this.pkpWcClient = wcClient;
-    this.initialise();
   }
 
   async initialise() {
     const config = {
-      projectId: "<Your WalletConnect project ID>",
+      projectId: "afdac16b07284976cc7f71299771b2b7",
       metadata: {
         name: "Test Lit Wallet",
         description: "Test Lit Wallet",
@@ -332,6 +334,7 @@ class pkpWalletConnect {
     this.pkpWcClient.addPKPClient(this.pkpClient);
 
     await this.subscribeSessionReq();
+    await this.subscribeSigingReq();
   }
 
   async subscribeSessionReq() {

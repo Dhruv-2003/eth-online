@@ -4,12 +4,14 @@ import {
   fetchPkps,
   generateSessionSigs,
   handleGoogleRedirect,
+  pkpWalletConnect,
+  preparePKPWallet,
   prepareStytchAuthMethod,
 } from "@/utils/Lit";
 import { getUser } from "@/utils/Stych";
 import { authenticateOtp, stytchSendOTP } from "@/utils/StychUI";
 import { BaseProvider } from "@lit-protocol/lit-auth-client";
-import { AuthMethod } from "@lit-protocol/types";
+import { AuthMethod, IRelayPKP, SessionSigsMap } from "@lit-protocol/types";
 import { useStytchSession, useStytchUser } from "@stytch/nextjs";
 import { OTPsLoginOrCreateResponse } from "@stytch/vanilla-js";
 import React, { useState } from "react";
@@ -17,6 +19,10 @@ import { prepareDiscordAuthMethod, handleDiscordRedirect } from "@/utils/Lit";
 import { useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 import { isSignInRedirect } from "@lit-protocol/lit-auth-client";
+import { POLYGON_ZKEVM, POLYGON_ZKEVM_TEST } from "@/constants/networks";
+import { PKPEthersWallet } from "@lit-protocol/pkp-ethers";
+import { ethers } from "ethers";
+import { intializeSDK, prepareSendNativeTransactionData } from "@/utils/Safe";
 
 const STYTCH_PROJECT_ID: string | undefined =
   process.env.NEXT_PUBLIC_STYTCH_PROJECT_ID;
@@ -37,11 +43,13 @@ export default function Authenticate() {
   const [provider, setProvider] = useState<BaseProvider>();
   const [sendRes, setSendRes] = useState<OTPsLoginOrCreateResponse>();
   const [user_id, setUser_id] = useState<string>();
+  const [sessionSigs, setSessionSigs] = useState<SessionSigsMap>();
+  const [PKP, setPKP] = useState<IRelayPKP>();
+  const [pkpWallet, setPkpWallet] = useState<PKPEthersWallet>();
+  const [pkpClient, setPkpClient] = useState<pkpWalletConnect>();
 
+  //1. calculate the pubKey for a new stytch User from the mobile or Email
   const getPubKey = async () => {
-    // let mobile;
-    // let email = "dhruvagarwal2017@gmail.com";
-
     try {
       const res = await fetch("/api/getUser", {
         method: "POST",
@@ -69,9 +77,10 @@ export default function Authenticate() {
     }
   };
 
+  //2. calculate the discord Pub key from the UserID which is linked to the username (but not directly)
   const getDiscordPubKey = async () => {
     try {
-      const user_id = "0xdhruv";
+      const user_id = "547325934043398144";
       console.log(user_id);
 
       if (!DISCORD_CLIENT_ID) {
@@ -86,25 +95,9 @@ export default function Authenticate() {
     } catch (error) {
       console.log(error);
     }
-    // b90d4b2d29f1d0371aa66b94a7f03b29f8d263d13bf2759d44fce5a1ce75f5c3 to 0415e0cf90d23d41465b6d45f4097c6d7a7357e55b88472efa6a4f622386b4c58d1e421170d71471012ce1198fa3d86341a7821f9e7b43299056663f907718457f
-    // 0459225a28c164f229c407b9e280c9b917d22234e5a26194770fc6ec6fe86bebd9ef40b1f6c4257929834edb8dbade503f67d237816cfec2ef768d3dc9c4a8e609 derived from key id ef5d8c1828610b5c0bcd86d242381636e627d8dfe62dc4f4bd53cbc7126b616f
   };
 
-  const completeAuth = async () => {
-    // this will include login first , for now using accessToken
-    if (authMethod && provider) {
-      const PKPs = await fetchPkps(provider, authMethod);
-      if (PKPs?.length) {
-        console.log(PKPs);
-      } else {
-        // const claimRes = await claim(authMethod, provider);
-        // console.log(claimRes);
-        const mint = await provider?.mintPKPThroughRelayer(authMethod);
-        console.log(mint);
-      }
-    }
-  };
-
+  //4. handle the redirect for Google or Discord Login
   const handleRedirect = useCallback(async () => {
     console.log("Redirect Called");
     const queryParams = router.query;
@@ -133,6 +126,7 @@ export default function Authenticate() {
     }
   }, [handleRedirect]);
 
+  //4. complete stytch OTP and autheticate to prepare the StytchAuthMethod
   const completeStytchAuth = async () => {
     try {
       if (!OTP) {
@@ -149,22 +143,28 @@ export default function Authenticate() {
           res.user_id
         );
         console.log(response);
-        const PKPs = await fetchPkps(
-          response.authProvider,
-          response.authMethod
-        );
-
         setAuthMethod(response.authMethod);
         setProvider(response.authProvider);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  //5. Safe Creation
+
+  //6. fetch the PKP and mint or Claim the new PKP in case if needed
+  const mintOrClaimPKP = async () => {
+    try {
+      if (authMethod && provider) {
+        const PKPs = await fetchPkps(provider, authMethod);
         if (PKPs?.length) {
           console.log(PKPs);
         } else {
-          const claimRes = await claim(
-            response.authMethod,
-            response.authProvider
-          );
+          const claimRes = await claim(authMethod, provider);
           console.log(claimRes);
+          // const mint = await provider?.mintPKPThroughRelayer(authMethod);
+          // console.log(mint);
         }
       }
     } catch (error) {
@@ -172,7 +172,8 @@ export default function Authenticate() {
     }
   };
 
-  const fetchPKPsStytch = async () => {
+  //7. fetch  the session Jwt from the local state , in case the user is currently logged in via Stytch
+  const fetchSessionKeysStytch = async () => {
     try {
       if (session && user) {
         const session_jwt = document.cookie;
@@ -184,12 +185,31 @@ export default function Authenticate() {
         if (response) {
           setAuthMethod(response.authMethod);
           setProvider(response.authProvider);
-          const PKPs = await fetchPkps(
-            response.authProvider,
-            response.authMethod
-          );
-          if (PKPs?.length) {
-            await generateSessionSigs(response.authMethod, PKPs[0]);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //7. fetch PKPs for the Authmethod in case the
+  const fetchPKPs = async () => {
+    try {
+      if (authMethod && provider) {
+        const PKPs = await fetchPkps(provider, authMethod);
+        console.log(PKPs);
+        if (PKPs?.length) {
+          const sigs = await generateSessionSigs(authMethod, PKPs[0]);
+          setPKP(PKPs[0]);
+          if (sigs) {
+            setSessionSigs(sigs);
+            const wallet = await preparePKPWallet(PKPs[0], sigs, POLYGON_ZKEVM);
+            console.log(wallet);
+            setPkpWallet(wallet);
+            const pkpClient = new pkpWalletConnect(PKPs[0], sigs);
+            await pkpClient.initialise();
+            console.log(pkpClient);
+            setPkpClient(pkpClient);
           }
         }
       }
@@ -198,13 +218,51 @@ export default function Authenticate() {
     }
   };
 
-  const fetchPKPs = async () => {
+  const signMessage = async () => {
     try {
-      if (authMethod && provider) {
-        const PKPs = await fetchPkps(provider, authMethod);
-        console.log(PKPs);
-        if (PKPs?.length) {
-          generateSessionSigs(authMethod, PKPs[0]);
+      if (pkpWallet) {
+        await pkpWallet.init();
+        await pkpWallet.setRpc(POLYGON_ZKEVM);
+        const signature = await pkpWallet?.signMessage("GM Frens");
+        console.log(pkpWallet?._isSigner);
+        console.log(signature);
+        pkpWallet.connect();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const connectPKP = async () => {
+    try {
+      if (pkpClient) {
+        await pkpClient.pair(
+          `wc:873a3a2c4a65164cd7ab8d17831528a6a7ad726630ad6a5126a781f10a9d7f14@2?relay-protocol=irn&symKey=f8a9dba5db0511f8532ca34e5eda7b035e3e1113965112ef2d095f1291928ebf`
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const signSafeMessage = async () => {
+    try {
+      const safeAddress = "0x6F41C6cF94FB847ceb3Dea47f03B5473b7889B51";
+      if (pkpWallet) {
+        const provider = new ethers.providers.JsonRpcProvider(POLYGON_ZKEVM);
+        await pkpWallet.init();
+        await pkpWallet.setRpc(POLYGON_ZKEVM);
+        const resData = await intializeSDK(provider, safeAddress);
+        console.log(resData.safeSDK);
+        const amount = ethers.utils.parseEther("1");
+        const response = await prepareSendNativeTransactionData(
+          "0x62C43323447899acb61C18181e34168903E033Bf",
+          `${amount}`,
+          resData.safeSDK
+        );
+
+        if (response) {
+          const signature = await pkpWallet?.signMessage("GM Frens");
         }
       }
     } catch (error) {
@@ -223,7 +281,7 @@ export default function Authenticate() {
         onChange={(e) => setEmail(e.target.value)}
       ></input>
       <br />
-      <button onClick={() => getPubKey()}>Get PubKey</button>
+      <button onClick={() => getDiscordPubKey()}>Get PubKey</button>
       <button onClick={() => fetchPKPs()}>Fetch PubKey</button>
       <a className="text-white">{pubKey && pubKey}</a>
       <br />
@@ -244,7 +302,9 @@ export default function Authenticate() {
       ></input>
       <br />
       <button onClick={completeStytchAuth}>Submit OTP</button>
-      <button onClick={completeAuth}>Submit Discord</button>
+      <button onClick={mintOrClaimPKP}>Mint Or Claim</button>
+      <br />
+      <button onClick={signMessage}>Sign</button>
       {/* <Notifi/> */}
     </div>
   );

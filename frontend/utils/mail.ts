@@ -4,18 +4,14 @@ const PASS = process.env.NEXT_PUBLIC_PASS;
 const RESEND_API_KEY = process.env.NEXT_PUBLIC_RESEND;
 import * as React from "react";
 
-export async function sendEmail() {
+export async function sendEmail(to: string) {
   try {
-    const data = {
-      to: "dhruvagarwal2017@gmail.com",
-    };
-
     const response = await fetch("/api/sendEmail", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({ to }),
     });
 
     console.log(response);

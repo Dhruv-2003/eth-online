@@ -28,12 +28,12 @@ const optionsSyncFee = {
 
 // initialise Safe SDK and relay Kit
 export const intializeSDK = async (
-  signer: ethers.Signer,
+  signerOrProvider: ethers.Signer | ethers.providers.Provider,
   safeAddress: string
 ): Promise<{ safeSDK: Safe; relayKit: GelatoRelayPack }> => {
   const ethAdapter = new EthersAdapter({
     ethers,
-    signerOrProvider: signer,
+    signerOrProvider: signerOrProvider,
   });
 
   const safeSDK = await Safe.create({

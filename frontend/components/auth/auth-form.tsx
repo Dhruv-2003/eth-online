@@ -27,6 +27,11 @@ export function CreateAccount() {
           <Label htmlFor="email">Email</Label>
           <Input id="email" type="email" placeholder="mail@example.com" />
         </div>
+        <Button className="w-full">Create account</Button>
+
+        {/* <CardFooter>
+        </CardFooter> */}
+
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
             <span className="w-full border-t" />
@@ -53,9 +58,6 @@ export function CreateAccount() {
           <Input id="password" type="password" />
         </div> */}
       </CardContent>
-      <CardFooter>
-        <Button className="w-full">Create account</Button>
-      </CardFooter>
     </Card>
   );
 }
