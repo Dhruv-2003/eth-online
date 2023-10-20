@@ -3,6 +3,7 @@ import {
   computePublicKey,
   fetchPkps,
   generateSessionSigs,
+  handleGoogleRedirect,
   prepareStytchAuthMethod,
 } from "@/utils/Lit";
 import { getUser } from "@/utils/Stych";
@@ -89,24 +90,36 @@ export default function Authenticate() {
     // 0459225a28c164f229c407b9e280c9b917d22234e5a26194770fc6ec6fe86bebd9ef40b1f6c4257929834edb8dbade503f67d237816cfec2ef768d3dc9c4a8e609 derived from key id ef5d8c1828610b5c0bcd86d242381636e627d8dfe62dc4f4bd53cbc7126b616f
   };
 
-  const completeDiscordAuth = async () => {
+  const completeAuth = async () => {
     // this will include login first , for now using accessToken
     if (authMethod && provider) {
       const PKPs = await fetchPkps(provider, authMethod);
       if (PKPs?.length) {
         console.log(PKPs);
       } else {
-        const claimRes = await claim(authMethod, provider);
-        console.log(claimRes);
+        // const claimRes = await claim(authMethod, provider);
+        // console.log(claimRes);
+        const mint = await provider?.mintPKPThroughRelayer(authMethod);
+        console.log(mint);
       }
     }
   };
 
   const handleRedirect = useCallback(async () => {
     console.log("Redirect Called");
-    const response = await handleDiscordRedirect();
-    setAuthMethod(response.authMethod);
-    setProvider(response.authProvider);
+    const queryParams = router.query;
+    if (queryParams.provider == "google") {
+      console.log("Redirect Called google");
+      const response = await handleGoogleRedirect();
+      setAuthMethod(response.authMethod);
+      setProvider(response.authProvider);
+    } else if (queryParams.provider == "discord") {
+      console.log("Redirect Called Discord");
+      const response = await handleDiscordRedirect();
+      setAuthMethod(response.authMethod);
+      setProvider(response.authProvider);
+    }
+    console.log(queryParams);
   }, [router]);
 
   useEffect(() => {
@@ -143,10 +156,7 @@ export default function Authenticate() {
 
         setAuthMethod(response.authMethod);
         setProvider(response.authProvider);
-        // const mint = await response.authProvider?.mintPKPThroughRelayer(
-        //   response.authMethod
-        // );
-        // console.log(mint);
+
         if (PKPs?.length) {
           console.log(PKPs);
         } else {
@@ -188,7 +198,7 @@ export default function Authenticate() {
     }
   };
 
-  const fetchPKPsDiscord = async () => {
+  const fetchPKPs = async () => {
     try {
       if (authMethod && provider) {
         const PKPs = await fetchPkps(provider, authMethod);
@@ -214,7 +224,7 @@ export default function Authenticate() {
       ></input>
       <br />
       <button onClick={() => getPubKey()}>Get PubKey</button>
-      <button onClick={() => fetchPKPsStytch()}>Fetch PubKey</button>
+      <button onClick={() => fetchPKPs()}>Fetch PubKey</button>
       <a className="text-white">{pubKey && pubKey}</a>
       <br />
       <button
@@ -234,7 +244,8 @@ export default function Authenticate() {
       ></input>
       <br />
       <button onClick={completeStytchAuth}>Submit OTP</button>
-      <button onClick={completeDiscordAuth}>Submit Discord</button>
+      <button onClick={completeAuth}>Submit Discord</button>
+      {/* <Notifi/> */}
     </div>
   );
 }
