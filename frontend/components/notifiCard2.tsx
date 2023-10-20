@@ -44,8 +44,6 @@ export const NotifiCard2: React.FC = () => {
   };
 
   return (
-    <div>
-      <p className="text-black text-3xl">open card</p>
       <NotifiContext
         dappAddress="junitest.xyz"
         env="Development"
@@ -60,8 +58,9 @@ export const NotifiCard2: React.FC = () => {
           cardId="005736525c6e40219fd4a704eb0a8374"
           inputLabels={inputLabels}
           inputSeparators={inputSeparators}
+          darkMode
+          buttonText="hello"
         />
       </NotifiContext>
-    </div>
   );
 };
