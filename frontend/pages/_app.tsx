@@ -3,12 +3,13 @@ import type { AppProps } from "next/app";
 import { createStytchUIClient } from "@stytch/nextjs/ui";
 import { StytchProvider } from "@stytch/nextjs";
 import { AuthContext } from "@/context/authContext";
+import '@notifi-network/notifi-react-card/dist/index.css'
 // import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 // import {
 //   WagmiConfig,
-//   createConfig,
+//   createClient
 //   mainnet,
-//   sepolia,
+//   goerli,
 //   configureChains,
 // } from "wagmi";
 // import { createPublicClient, http } from "viem";
@@ -26,12 +27,12 @@ export const font = FontLato({
 // import { publicProvider } from "wagmi/providers/public";
 // import { InjectedConnector } from "wagmi/connectors/injected";
 
-// const { chains, publicClient, webSocketPublicClient } = configureChains(
-//   [sepolia],
+// const { chains } = configureChains(
+//   [goerli],
 //   [alchemyProvider({ apiKey: "yourAlchemyApiKey" }), publicProvider()]
 // );
 
-// const config = createConfig({
+// const config = createClient({
 //   autoConnect: true,
 // @ts-ignore
 //   connectors: [
