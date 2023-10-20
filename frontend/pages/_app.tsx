@@ -3,15 +3,9 @@ import type { AppProps } from "next/app";
 import { createStytchUIClient } from "@stytch/nextjs/ui";
 import { StytchProvider } from "@stytch/nextjs";
 import { AuthContext } from "@/context/authContext";
-import '@notifi-network/notifi-react-card/dist/index.css'
+import "@notifi-network/notifi-react-card/dist/index.css";
 // import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-// import {
-//   WagmiConfig,
-//   createClient
-//   mainnet,
-//   goerli,
-//   configureChains,
-// } from "wagmi";
+// import { WagmiConfig, createClient, goerli, configureChains } from "wagmi";
 // import { createPublicClient, http } from "viem";
 import { Lato as FontLato } from "next/font/google";
 import { Navbar } from "@/components/ui/Navbar";
@@ -34,7 +28,6 @@ export const font = FontLato({
 
 // const config = createClient({
 //   autoConnect: true,
-// @ts-ignore
 //   connectors: [
 //     new InjectedConnector({
 //       chains,
@@ -45,8 +38,7 @@ export const font = FontLato({
 //     }),
 //   ],
 //   publicClient: createPublicClient({
-// @ts-ignore
-//     chain: mainnet,
+//     chain: goerli,
 //     transport: http(),
 //   }),
 // });
@@ -68,23 +60,23 @@ export default function App({ Component, pageProps }: AppProps) {
   const value = {};
   return (
     // <QueryClientProvider client={queryClient}>
-    // <WagmiConfig config={config}>
-    <AuthContext.Provider value={value}>
-      <StytchProvider stytch={stytchClient}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className={`${font.className}`}>
-            <Navbar />
-            <Component {...pageProps} />
-          </div>
-        </ThemeProvider>
-      </StytchProvider>
-    </AuthContext.Provider>
-    // </WagmiConfig>
-    // </QueryClientProvider>
+    //   <WagmiConfig config={config}>
+        <AuthContext.Provider value={value}>
+          <StytchProvider stytch={stytchClient}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <div className={`${font.className}`}>
+                <Navbar />
+                <Component {...pageProps} />
+              </div>
+            </ThemeProvider>
+          </StytchProvider>
+        </AuthContext.Provider>
+    //   {/* </WagmiConfig>
+    // </QueryClientProvider> */}
   );
 }
