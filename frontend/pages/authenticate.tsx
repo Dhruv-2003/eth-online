@@ -78,6 +78,7 @@ export default function Authenticate() {
   };
 
   //2. calculate the discord Pub key from the UserID which is linked to the username (but not directly)
+  // Can be only done if user does provide the userId
   const getDiscordPubKey = async () => {
     try {
       const user_id = "547325934043398144";

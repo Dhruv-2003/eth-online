@@ -4,6 +4,7 @@ import {
   GoogleProvider,
   LitAuthClient,
   StytchOtpProvider,
+  WebAuthnProvider,
 } from "@lit-protocol/lit-auth-client";
 import { PKPEthersWallet } from "@lit-protocol/pkp-ethers";
 import { PKPWalletConnect } from "@lit-protocol/pkp-walletconnect";
@@ -128,6 +129,25 @@ export const prepareGoogleAuthMethod = async (): Promise<{
   return { authProvider: provider };
 };
 
+export const prepareWebAuthnMethod = async (): Promise<{
+  authProvider: BaseProvider;
+}> => {
+  const provider = litAuthClient.initProvider<WebAuthnProvider>(
+    ProviderType.WebAuthn
+  );
+
+  // Register new WebAuthn credential
+  const options = await provider.register();
+
+  // Verify registration and mint PKP through relay server
+  const txHash = await provider.verifyAndMintPKPThroughRelayer(options);
+  const response = await provider.relay.pollRequestUntilTerminalState(txHash);
+  console.log(txHash);
+  console.log(response);
+  // Return public key of newly minted PKP
+  return { authProvider: provider };
+};
+
 // Auth client can be prepared for any method
 export const prepareStytchAuthMethod = async (
   session_jwt: string,
@@ -175,6 +195,17 @@ export const handleGoogleRedirect = async (): Promise<{
       redirectUri: "http://localhost:3000/authenticate",
     }
   );
+  const authMethod = await provider.authenticate();
+  console.log(authMethod);
+
+  return { authMethod, authProvider: provider };
+};
+
+export const handleWebAuthnLogin = async (): Promise<{
+  authMethod: AuthMethod;
+  authProvider: BaseProvider;
+}> => {
+  const provider = litAuthClient.getProvider(ProviderType.WebAuthn);
   const authMethod = await provider.authenticate();
   console.log(authMethod);
 

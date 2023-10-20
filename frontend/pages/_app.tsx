@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 import { createStytchUIClient } from "@stytch/nextjs/ui";
 import { StytchProvider } from "@stytch/nextjs";
 import { AuthContext } from "@/context/authContext";
-import '@notifi-network/notifi-react-card/dist/index.css'
+import "@notifi-network/notifi-react-card/dist/index.css";
 // import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 // import {
 //   WagmiConfig,

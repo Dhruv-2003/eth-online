@@ -145,3 +145,7 @@ const stytchOtpMethod = async (
     user_id,
   };
 };
+
+// Methods that can be used to loginOrCreateUser
+// 1. OTPs
+// 2. MagicLink
