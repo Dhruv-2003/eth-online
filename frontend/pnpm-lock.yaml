@@ -1,15 +1,15 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@lit-protocol/auth-helpers': ^3.0.7
-  '@lit-protocol/constants': ^3.0.7
-  '@lit-protocol/lit-auth-client': ^3.0.7
-  '@lit-protocol/lit-node-client': ^3.0.7
-  '@lit-protocol/lit-node-client-nodejs': ^3.0.7
-  '@lit-protocol/pkp-client': ^3.0.7
-  '@lit-protocol/pkp-ethers': ^3.0.7
-  '@lit-protocol/pkp-walletconnect': ^3.0.7
-  '@lit-protocol/types': ^3.0.7
+  '@lit-protocol/auth-helpers': ^3.0.12
+  '@lit-protocol/constants': ^3.0.12
+  '@lit-protocol/lit-auth-client': ^3.0.12
+  '@lit-protocol/lit-node-client': ^3.0.12
+  '@lit-protocol/lit-node-client-nodejs': ^3.0.12
+  '@lit-protocol/pkp-client': ^3.0.12
+  '@lit-protocol/pkp-ethers': ^3.0.12
+  '@lit-protocol/pkp-walletconnect': ^3.0.12
+  '@lit-protocol/types': ^3.0.12
   '@notifi-network/notifi-core': ^0.85.4
   '@notifi-network/notifi-frontend-client': ^0.85.4
   '@notifi-network/notifi-react-card': ^0.59.2-alpha.3+7347f24
@@ -46,15 +46,15 @@ specifiers:
   wagmi: 0.12.7
 
 dependencies:
-  '@lit-protocol/auth-helpers': 3.0.11_ethers@5.7.2
-  '@lit-protocol/constants': 3.0.11
-  '@lit-protocol/lit-auth-client': 3.0.7_react@18.2.0
-  '@lit-protocol/lit-node-client': 3.0.11_react@18.2.0
-  '@lit-protocol/lit-node-client-nodejs': 3.0.11
-  '@lit-protocol/pkp-client': 3.0.11_react@18.2.0
-  '@lit-protocol/pkp-ethers': 3.0.11_react@18.2.0
-  '@lit-protocol/pkp-walletconnect': 3.0.11_react@18.2.0
-  '@lit-protocol/types': 3.0.11
+  '@lit-protocol/auth-helpers': 3.0.13_ethers@5.7.2
+  '@lit-protocol/constants': 3.0.13
+  '@lit-protocol/lit-auth-client': 3.0.13_react@18.2.0
+  '@lit-protocol/lit-node-client': 3.0.13_react@18.2.0
+  '@lit-protocol/lit-node-client-nodejs': 3.0.13
+  '@lit-protocol/pkp-client': 3.0.13_react@18.2.0
+  '@lit-protocol/pkp-ethers': 3.0.13_react@18.2.0
+  '@lit-protocol/pkp-walletconnect': 3.0.13_react@18.2.0
+  '@lit-protocol/types': 3.0.13
   '@notifi-network/notifi-core': 0.85.4
   '@notifi-network/notifi-frontend-client': 0.85.4
   '@notifi-network/notifi-react-card': 0.59.8_biqbaboplfbrettd7655fr4n2y
@@ -1162,33 +1162,6 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@ipld/dag-cbor/6.0.15:
-    resolution: {integrity: sha512-Vm3VTSTwlmGV92a3C5aeY+r2A18zbH2amehNhsX8PBa3muXICaWrN8Uri85A5hLH7D7ElhE8PdjxD6kNqUmTZA==}
-    dependencies:
-      cborg: 1.10.2
-      multiformats: 9.9.0
-    dev: false
-
-  /@ipld/dag-cbor/7.0.3:
-    resolution: {integrity: sha512-1VVh2huHsuohdXC1bGJNE8WR72slZ9XE2T3wbBBq31dm7ZBatmKLLxrB+XAqafxfRFjv08RZmj/W/ZqaM13AuA==}
-    dependencies:
-      cborg: 1.10.2
-      multiformats: 9.9.0
-    dev: false
-
-  /@ipld/dag-json/8.0.11:
-    resolution: {integrity: sha512-Pea7JXeYHTWXRTIhBqBlhw7G53PJ7yta3G/sizGEZyzdeEwhZRr0od5IQ0r2ZxOt1Do+2czddjeEPp+YTxDwCA==}
-    dependencies:
-      cborg: 1.10.2
-      multiformats: 9.9.0
-    dev: false
-
-  /@ipld/dag-pb/2.1.18:
-    resolution: {integrity: sha512-ZBnf2fuX9y3KccADURG5vb9FaOeMjFkCrNysB0PtftME/4iCTjxfaLoNq/IAh5fTqUOMXvryN6Jyka4ZGuMLIg==}
-    dependencies:
-      multiformats: 9.9.0
-    dev: false
-
   /@ipld/dag-pb/4.0.6:
     resolution: {integrity: sha512-wOij3jfDKZsb9yjhQeHp+TQy0pu1vmUkGv324xciFFZ7xGbDfAGTQW03lSA5aJ/7HBBNYgjEE0nvHmNW1Qjfag==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
@@ -1265,14 +1238,14 @@ packages:
     resolution: {integrity: sha512-jnOD+/+dSrfTWYfSXBXlo5l5f0q1UuJo3tkbMDCYA2lKUYq79jaxqtGEvnRoh049nt1vdo1+45RinipU6FGY2g==}
     dev: false
 
-  /@lit-protocol/access-control-conditions/3.0.11:
-    resolution: {integrity: sha512-T9WLXxlle1lEL2XVZm4wp+16rIHoKDNX2eqFPrEZjj6D3phWrIgxQxD15Tis8QX/3Ehl/49gVQIl/9RL1AwdNA==}
+  /@lit-protocol/access-control-conditions/3.0.13:
+    resolution: {integrity: sha512-KdTTp6q4u2Bu7sSkCpmmPIBi9BJPaA5QQ3Blt5ZOFCmvb89p/qrLgYAe/TrqdRa7IBq9GiARd2pKlthRLTbOkw==}
     dependencies:
-      '@lit-protocol/auth-helpers': 3.0.11_ethers@5.7.2
-      '@lit-protocol/constants': 3.0.11
-      '@lit-protocol/misc': 3.0.11
-      '@lit-protocol/types': 3.0.11
-      '@lit-protocol/uint8arrays': 3.0.11
+      '@lit-protocol/auth-helpers': 3.0.13_ethers@5.7.2
+      '@lit-protocol/constants': 3.0.13
+      '@lit-protocol/misc': 3.0.13
+      '@lit-protocol/types': 3.0.13
+      '@lit-protocol/uint8arrays': 3.0.13
       ethers: 5.7.2
       jszip: 3.10.1
       siwe: 2.1.4_ethers@5.7.2
@@ -1283,33 +1256,15 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lit-protocol/access-control-conditions/3.0.7:
-    resolution: {integrity: sha512-xZEbM1Eq5JCwwEBesKJqrtMwrGPOGsbSKuQFRRqy2ukSaPruZVHlaDqjKJWYsEvXRLgm7g3+woUwqpTCw/jICA==}
+  /@lit-protocol/auth-browser/3.0.13_react@18.2.0:
+    resolution: {integrity: sha512-zau8OvF8CybxUQYmmGjNETup44fXpbNqjN7cOlkWf9c9Q7SKByscW7YlME4Aus5a6qGqIUdDswj6rqSrEkMliQ==}
     dependencies:
-      '@lit-protocol/auth-helpers': 3.0.7_ethers@5.7.2
-      '@lit-protocol/constants': 3.0.7
-      '@lit-protocol/misc': 3.0.7
-      '@lit-protocol/types': 3.0.7
-      '@lit-protocol/uint8arrays': 3.0.7
-      ethers: 5.7.2
-      jszip: 3.10.1
-      siwe: 2.1.4_ethers@5.7.2
-      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-    dev: false
-
-  /@lit-protocol/auth-browser/3.0.11_react@18.2.0:
-    resolution: {integrity: sha512-dqICQwhIJVtr+t82FxreTFpqYT/HKZhux2LTEAcFBq9a0V7jVT/zU4vmNrxqiQ64C2ArJw4oiHAtAr0SNP4SWw==}
-    dependencies:
-      '@lit-protocol/auth-helpers': 3.0.11_ethers@5.7.2
-      '@lit-protocol/constants': 3.0.11
-      '@lit-protocol/misc': 3.0.11
-      '@lit-protocol/misc-browser': 3.0.11
-      '@lit-protocol/types': 3.0.11
-      '@lit-protocol/uint8arrays': 3.0.11
+      '@lit-protocol/auth-helpers': 3.0.13_ethers@5.7.2
+      '@lit-protocol/constants': 3.0.13
+      '@lit-protocol/misc': 3.0.13
+      '@lit-protocol/misc-browser': 3.0.13
+      '@lit-protocol/types': 3.0.13
+      '@lit-protocol/uint8arrays': 3.0.13
       '@walletconnect/ethereum-provider': 2.9.2_@walletconnect+modal@2.6.1
       '@walletconnect/modal': 2.6.1_react@18.2.0
       ethers: 5.7.2
@@ -1335,42 +1290,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lit-protocol/auth-browser/3.0.7_react@18.2.0:
-    resolution: {integrity: sha512-0EgllRrFNWFLFQ/JcqJ5HXWSRrOGm4csprWk2OgRSyCqfVoBcWwuFwySJDbktXTFqxsjp6VN2hzo57dE5bBS7g==}
-    dependencies:
-      '@lit-protocol/auth-helpers': 3.0.7_ethers@5.7.2
-      '@lit-protocol/constants': 3.0.7
-      '@lit-protocol/misc': 3.0.7
-      '@lit-protocol/misc-browser': 3.0.7
-      '@lit-protocol/types': 3.0.7
-      '@lit-protocol/uint8arrays': 3.0.7
-      '@walletconnect/ethereum-provider': 2.9.2_@walletconnect+modal@2.6.1
-      '@walletconnect/modal': 2.6.1_react@18.2.0
-      ethers: 5.7.2
-      jszip: 3.10.1
-      lit-siwe: 1.1.8
-      siwe: 2.1.4_ethers@5.7.2
-      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
-      tslib: 2.6.2
-      tweetnacl: 1.0.3
-      tweetnacl-util: 0.13.5
-      util: 0.12.5
-      web-vitals: 3.5.0
-    transitivePeerDependencies:
-      - '@ethersproject/contracts'
-      - '@ethersproject/hash'
-      - '@ethersproject/providers'
-      - '@ethersproject/wallet'
-      - '@react-native-async-storage/async-storage'
-      - bufferutil
-      - encoding
-      - lokijs
-      - react
-      - utf-8-validate
-    dev: false
-
-  /@lit-protocol/auth-helpers/3.0.11_ethers@5.7.2:
-    resolution: {integrity: sha512-cFer9/cUr3jRDWGFlMgSST+UJmbKDskHUKyrEvt5RwxU3swPGXN1HDC09GU+p6oLbhdC7INI8WZsl7U7ZSRtNQ==}
+  /@lit-protocol/auth-helpers/3.0.13_ethers@5.7.2:
+    resolution: {integrity: sha512-8idRqIr3pomfLtyG2u8CBUdnXuoHDCnpk7dcabBjgQSbnQIhp2kD3V9i5a52pJZ6Z04N+5N2G3lML9wkVamfUw==}
     dependencies:
       siwe: 2.1.4_ethers@5.7.2
       siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
@@ -1379,35 +1300,18 @@ packages:
       - ethers
     dev: false
 
-  /@lit-protocol/auth-helpers/3.0.7_ethers@5.7.2:
-    resolution: {integrity: sha512-yyT3D+MAgureRpJKNQU/gM3MI5gB96w8NUubt3UF/YplOpU4l5s1k8F2Hg5DPiB6/DREqLUvKWTvCq3yo02tRQ==}
-    dependencies:
-      siwe: 2.1.4_ethers@5.7.2
-      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - ethers
-    dev: false
-
-  /@lit-protocol/bls-sdk/3.0.11:
-    resolution: {integrity: sha512-+AkxFul+qkrPuZs2R9Pd2iFTLk2CXkQt8rRCvenOheH7cf3Fk9KgSA+fVkFMK95EPkTrM+wAjlwlSsqRNUyLtg==}
+  /@lit-protocol/bls-sdk/3.0.13:
+    resolution: {integrity: sha512-qt6Jt0aRZX0YkLDAOgLdzTVrLVsSjEpWgr8Um2xOgx3w6NtvA7UWSQq+daIiBNF3TuVyZ9Nl7zduwQX5I/678Q==}
     dependencies:
       pako: 2.1.0
       tslib: 2.6.2
     dev: false
 
-  /@lit-protocol/bls-sdk/3.0.7:
-    resolution: {integrity: sha512-Ldy7nNIz9gaeqxS4876xTHUBB5gngni00JcLlyV0AJb1vPabUxuEh8zuYox/tyxxEXbz+a9tLrtrvFd2L8IIoA==}
+  /@lit-protocol/constants/3.0.13:
+    resolution: {integrity: sha512-FCQfsrQW941f1RkLoEpbcI0JEUK4PxXNHkPwVjO4qsOU7145v9QjUbJwgUuHhkgQzSOJJ3Lc4viUAt7eevK5VA==}
     dependencies:
-      pako: 2.1.0
-      tslib: 2.6.2
-    dev: false
-
-  /@lit-protocol/constants/3.0.11:
-    resolution: {integrity: sha512-S/xhr7loWnwAts9XaDMEDiDA/KN8/KfVAJI5UIWvpQ6I+4xjP0rQoO2r3UxktsRxm6s/qMKjoMCHaZeuA1GxGg==}
-    dependencies:
-      '@lit-protocol/auth-helpers': 3.0.11_ethers@5.7.2
-      '@lit-protocol/types': 3.0.11
+      '@lit-protocol/auth-helpers': 3.0.13_ethers@5.7.2
+      '@lit-protocol/types': 3.0.13
       ethers: 5.7.2
       jszip: 3.10.1
       siwe: 2.1.4_ethers@5.7.2
@@ -1418,11 +1322,19 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lit-protocol/constants/3.0.7:
-    resolution: {integrity: sha512-9Dw2/zH8/UkxXE6m6sJwAoR4GnkVWmRtibXpqTWOAX61YEY0d0CGvxG4/W+9ZIaiTNKNJanpBZVTe77+EOoHxQ==}
+  /@lit-protocol/core/3.0.13:
+    resolution: {integrity: sha512-TgFZaWNFIjkBJeJG+3ILzuP2CpHAK9MzIHTVIOMUP9OwYJiPzt3cb0nJQqKxDt7J3wX3iA8vUXZS0AEUtx7HxA==}
     dependencies:
-      '@lit-protocol/auth-helpers': 3.0.7_ethers@5.7.2
-      '@lit-protocol/types': 3.0.7
+      '@lit-protocol/access-control-conditions': 3.0.13
+      '@lit-protocol/auth-helpers': 3.0.13_ethers@5.7.2
+      '@lit-protocol/bls-sdk': 3.0.13
+      '@lit-protocol/constants': 3.0.13
+      '@lit-protocol/crypto': 3.0.13
+      '@lit-protocol/ecdsa-sdk': 3.0.13
+      '@lit-protocol/misc': 3.0.13
+      '@lit-protocol/nacl': 3.0.13
+      '@lit-protocol/types': 3.0.13
+      '@lit-protocol/uint8arrays': 3.0.13
       ethers: 5.7.2
       jszip: 3.10.1
       siwe: 2.1.4_ethers@5.7.2
@@ -1433,19 +1345,17 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lit-protocol/core/3.0.11:
-    resolution: {integrity: sha512-mzx6sja5x8NPVUypN8UQMBEMPD0ggogKzqIkAMnF9sMj5TBwluYA/ApZgcPN0yV1AGStabV6pMFLW4zS11AKQQ==}
+  /@lit-protocol/crypto/3.0.13:
+    resolution: {integrity: sha512-+qPs2H+FarlPRnGQVJ75dr4QYcLEVBgvBuMLwDVMkPIrL7LQoeHRB3J87NFLww/K66ztslW1ONE4UbhxMpb9IA==}
     dependencies:
-      '@lit-protocol/access-control-conditions': 3.0.11
-      '@lit-protocol/auth-helpers': 3.0.11_ethers@5.7.2
-      '@lit-protocol/bls-sdk': 3.0.11
-      '@lit-protocol/constants': 3.0.11
-      '@lit-protocol/crypto': 3.0.11
-      '@lit-protocol/ecdsa-sdk': 3.0.11
-      '@lit-protocol/misc': 3.0.11
-      '@lit-protocol/nacl': 3.0.11
-      '@lit-protocol/types': 3.0.11
-      '@lit-protocol/uint8arrays': 3.0.11
+      '@lit-protocol/auth-helpers': 3.0.13_ethers@5.7.2
+      '@lit-protocol/bls-sdk': 3.0.13
+      '@lit-protocol/constants': 3.0.13
+      '@lit-protocol/ecdsa-sdk': 3.0.13
+      '@lit-protocol/misc': 3.0.13
+      '@lit-protocol/nacl': 3.0.13
+      '@lit-protocol/types': 3.0.13
+      '@lit-protocol/uint8arrays': 3.0.13
       ethers: 5.7.2
       jszip: 3.10.1
       siwe: 2.1.4_ethers@5.7.2
@@ -1456,19 +1366,24 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lit-protocol/core/3.0.7:
-    resolution: {integrity: sha512-8oAd8bYJTiXuwktykdgREteSr6TFVUN7m3gWRNwL0fq/sHS/jgKwEE/hjCmfIxi9e0vL8679LDjL8AwkzX2Cug==}
+  /@lit-protocol/ecdsa-sdk/3.0.13:
+    resolution: {integrity: sha512-WdCfYZVGNgidLTDkfcO5/LIuTc7iH6bL3fzaV+oEGDzX01eGs6s9oW65AG70LCZS271SBIeUu1kCF4rawoi1LQ==}
     dependencies:
-      '@lit-protocol/access-control-conditions': 3.0.7
-      '@lit-protocol/auth-helpers': 3.0.7_ethers@5.7.2
-      '@lit-protocol/bls-sdk': 3.0.7
-      '@lit-protocol/constants': 3.0.7
-      '@lit-protocol/crypto': 3.0.7
-      '@lit-protocol/ecdsa-sdk': 3.0.7
-      '@lit-protocol/misc': 3.0.7
-      '@lit-protocol/nacl': 3.0.7
-      '@lit-protocol/types': 3.0.7
-      '@lit-protocol/uint8arrays': 3.0.7
+      tslib: 2.6.2
+    dev: false
+
+  /@lit-protocol/encryption/3.0.13:
+    resolution: {integrity: sha512-u0AY/9hFM8zaIGj6Nrn27xnccnMPl7Eqw74R2F/p1ajJ2ILdVBOy+aF9frU7I3WBqBFS0FsFhxuVBpnBZAjvbA==}
+    dependencies:
+      '@lit-protocol/auth-helpers': 3.0.13_ethers@5.7.2
+      '@lit-protocol/bls-sdk': 3.0.13
+      '@lit-protocol/constants': 3.0.13
+      '@lit-protocol/crypto': 3.0.13
+      '@lit-protocol/ecdsa-sdk': 3.0.13
+      '@lit-protocol/misc': 3.0.13
+      '@lit-protocol/nacl': 3.0.13
+      '@lit-protocol/types': 3.0.13
+      '@lit-protocol/uint8arrays': 3.0.13
       ethers: 5.7.2
       jszip: 3.10.1
       siwe: 2.1.4_ethers@5.7.2
@@ -1479,134 +1394,29 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lit-protocol/crypto/3.0.11:
-    resolution: {integrity: sha512-CXs7yJrxA010w6pb28oJAwr0ikf8Ii1BVnRnV0I8LAfpYM9zEmcBf6fCPekvyG9mBbRtHrbZyfBXpnKmPQOQEQ==}
-    dependencies:
-      '@lit-protocol/auth-helpers': 3.0.11_ethers@5.7.2
-      '@lit-protocol/bls-sdk': 3.0.11
-      '@lit-protocol/constants': 3.0.11
-      '@lit-protocol/ecdsa-sdk': 3.0.11
-      '@lit-protocol/misc': 3.0.11
-      '@lit-protocol/nacl': 3.0.11
-      '@lit-protocol/types': 3.0.11
-      '@lit-protocol/uint8arrays': 3.0.11
-      ethers: 5.7.2
-      jszip: 3.10.1
-      siwe: 2.1.4_ethers@5.7.2
-      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-    dev: false
-
-  /@lit-protocol/crypto/3.0.7:
-    resolution: {integrity: sha512-lirUeC5n7guwxVOAoYQwcJ53Jqct3x+1ho7DJqwcpuFEo3b9tNDM836zHMDqhaZNUel3iYa/JP1ds2VUpBwl+Q==}
-    dependencies:
-      '@lit-protocol/auth-helpers': 3.0.7_ethers@5.7.2
-      '@lit-protocol/bls-sdk': 3.0.7
-      '@lit-protocol/constants': 3.0.7
-      '@lit-protocol/ecdsa-sdk': 3.0.7
-      '@lit-protocol/misc': 3.0.7
-      '@lit-protocol/nacl': 3.0.7
-      '@lit-protocol/types': 3.0.7
-      '@lit-protocol/uint8arrays': 3.0.7
-      ethers: 5.7.2
-      jszip: 3.10.1
-      siwe: 2.1.4_ethers@5.7.2
-      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-    dev: false
-
-  /@lit-protocol/ecdsa-sdk/3.0.11:
-    resolution: {integrity: sha512-MBpEr1mrlJQKHG3Ks2LAUORiMrE/Q8O0IriZdkVFYRYPloQQpo/5SUr4xt0ZyIENmTfDhzQpFxlJdZ8wSDsAbQ==}
-    dependencies:
-      tslib: 2.6.2
-    dev: false
-
-  /@lit-protocol/ecdsa-sdk/3.0.7:
-    resolution: {integrity: sha512-A6SJTqN4ZCrR7gnBu960YX5CcxUABTP+iIRDbGlwl3yxrmqLAftEXfHJa7+DfhnXMHKpQGBigjwHpxR9QuGolA==}
-    dependencies:
-      tslib: 2.6.2
-    dev: false
-
-  /@lit-protocol/encryption/3.0.11_node-fetch@2.7.0:
-    resolution: {integrity: sha512-kYeWcuW+9w7p5WYCZdSyMIA7TEBds0tZeyFFCnVxN8e4rO4I2FQbWdf/GDXeO5N/RkNEkxVCOxQdgAU7XZ1yBA==}
-    dependencies:
-      '@lit-protocol/auth-helpers': 3.0.11_ethers@5.7.2
-      '@lit-protocol/bls-sdk': 3.0.11
-      '@lit-protocol/constants': 3.0.11
-      '@lit-protocol/crypto': 3.0.11
-      '@lit-protocol/ecdsa-sdk': 3.0.11
-      '@lit-protocol/misc': 3.0.11
-      '@lit-protocol/nacl': 3.0.11
-      '@lit-protocol/types': 3.0.11
-      '@lit-protocol/uint8arrays': 3.0.11
-      ethers: 5.7.2
-      ipfs-http-client: 56.0.0_node-fetch@2.7.0
-      jszip: 3.10.1
-      siwe: 2.1.4_ethers@5.7.2
-      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - bufferutil
-      - encoding
-      - node-fetch
-      - supports-color
-      - utf-8-validate
-    dev: false
-
-  /@lit-protocol/encryption/3.0.7_node-fetch@2.7.0:
-    resolution: {integrity: sha512-jQVyM2zF2/4Qza4a5Ei7aYuldClSCSae9zZ9OyvKwpVXc5NIhQpgsecTZCqEfstYlwlSn1egh7ravxGAmO+jVA==}
-    dependencies:
-      '@lit-protocol/auth-helpers': 3.0.7_ethers@5.7.2
-      '@lit-protocol/bls-sdk': 3.0.7
-      '@lit-protocol/constants': 3.0.7
-      '@lit-protocol/crypto': 3.0.7
-      '@lit-protocol/ecdsa-sdk': 3.0.7
-      '@lit-protocol/misc': 3.0.7
-      '@lit-protocol/nacl': 3.0.7
-      '@lit-protocol/types': 3.0.7
-      '@lit-protocol/uint8arrays': 3.0.7
-      ethers: 5.7.2
-      ipfs-http-client: 56.0.0_node-fetch@2.7.0
-      jszip: 3.10.1
-      siwe: 2.1.4_ethers@5.7.2
-      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - bufferutil
-      - encoding
-      - node-fetch
-      - supports-color
-      - utf-8-validate
-    dev: false
-
-  /@lit-protocol/lit-auth-client/3.0.7_react@18.2.0:
-    resolution: {integrity: sha512-WR330H3cGAjAXp7IQlIGqTtGd8yVU4jFzYac+vZTeL8J1dy1Z8CEUPzY9pc7XOm3AhqoCo3ePo0AMohbvsOtfg==}
+  /@lit-protocol/lit-auth-client/3.0.13_react@18.2.0:
+    resolution: {integrity: sha512-JsRxwaY1tuK03CW/rq1HVlde+j7JifKpd2mr7fuRRl6QS/0KTGtFnuLnDSpZg7e3WYGV7jKISyevT7El00r3og==}
     dependencies:
       '@cosmjs/proto-signing': 0.30.1
       '@cosmjs/stargate': 0.30.1
-      '@lit-protocol/access-control-conditions': 3.0.7
-      '@lit-protocol/auth-browser': 3.0.7_react@18.2.0
-      '@lit-protocol/auth-helpers': 3.0.7_ethers@5.7.2
-      '@lit-protocol/bls-sdk': 3.0.7
-      '@lit-protocol/constants': 3.0.7
-      '@lit-protocol/core': 3.0.7
-      '@lit-protocol/crypto': 3.0.7
-      '@lit-protocol/ecdsa-sdk': 3.0.7
-      '@lit-protocol/encryption': 3.0.7_node-fetch@2.7.0
-      '@lit-protocol/lit-node-client': 3.0.7_react@18.2.0
-      '@lit-protocol/lit-node-client-nodejs': 3.0.7
-      '@lit-protocol/lit-third-party-libs': 3.0.7
-      '@lit-protocol/misc': 3.0.7
-      '@lit-protocol/misc-browser': 3.0.7
-      '@lit-protocol/nacl': 3.0.7
-      '@lit-protocol/types': 3.0.7
-      '@lit-protocol/uint8arrays': 3.0.7
+      '@lit-protocol/access-control-conditions': 3.0.13
+      '@lit-protocol/auth-browser': 3.0.13_react@18.2.0
+      '@lit-protocol/auth-helpers': 3.0.13_ethers@5.7.2
+      '@lit-protocol/bls-sdk': 3.0.13
+      '@lit-protocol/constants': 3.0.13
+      '@lit-protocol/core': 3.0.13
+      '@lit-protocol/crypto': 3.0.13
+      '@lit-protocol/ecdsa-sdk': 3.0.13
+      '@lit-protocol/encryption': 3.0.13
+      '@lit-protocol/lit-node-client': 3.0.13_react@18.2.0
+      '@lit-protocol/lit-node-client-nodejs': 3.0.13
+      '@lit-protocol/lit-storage': 3.0.13
+      '@lit-protocol/lit-third-party-libs': 3.0.13
+      '@lit-protocol/misc': 3.0.13
+      '@lit-protocol/misc-browser': 3.0.13
+      '@lit-protocol/nacl': 3.0.13
+      '@lit-protocol/types': 3.0.13
+      '@lit-protocol/uint8arrays': 3.0.13
       '@simplewebauthn/browser': 7.4.0
       '@simplewebauthn/typescript-types': 7.4.0
       '@walletconnect/ethereum-provider': 2.9.2_@walletconnect+modal@2.6.1
@@ -1615,7 +1425,6 @@ packages:
       blockstore-core: 3.0.0
       cbor-web: 9.0.1
       ethers: 5.7.2
-      ipfs-http-client: 56.0.0_node-fetch@2.7.0
       ipfs-unixfs-importer: 12.0.1
       jose: 4.15.3
       jszip: 3.10.1
@@ -1642,28 +1451,27 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lit-protocol/lit-node-client-nodejs/3.0.11:
-    resolution: {integrity: sha512-yfybXMIVNPFcTzU1u745nEYH9jrD7YQeF2YCHl9dL/GDUV+8UEDOWC35y1zHOJ2dmD0QwAsppge+PdFfnNfYVA==}
+  /@lit-protocol/lit-node-client-nodejs/3.0.13:
+    resolution: {integrity: sha512-43+cd0qB6jARyrn4nVBjlIZ4OtWXZUXR7UdDTaq26QLgWlZJUBQm8Eg2p93nvclvPbwXoXtTs3gor3YFQyaafA==}
     dependencies:
       '@cosmjs/proto-signing': 0.30.1
       '@cosmjs/stargate': 0.30.1
-      '@lit-protocol/access-control-conditions': 3.0.11
-      '@lit-protocol/auth-helpers': 3.0.11_ethers@5.7.2
-      '@lit-protocol/bls-sdk': 3.0.11
-      '@lit-protocol/constants': 3.0.11
-      '@lit-protocol/core': 3.0.11
-      '@lit-protocol/crypto': 3.0.11
-      '@lit-protocol/ecdsa-sdk': 3.0.11
-      '@lit-protocol/encryption': 3.0.11_node-fetch@2.7.0
-      '@lit-protocol/lit-third-party-libs': 3.0.11
-      '@lit-protocol/misc': 3.0.11
-      '@lit-protocol/misc-browser': 3.0.11
-      '@lit-protocol/nacl': 3.0.11
-      '@lit-protocol/types': 3.0.11
-      '@lit-protocol/uint8arrays': 3.0.11
+      '@lit-protocol/access-control-conditions': 3.0.13
+      '@lit-protocol/auth-helpers': 3.0.13_ethers@5.7.2
+      '@lit-protocol/bls-sdk': 3.0.13
+      '@lit-protocol/constants': 3.0.13
+      '@lit-protocol/core': 3.0.13
+      '@lit-protocol/crypto': 3.0.13
+      '@lit-protocol/ecdsa-sdk': 3.0.13
+      '@lit-protocol/encryption': 3.0.13
+      '@lit-protocol/lit-third-party-libs': 3.0.13
+      '@lit-protocol/misc': 3.0.13
+      '@lit-protocol/misc-browser': 3.0.13
+      '@lit-protocol/nacl': 3.0.13
+      '@lit-protocol/types': 3.0.13
+      '@lit-protocol/uint8arrays': 3.0.13
       blockstore-core: 3.0.0
       ethers: 5.7.2
-      ipfs-http-client: 56.0.0_node-fetch@2.7.0
       ipfs-unixfs-importer: 12.0.1
       jszip: 3.10.1
       lit-siwe: 1.1.8
@@ -1683,73 +1491,31 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lit-protocol/lit-node-client-nodejs/3.0.7:
-    resolution: {integrity: sha512-MzzSYaF29kyY5bqQjjhbjqY3j7GuXthXMqfUosgsU4AID9WZgzqn+Xab3bOJxY+QzKGdwWuc7izT+W232GPEZQ==}
+  /@lit-protocol/lit-node-client/3.0.13_react@18.2.0:
+    resolution: {integrity: sha512-MiteuGUi7S6hSihZldIRt+txWq1v8NXJs2LnuppBWZXvke+sLihykqBkluD4zyriFRqygILyTkFbkmkSBOwbNw==}
     dependencies:
       '@cosmjs/proto-signing': 0.30.1
       '@cosmjs/stargate': 0.30.1
-      '@lit-protocol/access-control-conditions': 3.0.7
-      '@lit-protocol/auth-helpers': 3.0.7_ethers@5.7.2
-      '@lit-protocol/bls-sdk': 3.0.7
-      '@lit-protocol/constants': 3.0.7
-      '@lit-protocol/core': 3.0.7
-      '@lit-protocol/crypto': 3.0.7
-      '@lit-protocol/ecdsa-sdk': 3.0.7
-      '@lit-protocol/encryption': 3.0.7_node-fetch@2.7.0
-      '@lit-protocol/lit-third-party-libs': 3.0.7
-      '@lit-protocol/misc': 3.0.7
-      '@lit-protocol/misc-browser': 3.0.7
-      '@lit-protocol/nacl': 3.0.7
-      '@lit-protocol/types': 3.0.7
-      '@lit-protocol/uint8arrays': 3.0.7
-      blockstore-core: 3.0.0
-      ethers: 5.7.2
-      ipfs-http-client: 56.0.0_node-fetch@2.7.0
-      ipfs-unixfs-importer: 12.0.1
-      jszip: 3.10.1
-      lit-siwe: 1.1.8
-      node-fetch: 2.7.0
-      siwe: 2.1.4_ethers@5.7.2
-      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - '@ethersproject/contracts'
-      - '@ethersproject/hash'
-      - '@ethersproject/providers'
-      - '@ethersproject/wallet'
-      - bufferutil
-      - debug
-      - encoding
-      - supports-color
-      - utf-8-validate
-    dev: false
-
-  /@lit-protocol/lit-node-client/3.0.11_react@18.2.0:
-    resolution: {integrity: sha512-W4XjEzViyd1ED4zDuUMCeJOmkP4ucmpBe3YmxAZrFibrUl5OlPUriS2hWddad9cWgcOg7o+E+743KaJon0pAgw==}
-    dependencies:
-      '@cosmjs/proto-signing': 0.30.1
-      '@cosmjs/stargate': 0.30.1
-      '@lit-protocol/access-control-conditions': 3.0.11
-      '@lit-protocol/auth-browser': 3.0.11_react@18.2.0
-      '@lit-protocol/auth-helpers': 3.0.11_ethers@5.7.2
-      '@lit-protocol/bls-sdk': 3.0.11
-      '@lit-protocol/constants': 3.0.11
-      '@lit-protocol/core': 3.0.11
-      '@lit-protocol/crypto': 3.0.11
-      '@lit-protocol/ecdsa-sdk': 3.0.11
-      '@lit-protocol/encryption': 3.0.11_node-fetch@2.7.0
-      '@lit-protocol/lit-node-client-nodejs': 3.0.11
-      '@lit-protocol/lit-third-party-libs': 3.0.11
-      '@lit-protocol/misc': 3.0.11
-      '@lit-protocol/misc-browser': 3.0.11
-      '@lit-protocol/nacl': 3.0.11
-      '@lit-protocol/types': 3.0.11
-      '@lit-protocol/uint8arrays': 3.0.11
+      '@lit-protocol/access-control-conditions': 3.0.13
+      '@lit-protocol/auth-browser': 3.0.13_react@18.2.0
+      '@lit-protocol/auth-helpers': 3.0.13_ethers@5.7.2
+      '@lit-protocol/bls-sdk': 3.0.13
+      '@lit-protocol/constants': 3.0.13
+      '@lit-protocol/core': 3.0.13
+      '@lit-protocol/crypto': 3.0.13
+      '@lit-protocol/ecdsa-sdk': 3.0.13
+      '@lit-protocol/encryption': 3.0.13
+      '@lit-protocol/lit-node-client-nodejs': 3.0.13
+      '@lit-protocol/lit-third-party-libs': 3.0.13
+      '@lit-protocol/misc': 3.0.13
+      '@lit-protocol/misc-browser': 3.0.13
+      '@lit-protocol/nacl': 3.0.13
+      '@lit-protocol/types': 3.0.13
+      '@lit-protocol/uint8arrays': 3.0.13
       '@walletconnect/ethereum-provider': 2.9.2_@walletconnect+modal@2.6.1
       '@walletconnect/modal': 2.6.1_react@18.2.0
       blockstore-core: 3.0.0
       ethers: 5.7.2
-      ipfs-http-client: 56.0.0_node-fetch@2.7.0
       ipfs-unixfs-importer: 12.0.1
       jszip: 3.10.1
       lit-siwe: 1.1.8
@@ -1774,193 +1540,104 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lit-protocol/lit-node-client/3.0.7_react@18.2.0:
-    resolution: {integrity: sha512-8Me4iQbYc8RSNHWtbinwfp5C+Q9lzDsUxZXMu3xn3fmKrZLjJY7rvmli3r6m4j6bV+JOuzP3bj5ELoHePZ99Hw==}
+  /@lit-protocol/lit-storage/3.0.13:
+    resolution: {integrity: sha512-XN+F7b7Z+FLjeLSu3YMyxi7z0ZaTwMpFfO4Ml0TL5SG9aUZrslle+O/wDzyd98GrJbGMe6Yfwtqhd7fFjS/Rsw==}
+    dependencies:
+      '@lit-protocol/auth-helpers': 3.0.13_ethers@5.7.2
+      '@lit-protocol/constants': 3.0.13
+      '@lit-protocol/misc': 3.0.13
+      '@lit-protocol/types': 3.0.13
+      ethers: 5.7.2
+      jszip: 3.10.1
+      siwe: 2.1.4_ethers@5.7.2
+      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
+      tslib: 2.6.2
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+    dev: false
+
+  /@lit-protocol/lit-third-party-libs/3.0.13:
+    resolution: {integrity: sha512-zGSQMDNfELRwQaHdBkelsLCHJD+3u3txhkfblzTGN0l32/Hx/Jv2elbeT/GnJjGXVLV/kw7IBHTM6y0ODYwFMw==}
     dependencies:
       '@cosmjs/proto-signing': 0.30.1
       '@cosmjs/stargate': 0.30.1
-      '@lit-protocol/access-control-conditions': 3.0.7
-      '@lit-protocol/auth-browser': 3.0.7_react@18.2.0
-      '@lit-protocol/auth-helpers': 3.0.7_ethers@5.7.2
-      '@lit-protocol/bls-sdk': 3.0.7
-      '@lit-protocol/constants': 3.0.7
-      '@lit-protocol/core': 3.0.7
-      '@lit-protocol/crypto': 3.0.7
-      '@lit-protocol/ecdsa-sdk': 3.0.7
-      '@lit-protocol/encryption': 3.0.7_node-fetch@2.7.0
-      '@lit-protocol/lit-node-client-nodejs': 3.0.7
-      '@lit-protocol/lit-third-party-libs': 3.0.7
-      '@lit-protocol/misc': 3.0.7
-      '@lit-protocol/misc-browser': 3.0.7
-      '@lit-protocol/nacl': 3.0.7
-      '@lit-protocol/types': 3.0.7
-      '@lit-protocol/uint8arrays': 3.0.7
+      blockstore-core: 3.0.0
+      ipfs-unixfs-importer: 12.0.1
+      tslib: 2.6.2
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - encoding
+      - supports-color
+      - utf-8-validate
+    dev: false
+
+  /@lit-protocol/misc-browser/3.0.13:
+    resolution: {integrity: sha512-XXvfu7aPPRIpx9QuDT8xfccbHZAVZokzqCNO39dp/Aucjv5shvld4I5CeK5OGsVUfbPgmkv9SLzI2QjovGF9bg==}
+    dependencies:
+      '@lit-protocol/auth-helpers': 3.0.13_ethers@5.7.2
+      '@lit-protocol/constants': 3.0.13
+      '@lit-protocol/types': 3.0.13
+      '@lit-protocol/uint8arrays': 3.0.13
+      ethers: 5.7.2
+      jszip: 3.10.1
+      siwe: 2.1.4_ethers@5.7.2
+      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
+      tslib: 2.6.2
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+    dev: false
+
+  /@lit-protocol/misc/3.0.13:
+    resolution: {integrity: sha512-gCeQ0/wty+Kjp5iqd81/gNTVmLi9DmbprTuW6moFN/chb6ibRe0+QgC799NmuUQjFnK8hzoOWH9/O1hqJtNZcQ==}
+    dependencies:
+      '@lit-protocol/auth-helpers': 3.0.13_ethers@5.7.2
+      '@lit-protocol/constants': 3.0.13
+      '@lit-protocol/types': 3.0.13
+      ethers: 5.7.2
+      jszip: 3.10.1
+      siwe: 2.1.4_ethers@5.7.2
+      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
+      tslib: 2.6.2
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+    dev: false
+
+  /@lit-protocol/nacl/3.0.13:
+    resolution: {integrity: sha512-a1Bd3EYPcEZDt8d82ypKsa9qvuCJlOnC1Pldxn/IsEZEIHFWimCHl/CRo+AZPPBg3fRUKVKV5DXuS+jl8ivDew==}
+    dependencies:
+      tslib: 2.6.2
+    dev: false
+
+  /@lit-protocol/pkp-base/3.0.13_react@18.2.0:
+    resolution: {integrity: sha512-ukKLIvjRz3CVNYBKbf2CByVY996itfYG2fSSxMEz0pLcVLL2lkXLJbNmXdvm2nZXdE+or479vcGvi9dGFxMa/Q==}
+    dependencies:
+      '@cosmjs/proto-signing': 0.30.1
+      '@cosmjs/stargate': 0.30.1
+      '@lit-protocol/access-control-conditions': 3.0.13
+      '@lit-protocol/auth-browser': 3.0.13_react@18.2.0
+      '@lit-protocol/auth-helpers': 3.0.13_ethers@5.7.2
+      '@lit-protocol/bls-sdk': 3.0.13
+      '@lit-protocol/constants': 3.0.13
+      '@lit-protocol/core': 3.0.13
+      '@lit-protocol/crypto': 3.0.13
+      '@lit-protocol/ecdsa-sdk': 3.0.13
+      '@lit-protocol/encryption': 3.0.13
+      '@lit-protocol/lit-node-client': 3.0.13_react@18.2.0
+      '@lit-protocol/lit-node-client-nodejs': 3.0.13
+      '@lit-protocol/lit-third-party-libs': 3.0.13
+      '@lit-protocol/misc': 3.0.13
+      '@lit-protocol/misc-browser': 3.0.13
+      '@lit-protocol/nacl': 3.0.13
+      '@lit-protocol/types': 3.0.13
+      '@lit-protocol/uint8arrays': 3.0.13
       '@walletconnect/ethereum-provider': 2.9.2_@walletconnect+modal@2.6.1
       '@walletconnect/modal': 2.6.1_react@18.2.0
       blockstore-core: 3.0.0
       ethers: 5.7.2
-      ipfs-http-client: 56.0.0_node-fetch@2.7.0
-      ipfs-unixfs-importer: 12.0.1
-      jszip: 3.10.1
-      lit-siwe: 1.1.8
-      node-fetch: 2.7.0
-      siwe: 2.1.4_ethers@5.7.2
-      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
-      tslib: 2.6.2
-      tweetnacl: 1.0.3
-      tweetnacl-util: 0.15.1
-    transitivePeerDependencies:
-      - '@ethersproject/contracts'
-      - '@ethersproject/hash'
-      - '@ethersproject/providers'
-      - '@ethersproject/wallet'
-      - '@react-native-async-storage/async-storage'
-      - bufferutil
-      - debug
-      - encoding
-      - lokijs
-      - react
-      - supports-color
-      - utf-8-validate
-    dev: false
-
-  /@lit-protocol/lit-third-party-libs/3.0.11:
-    resolution: {integrity: sha512-YuvmcsfoP3E3aNW+IeUmp4nPE1r7daJwcoKo0N585wp82GYcXLOBRl5gAOrtCN1ySaAUCD5w6vsdy+HSrPUK+Q==}
-    dependencies:
-      '@cosmjs/proto-signing': 0.30.1
-      '@cosmjs/stargate': 0.30.1
-      blockstore-core: 3.0.0
-      ipfs-unixfs-importer: 12.0.1
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - bufferutil
-      - debug
-      - encoding
-      - supports-color
-      - utf-8-validate
-    dev: false
-
-  /@lit-protocol/lit-third-party-libs/3.0.7:
-    resolution: {integrity: sha512-qZL15ZFYheYaFeCaq0p+NAghkTvIQIvQ0DaUu49CdBxq67PGaSjkvrwuGAZwLneAj8j3bTvEIj4J80E7LzeUQA==}
-    dependencies:
-      '@cosmjs/proto-signing': 0.30.1
-      '@cosmjs/stargate': 0.30.1
-      blockstore-core: 3.0.0
-      ipfs-unixfs-importer: 12.0.1
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - bufferutil
-      - debug
-      - encoding
-      - supports-color
-      - utf-8-validate
-    dev: false
-
-  /@lit-protocol/misc-browser/3.0.11:
-    resolution: {integrity: sha512-pBAkEckW/gip5LeM9yZjiUyc8dpy8WsSLmlxEvu7NBAw4J7fZyr5Pb0AMINn9giQ7WoS4N0Fp1PgnKvIcv7bdA==}
-    dependencies:
-      '@lit-protocol/auth-helpers': 3.0.11_ethers@5.7.2
-      '@lit-protocol/constants': 3.0.11
-      '@lit-protocol/types': 3.0.11
-      '@lit-protocol/uint8arrays': 3.0.11
-      ethers: 5.7.2
-      jszip: 3.10.1
-      siwe: 2.1.4_ethers@5.7.2
-      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-    dev: false
-
-  /@lit-protocol/misc-browser/3.0.7:
-    resolution: {integrity: sha512-DoY8kUQsECtmpDsHsLRZMJb2P2DfUM/YBJNMrb8MfMj/qr8dcxcIZK4SJylHZxyW0Je4S/cc+QiLmrHe2ethfg==}
-    dependencies:
-      '@lit-protocol/auth-helpers': 3.0.7_ethers@5.7.2
-      '@lit-protocol/constants': 3.0.7
-      '@lit-protocol/types': 3.0.7
-      '@lit-protocol/uint8arrays': 3.0.7
-      ethers: 5.7.2
-      jszip: 3.10.1
-      siwe: 2.1.4_ethers@5.7.2
-      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-    dev: false
-
-  /@lit-protocol/misc/3.0.11:
-    resolution: {integrity: sha512-6hJ3cqSbAVXz1D6e7+8k4rfsEXiHhATzRHSF95zb8PBKIdVISrMIS0xpj9EeVMqfvDHtL/ow0bNQeFMai80YEg==}
-    dependencies:
-      '@lit-protocol/auth-helpers': 3.0.11_ethers@5.7.2
-      '@lit-protocol/constants': 3.0.11
-      '@lit-protocol/types': 3.0.11
-      ethers: 5.7.2
-      jszip: 3.10.1
-      siwe: 2.1.4_ethers@5.7.2
-      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-    dev: false
-
-  /@lit-protocol/misc/3.0.7:
-    resolution: {integrity: sha512-vIYeFPBv8d7Gogw/w1R7qX7/jtgQQaBE4+1OoOrdr1M/vX38E8VHPMO+RDZWYFhuYUlH07AJ+j16FIHpuv5gLA==}
-    dependencies:
-      '@lit-protocol/auth-helpers': 3.0.7_ethers@5.7.2
-      '@lit-protocol/constants': 3.0.7
-      '@lit-protocol/types': 3.0.7
-      ethers: 5.7.2
-      jszip: 3.10.1
-      siwe: 2.1.4_ethers@5.7.2
-      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-    dev: false
-
-  /@lit-protocol/nacl/3.0.11:
-    resolution: {integrity: sha512-pEkDWsqc2YYd+kP+gVTVIEX2P6D1j1zH9JnkO8BS33gvPSupcIpAsv9nkhQcFH3VgexzcDiaNi4pNU8Rpyft1g==}
-    dependencies:
-      tslib: 2.6.2
-    dev: false
-
-  /@lit-protocol/nacl/3.0.7:
-    resolution: {integrity: sha512-yMFR8sZd3S5y9JHE/LAnv7JWljFDV3OoiPfjxaJ9NFt8qWgDtUvKcecVUBFljs5OMDlqixXeZMwfJbOSm/HLhw==}
-    dependencies:
-      tslib: 2.6.2
-    dev: false
-
-  /@lit-protocol/pkp-base/3.0.11_react@18.2.0:
-    resolution: {integrity: sha512-LxlYI2k7oBn1wmQr8Z8KLWjgU6s34jThnibtOfmhJYS8JbHdi0dL2f79ACgsTAvKClt+roy8mKm0tvHHaYglbQ==}
-    dependencies:
-      '@cosmjs/proto-signing': 0.30.1
-      '@cosmjs/stargate': 0.30.1
-      '@lit-protocol/access-control-conditions': 3.0.11
-      '@lit-protocol/auth-browser': 3.0.11_react@18.2.0
-      '@lit-protocol/auth-helpers': 3.0.11_ethers@5.7.2
-      '@lit-protocol/bls-sdk': 3.0.11
-      '@lit-protocol/constants': 3.0.11
-      '@lit-protocol/core': 3.0.11
-      '@lit-protocol/crypto': 3.0.11
-      '@lit-protocol/ecdsa-sdk': 3.0.11
-      '@lit-protocol/encryption': 3.0.11_node-fetch@2.7.0
-      '@lit-protocol/lit-node-client': 3.0.11_react@18.2.0
-      '@lit-protocol/lit-node-client-nodejs': 3.0.11
-      '@lit-protocol/lit-third-party-libs': 3.0.11
-      '@lit-protocol/misc': 3.0.11
-      '@lit-protocol/misc-browser': 3.0.11
-      '@lit-protocol/nacl': 3.0.11
-      '@lit-protocol/types': 3.0.11
-      '@lit-protocol/uint8arrays': 3.0.11
-      '@walletconnect/ethereum-provider': 2.9.2_@walletconnect+modal@2.6.1
-      '@walletconnect/modal': 2.6.1_react@18.2.0
-      blockstore-core: 3.0.0
-      ethers: 5.7.2
-      ipfs-http-client: 56.0.0_node-fetch@2.7.0
       ipfs-unixfs-importer: 12.0.1
       jszip: 3.10.1
       lit-siwe: 1.1.8
@@ -1987,37 +1664,36 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lit-protocol/pkp-client/3.0.11_react@18.2.0:
-    resolution: {integrity: sha512-JKDZY+UQd1u890DdIx+Ea26Ygh8kittQQNOsy1QLaplMR6TancWwpkthCBxDNzJawOUhlOikwll/h3X86Gekhg==}
+  /@lit-protocol/pkp-client/3.0.13_react@18.2.0:
+    resolution: {integrity: sha512-ONEXw+ex60/BT20/XZj4WObKCzG4e7fUeMF4pqX87l/IA3j/XBK6fdCU8K6XqEskKGXUL6xl0XcaeTug06fSaw==}
     dependencies:
       '@cosmjs/proto-signing': 0.30.1
       '@cosmjs/stargate': 0.30.1
-      '@lit-protocol/access-control-conditions': 3.0.11
-      '@lit-protocol/auth-browser': 3.0.11_react@18.2.0
-      '@lit-protocol/auth-helpers': 3.0.11_ethers@5.7.2
-      '@lit-protocol/bls-sdk': 3.0.11
-      '@lit-protocol/constants': 3.0.11
-      '@lit-protocol/core': 3.0.11
-      '@lit-protocol/crypto': 3.0.11
-      '@lit-protocol/ecdsa-sdk': 3.0.11
-      '@lit-protocol/encryption': 3.0.11_node-fetch@2.7.0
-      '@lit-protocol/lit-node-client': 3.0.11_react@18.2.0
-      '@lit-protocol/lit-node-client-nodejs': 3.0.11
-      '@lit-protocol/lit-third-party-libs': 3.0.11
-      '@lit-protocol/misc': 3.0.11
-      '@lit-protocol/misc-browser': 3.0.11
-      '@lit-protocol/nacl': 3.0.11
-      '@lit-protocol/pkp-base': 3.0.11_react@18.2.0
-      '@lit-protocol/pkp-cosmos': 3.0.11_react@18.2.0
-      '@lit-protocol/pkp-ethers': 3.0.11_react@18.2.0
-      '@lit-protocol/types': 3.0.11
-      '@lit-protocol/uint8arrays': 3.0.11
+      '@lit-protocol/access-control-conditions': 3.0.13
+      '@lit-protocol/auth-browser': 3.0.13_react@18.2.0
+      '@lit-protocol/auth-helpers': 3.0.13_ethers@5.7.2
+      '@lit-protocol/bls-sdk': 3.0.13
+      '@lit-protocol/constants': 3.0.13
+      '@lit-protocol/core': 3.0.13
+      '@lit-protocol/crypto': 3.0.13
+      '@lit-protocol/ecdsa-sdk': 3.0.13
+      '@lit-protocol/encryption': 3.0.13
+      '@lit-protocol/lit-node-client': 3.0.13_react@18.2.0
+      '@lit-protocol/lit-node-client-nodejs': 3.0.13
+      '@lit-protocol/lit-third-party-libs': 3.0.13
+      '@lit-protocol/misc': 3.0.13
+      '@lit-protocol/misc-browser': 3.0.13
+      '@lit-protocol/nacl': 3.0.13
+      '@lit-protocol/pkp-base': 3.0.13_react@18.2.0
+      '@lit-protocol/pkp-cosmos': 3.0.13_react@18.2.0
+      '@lit-protocol/pkp-ethers': 3.0.13_react@18.2.0
+      '@lit-protocol/types': 3.0.13
+      '@lit-protocol/uint8arrays': 3.0.13
       '@metamask/eth-sig-util': 5.0.2
       '@walletconnect/ethereum-provider': 2.9.2_@walletconnect+modal@2.6.1
       '@walletconnect/modal': 2.6.1_react@18.2.0
       blockstore-core: 3.0.0
       ethers: 5.7.2
-      ipfs-http-client: 56.0.0_node-fetch@2.7.0
       ipfs-unixfs-importer: 12.0.1
       jszip: 3.10.1
       lit-siwe: 1.1.8
@@ -2044,34 +1720,33 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lit-protocol/pkp-cosmos/3.0.11_react@18.2.0:
-    resolution: {integrity: sha512-/PjXScC7jqWF7WdEo/2bAciBpBpvxDKNoV2bb5YtFUP6EsMjkqNmLlQMgJnWl3WkTHrKNoRXRrJCYVQ3UDXmJA==}
+  /@lit-protocol/pkp-cosmos/3.0.13_react@18.2.0:
+    resolution: {integrity: sha512-K1t1wBOpYq0YcewFCbiZx9q/9dfqtPDou4v1XvXCM6osSnV6IwGecSG+FIL50hzhktzO4Yyz9JbgVsKgL85EtQ==}
     dependencies:
       '@cosmjs/proto-signing': 0.30.1
       '@cosmjs/stargate': 0.30.1
-      '@lit-protocol/access-control-conditions': 3.0.11
-      '@lit-protocol/auth-browser': 3.0.11_react@18.2.0
-      '@lit-protocol/auth-helpers': 3.0.11_ethers@5.7.2
-      '@lit-protocol/bls-sdk': 3.0.11
-      '@lit-protocol/constants': 3.0.11
-      '@lit-protocol/core': 3.0.11
-      '@lit-protocol/crypto': 3.0.11
-      '@lit-protocol/ecdsa-sdk': 3.0.11
-      '@lit-protocol/encryption': 3.0.11_node-fetch@2.7.0
-      '@lit-protocol/lit-node-client': 3.0.11_react@18.2.0
-      '@lit-protocol/lit-node-client-nodejs': 3.0.11
-      '@lit-protocol/lit-third-party-libs': 3.0.11
-      '@lit-protocol/misc': 3.0.11
-      '@lit-protocol/misc-browser': 3.0.11
-      '@lit-protocol/nacl': 3.0.11
-      '@lit-protocol/pkp-base': 3.0.11_react@18.2.0
-      '@lit-protocol/types': 3.0.11
-      '@lit-protocol/uint8arrays': 3.0.11
+      '@lit-protocol/access-control-conditions': 3.0.13
+      '@lit-protocol/auth-browser': 3.0.13_react@18.2.0
+      '@lit-protocol/auth-helpers': 3.0.13_ethers@5.7.2
+      '@lit-protocol/bls-sdk': 3.0.13
+      '@lit-protocol/constants': 3.0.13
+      '@lit-protocol/core': 3.0.13
+      '@lit-protocol/crypto': 3.0.13
+      '@lit-protocol/ecdsa-sdk': 3.0.13
+      '@lit-protocol/encryption': 3.0.13
+      '@lit-protocol/lit-node-client': 3.0.13_react@18.2.0
+      '@lit-protocol/lit-node-client-nodejs': 3.0.13
+      '@lit-protocol/lit-third-party-libs': 3.0.13
+      '@lit-protocol/misc': 3.0.13
+      '@lit-protocol/misc-browser': 3.0.13
+      '@lit-protocol/nacl': 3.0.13
+      '@lit-protocol/pkp-base': 3.0.13_react@18.2.0
+      '@lit-protocol/types': 3.0.13
+      '@lit-protocol/uint8arrays': 3.0.13
       '@walletconnect/ethereum-provider': 2.9.2_@walletconnect+modal@2.6.1
       '@walletconnect/modal': 2.6.1_react@18.2.0
       blockstore-core: 3.0.0
       ethers: 5.7.2
-      ipfs-http-client: 56.0.0_node-fetch@2.7.0
       ipfs-unixfs-importer: 12.0.1
       jszip: 3.10.1
       lit-siwe: 1.1.8
@@ -2098,35 +1773,34 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lit-protocol/pkp-ethers/3.0.11_react@18.2.0:
-    resolution: {integrity: sha512-2k/58iJQVnB2sperPFTYvBGUqdzZbhwHKwqfkL4gCbR2w+fCJpaydl/c6b/XNDj9xys5dbixHj/ZVUFHdZ180g==}
+  /@lit-protocol/pkp-ethers/3.0.13_react@18.2.0:
+    resolution: {integrity: sha512-XLKo1z8VRBrgW9462z69WMCte7ARAv46j/tT/+4TxElBbtkNrLwDlsADIItyEp5p+rWKGGnJGLHJbHW03eGCqA==}
     dependencies:
       '@cosmjs/proto-signing': 0.30.1
       '@cosmjs/stargate': 0.30.1
-      '@lit-protocol/access-control-conditions': 3.0.11
-      '@lit-protocol/auth-browser': 3.0.11_react@18.2.0
-      '@lit-protocol/auth-helpers': 3.0.11_ethers@5.7.2
-      '@lit-protocol/bls-sdk': 3.0.11
-      '@lit-protocol/constants': 3.0.11
-      '@lit-protocol/core': 3.0.11
-      '@lit-protocol/crypto': 3.0.11
-      '@lit-protocol/ecdsa-sdk': 3.0.11
-      '@lit-protocol/encryption': 3.0.11_node-fetch@2.7.0
-      '@lit-protocol/lit-node-client': 3.0.11_react@18.2.0
-      '@lit-protocol/lit-node-client-nodejs': 3.0.11
-      '@lit-protocol/lit-third-party-libs': 3.0.11
-      '@lit-protocol/misc': 3.0.11
-      '@lit-protocol/misc-browser': 3.0.11
-      '@lit-protocol/nacl': 3.0.11
-      '@lit-protocol/pkp-base': 3.0.11_react@18.2.0
-      '@lit-protocol/types': 3.0.11
-      '@lit-protocol/uint8arrays': 3.0.11
+      '@lit-protocol/access-control-conditions': 3.0.13
+      '@lit-protocol/auth-browser': 3.0.13_react@18.2.0
+      '@lit-protocol/auth-helpers': 3.0.13_ethers@5.7.2
+      '@lit-protocol/bls-sdk': 3.0.13
+      '@lit-protocol/constants': 3.0.13
+      '@lit-protocol/core': 3.0.13
+      '@lit-protocol/crypto': 3.0.13
+      '@lit-protocol/ecdsa-sdk': 3.0.13
+      '@lit-protocol/encryption': 3.0.13
+      '@lit-protocol/lit-node-client': 3.0.13_react@18.2.0
+      '@lit-protocol/lit-node-client-nodejs': 3.0.13
+      '@lit-protocol/lit-third-party-libs': 3.0.13
+      '@lit-protocol/misc': 3.0.13
+      '@lit-protocol/misc-browser': 3.0.13
+      '@lit-protocol/nacl': 3.0.13
+      '@lit-protocol/pkp-base': 3.0.13_react@18.2.0
+      '@lit-protocol/types': 3.0.13
+      '@lit-protocol/uint8arrays': 3.0.13
       '@metamask/eth-sig-util': 5.0.2
       '@walletconnect/ethereum-provider': 2.9.2_@walletconnect+modal@2.6.1
       '@walletconnect/modal': 2.6.1_react@18.2.0
       blockstore-core: 3.0.0
       ethers: 5.7.2
-      ipfs-http-client: 56.0.0_node-fetch@2.7.0
       ipfs-unixfs-importer: 12.0.1
       jszip: 3.10.1
       lit-siwe: 1.1.8
@@ -2153,32 +1827,32 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lit-protocol/pkp-walletconnect/3.0.11_react@18.2.0:
-    resolution: {integrity: sha512-x7QDyE9UsBf3+jOYyBd+CKaSlkWDgbUdCZFHhZM/OXGKjKycILkGF9HY1q3J/dGL4+Tm8+/6yFIdfll7ViffYA==}
+  /@lit-protocol/pkp-walletconnect/3.0.13_react@18.2.0:
+    resolution: {integrity: sha512-+Wl3q0bW2m7mYh/isx2IDQLtHnIImmGX80/c18beoDzNVwhXXNLQ8oHZnqycSCZm4gMdcEEud8rtVPNICbQ4ug==}
     dependencies:
       '@cosmjs/proto-signing': 0.30.1
       '@cosmjs/stargate': 0.30.1
-      '@lit-protocol/access-control-conditions': 3.0.11
-      '@lit-protocol/auth-browser': 3.0.11_react@18.2.0
-      '@lit-protocol/auth-helpers': 3.0.11_ethers@5.7.2
-      '@lit-protocol/bls-sdk': 3.0.11
-      '@lit-protocol/constants': 3.0.11
-      '@lit-protocol/core': 3.0.11
-      '@lit-protocol/crypto': 3.0.11
-      '@lit-protocol/ecdsa-sdk': 3.0.11
-      '@lit-protocol/encryption': 3.0.11_node-fetch@2.7.0
-      '@lit-protocol/lit-node-client': 3.0.11_react@18.2.0
-      '@lit-protocol/lit-node-client-nodejs': 3.0.11
-      '@lit-protocol/lit-third-party-libs': 3.0.11
-      '@lit-protocol/misc': 3.0.11
-      '@lit-protocol/misc-browser': 3.0.11
-      '@lit-protocol/nacl': 3.0.11
-      '@lit-protocol/pkp-base': 3.0.11_react@18.2.0
-      '@lit-protocol/pkp-client': 3.0.11_react@18.2.0
-      '@lit-protocol/pkp-cosmos': 3.0.11_react@18.2.0
-      '@lit-protocol/pkp-ethers': 3.0.11_react@18.2.0
-      '@lit-protocol/types': 3.0.11
-      '@lit-protocol/uint8arrays': 3.0.11
+      '@lit-protocol/access-control-conditions': 3.0.13
+      '@lit-protocol/auth-browser': 3.0.13_react@18.2.0
+      '@lit-protocol/auth-helpers': 3.0.13_ethers@5.7.2
+      '@lit-protocol/bls-sdk': 3.0.13
+      '@lit-protocol/constants': 3.0.13
+      '@lit-protocol/core': 3.0.13
+      '@lit-protocol/crypto': 3.0.13
+      '@lit-protocol/ecdsa-sdk': 3.0.13
+      '@lit-protocol/encryption': 3.0.13
+      '@lit-protocol/lit-node-client': 3.0.13_react@18.2.0
+      '@lit-protocol/lit-node-client-nodejs': 3.0.13
+      '@lit-protocol/lit-third-party-libs': 3.0.13
+      '@lit-protocol/misc': 3.0.13
+      '@lit-protocol/misc-browser': 3.0.13
+      '@lit-protocol/nacl': 3.0.13
+      '@lit-protocol/pkp-base': 3.0.13_react@18.2.0
+      '@lit-protocol/pkp-client': 3.0.13_react@18.2.0
+      '@lit-protocol/pkp-cosmos': 3.0.13_react@18.2.0
+      '@lit-protocol/pkp-ethers': 3.0.13_react@18.2.0
+      '@lit-protocol/types': 3.0.13
+      '@lit-protocol/uint8arrays': 3.0.13
       '@metamask/eth-sig-util': 5.0.2
       '@walletconnect/core': 2.9.2
       '@walletconnect/ethereum-provider': 2.9.2_@walletconnect+modal@2.6.1
@@ -2189,7 +1863,6 @@ packages:
       '@walletconnect/web3wallet': 1.8.8
       blockstore-core: 3.0.0
       ethers: 5.7.2
-      ipfs-http-client: 56.0.0_node-fetch@2.7.0
       ipfs-unixfs-importer: 12.0.1
       jszip: 3.10.1
       lit-siwe: 1.1.8
@@ -2216,10 +1889,10 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lit-protocol/types/3.0.11:
-    resolution: {integrity: sha512-DipsLfqsldBrpo60u3f8zDoMRrvyx1xsN6d583jewkR7E9CAbsOKKPQpneIMHFz+4Y5vVOZgiLKPnBNwosNAbg==}
+  /@lit-protocol/types/3.0.13:
+    resolution: {integrity: sha512-sRVm978VTVNzD8Q+r9w7W5Qk+heshn/r/Q3B1LQHGeReKrb9QY5f2wl2s+BQd1a8vd5gJ6AcLYg7V3DCQf7aBA==}
     dependencies:
-      '@lit-protocol/auth-helpers': 3.0.11_ethers@5.7.2
+      '@lit-protocol/auth-helpers': 3.0.13_ethers@5.7.2
       ethers: 5.7.2
       jszip: 3.10.1
       siwe: 2.1.4_ethers@5.7.2
@@ -2230,28 +1903,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lit-protocol/types/3.0.7:
-    resolution: {integrity: sha512-YIjw4phqc+IygzI82wMDMZwWCf6bGOkepG25cgxhvChbzkd5oXXtG7Yq5u5gUKWEdMOB1n8f6WBv3vTjNsoQrg==}
-    dependencies:
-      '@lit-protocol/auth-helpers': 3.0.7_ethers@5.7.2
-      ethers: 5.7.2
-      jszip: 3.10.1
-      siwe: 2.1.4_ethers@5.7.2
-      siwe-recap: 0.0.2-alpha.0_ethers@5.7.2
-      tslib: 2.6.2
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-    dev: false
-
-  /@lit-protocol/uint8arrays/3.0.11:
-    resolution: {integrity: sha512-/ejMbc60KxqQvQsSmm434MxwsYglN6s8Ts3s7jOVB2roxj6B7ixS8WXjwqTJWhtGOgCmXszNAEgmHgvfI29F+Q==}
-    dependencies:
-      tslib: 2.6.2
-    dev: false
-
-  /@lit-protocol/uint8arrays/3.0.7:
-    resolution: {integrity: sha512-IYAX7cI4ORSAP+Eq5ve3gk78VwWdPOrMxk+RwvL/yVOfJeR5/RTX8e6jnRyFAQZRRvHPPbKkHEB3Zt9olXrWnQ==}
+  /@lit-protocol/uint8arrays/3.0.13:
+    resolution: {integrity: sha512-LOnWUfAxgRzJtgCgTuoFmWuaXCIhEc9o2812ZGAd4pArn/+utDgCRboVJnUmJWbcjM96B1HNx4JnQyR9VbagrQ==}
     dependencies:
       tslib: 2.6.2
     dev: false
@@ -3342,10 +2995,6 @@ packages:
 
   /@types/long/4.0.2:
     resolution: {integrity: sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==}
-    dev: false
-
-  /@types/minimatch/3.0.5:
-    resolution: {integrity: sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==}
     dev: false
 
   /@types/ms/0.7.32:
@@ -4439,10 +4088,6 @@ packages:
     resolution: {integrity: sha512-7UvmKalWRt1wgjL1RrGxoSJW/0QZFIegpeGvZG9kjp8vrRu55XTHbwnqq2GpXm9uLbcuhxm3IqX9OB4MZR1b2A==}
     dev: true
 
-  /any-signal/3.0.1:
-    resolution: {integrity: sha512-xgZgJtKEa9YmDqXodIgl7Fl1C8yNXr8w6gXjqK3LW4GcEiYT+6AQfJSE/8SPsEpLLmcvbv8YU+qet94UewHxqg==}
-    dev: false
-
   /anymatch/3.1.3:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
@@ -4766,12 +4411,6 @@ packages:
     resolution: {integrity: sha512-QXUSXI3QVc/gJME0dBpXrag1kbzOqCjCX8/b54ntNyW6sjtoqxqRk3LTmXzaJoh71zMsDCjM+47jS7XiwN/+fQ==}
     dev: false
 
-  /blob-to-it/1.0.4:
-    resolution: {integrity: sha512-iCmk0W4NdbrWgRRuxOriU8aM5ijeVLI61Zulsmg/lUHNr7pYjoj+U77opLefNagevtrrbMt3JQ5Qip7ar178kA==}
-    dependencies:
-      browser-readablestream-to-it: 1.0.3
-    dev: false
-
   /blockstore-core/3.0.0:
     resolution: {integrity: sha512-5ZZB5nh6kErcjZ/CTK6lCwTIGlPdkTXbD8+2xLC4Fm0WGh7g2e2lW2bfURw7mvnPtSX1xV+sN4V2ndowSgIiHQ==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
@@ -4883,10 +4522,6 @@ packages:
 
   /brorand/1.1.0:
     resolution: {integrity: sha512-cKV8tMCEpQs4hK/ik71d6LrPOnpkpGBR0wzxqr68g2m/LB2GxVYQroAjMJZRVM1Y4BCjCKc3vAamxSzOY2RP+w==}
-    dev: false
-
-  /browser-readablestream-to-it/1.0.3:
-    resolution: {integrity: sha512-+12sHB+Br8HIh6VAMVEG5r3UXCyESIgDW7kzk3BjIXa43DVqVwL7GC5TW3jeh+72dtcH99pPVpw0X8i0jt+/kw==}
     dev: false
 
   /browser-stdout/1.3.1:
@@ -5055,11 +4690,6 @@ packages:
   /cbor-web/9.0.1:
     resolution: {integrity: sha512-9lW24Q2fOvCei/qMSeH48VWOcndR6u/gsi1zqXzXqeTj67XVGR253S+rOaJY+zE9TDahorcpXKeIBFRv4U2MYA==}
     engines: {node: '>=16'}
-    dev: false
-
-  /cborg/1.10.2:
-    resolution: {integrity: sha512-b3tFPA9pUr2zCUiCfRd2+wok2/LBSNUMKOuRRok+WlvvAgEt/PlbgPTsZUcwCOs53IJvLgTp0eotwtosE6njug==}
-    hasBin: true
     dev: false
 
   /chai/4.3.10:
@@ -5387,13 +5017,6 @@ packages:
       type: 1.2.0
     dev: false
 
-  /dag-jose/1.0.0:
-    resolution: {integrity: sha512-U0b/YsIPBp6YZNTFrVjwLZAlY3qGRxZTIEcM/CcQmrVrCWq9MWQq9pheXVSPLIhF4SNwzp2SikPva4/BIrJY+g==}
-    dependencies:
-      '@ipld/dag-cbor': 6.0.15
-      multiformats: 9.9.0
-    dev: false
-
   /damerau-levenshtein/1.0.8:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
     dev: true
@@ -5611,17 +5234,6 @@ packages:
     resolution: {integrity: sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==}
     dev: true
 
-  /dns-over-http-resolver/1.2.3_node-fetch@2.7.0:
-    resolution: {integrity: sha512-miDiVSI6KSNbi4SVifzO/reD8rMnxgrlnkrlkugOLQpWQTe2qMdHsZp5DmfKjxNE+/T3VAAYLQUZMv9SMr6+AA==}
-    dependencies:
-      debug: 4.3.4
-      native-fetch: 3.0.0_node-fetch@2.7.0
-      receptacle: 1.3.2
-    transitivePeerDependencies:
-      - node-fetch
-      - supports-color
-    dev: false
-
   /doctrine/2.1.0:
     resolution: {integrity: sha512-35mSku4ZXK0vfCuHEDAwt55dg2jNajHZ1odvF+8SSr82EsZY4QmXfuWso8oEd8zRhVObSN18aM0CjSdoBX7zIw==}
     engines: {node: '>=0.10.0'}
@@ -5720,13 +5332,6 @@ packages:
       - utf-8-validate
     dev: false
 
-  /electron-fetch/1.9.1:
-    resolution: {integrity: sha512-M9qw6oUILGVrcENMSRRefE1MbHPIz0h79EKIeJWK9v563aT9Qkh8aEHPO1H5vi970wPirNY+jO9OpFoLiMsMGA==}
-    engines: {node: '>=6'}
-    dependencies:
-      encoding: 0.1.13
-    dev: false
-
   /electron-to-chromium/1.4.554:
     resolution: {integrity: sha512-Q0umzPJjfBrrj8unkONTgbKQXzXRrH7sVV7D9ea2yBV3Oaogz991yhbpfvo2LMNkJItmruXTEzVpP9cp7vaIiQ==}
 
@@ -5757,12 +5362,6 @@ packages:
   /encodeurl/1.0.2:
     resolution: {integrity: sha512-TPJXq8JqFaVYm2CWmPvnP2Iyo4ZSM7/QKcSmuMLDObfpH5fi7RUGmd/rTDf+rut/saiDiQEeVTNgAmJEdAOx0w==}
     engines: {node: '>= 0.8'}
-    dev: false
-
-  /encoding/0.1.13:
-    resolution: {integrity: sha512-ETBauow1T35Y/WZMkio9jiM0Z5xjHHmJ4XmjZOq1l/dXz3lr2sRn87nJy20RupqSh1F2m3HHPSp8ShIPQJrJ3A==}
-    dependencies:
-      iconv-lite: 0.6.3
     dev: false
 
   /end-of-stream/1.4.4:
@@ -6530,10 +6129,6 @@ packages:
   /fast-deep-equal/3.1.3:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
 
-  /fast-fifo/1.3.2:
-    resolution: {integrity: sha512-/d9sfos4yxzpwkDkuN7k2SqFKtYNmCTzgfEpz82x34IM9/zc8KGxQoXg1liNC/izpRM/MBdt44Nmx41ZWqk+FQ==}
-    dev: false
-
   /fast-glob/3.3.1:
     resolution: {integrity: sha512-kNFPyjhh5cKjrUltxs+wFx+ZkbRaxxmZ+X0ZU31SOsxCEtP9VPgtq2teZw1DebupL5GmDaNQ6yKMMVcM41iqDg==}
     engines: {node: '>=8.6.0'}
@@ -6788,10 +6383,6 @@ packages:
       has: 1.0.4
       has-proto: 1.0.1
       has-symbols: 1.0.3
-
-  /get-iterator/1.0.2:
-    resolution: {integrity: sha512-v+dm9bNVfOYsY1OrhaCrmyOcYoSeVvbt+hHZ0Au+T+p1y+0Uyj9aMaGIeUTT6xdpRbWzDeYKvfOslPhggQMcsg==}
-    dev: false
 
   /get-stream/5.2.0:
     resolution: {integrity: sha512-nBF+F1rAZVCu/p7rjzgA+Yb4lfYXrpl7a6VmJrU8wF9I1CKvP/QwPNZHnOlwbTkY6dvtFIzFMSyQXbLoTQPRpA==}
@@ -7207,13 +6798,6 @@ packages:
       safer-buffer: 2.1.2
     dev: false
 
-  /iconv-lite/0.6.3:
-    resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
-    engines: {node: '>=0.10.0'}
-    dependencies:
-      safer-buffer: 2.1.2
-    dev: false
-
   /idna-uts46-hx/2.3.1:
     resolution: {integrity: sha512-PWoF9Keq6laYdIRwwCdhTPl60xRqAloYNMQLiyUnG42VjT53oW07BXIRM+NK7eQjzXjAk2gUvX9caRxlnF9TAA==}
     engines: {node: '>=4.0.0'}
@@ -7273,18 +6857,6 @@ packages:
       multiformats: 11.0.2
     dev: false
 
-  /interface-datastore/6.1.1:
-    resolution: {integrity: sha512-AmCS+9CT34pp2u0QQVXjKztkuq3y5T+BIciuiHDDtDZucZD8VudosnSdUyXJV6IsRkN5jc4RFDhCk1O6Q3Gxjg==}
-    dependencies:
-      interface-store: 2.0.2
-      nanoid: 3.3.6
-      uint8arrays: 3.1.1
-    dev: false
-
-  /interface-store/2.0.2:
-    resolution: {integrity: sha512-rScRlhDcz6k199EkHqT8NpM87ebN89ICOzILoBHgaG36/WX50N32BnU/kpZgCGPLhARRAWUUX5/cyaIjt7Kipg==}
-    dev: false
-
   /interface-store/3.0.4:
     resolution: {integrity: sha512-OjHUuGXbH4eXSBx1TF1tTySvjLldPLzRSYYXJwrEQI+XfH5JWYZofr0gVMV4F8XTwC+4V7jomDYkvGRmDSRKqQ==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
@@ -7299,87 +6871,9 @@ packages:
       side-channel: 1.0.4
     dev: true
 
-  /ip-regex/4.3.0:
-    resolution: {integrity: sha512-B9ZWJxHHOHUhUjCPrMpLD4xEq35bUTClHM1S6CBU5ixQnkZmwipwgc96vAd7AAGM9TGHvJR+Uss+/Ak6UphK+Q==}
-    engines: {node: '>=8'}
-    dev: false
-
   /ipaddr.js/1.9.1:
     resolution: {integrity: sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==}
     engines: {node: '>= 0.10'}
-    dev: false
-
-  /ipfs-core-types/0.10.3_node-fetch@2.7.0:
-    resolution: {integrity: sha512-GNid2lRBjR5qgScCglgk7w9Hk3TZAwPHQXxOLQx72wgyc0jF2U5NXRoKW0GRvX8NPbHmsrFszForIqxd23I1Gw==}
-    deprecated: js-IPFS has been deprecated in favour of Helia - please see https://github.com/ipfs/js-ipfs/issues/4336 for details
-    dependencies:
-      '@ipld/dag-pb': 2.1.18
-      interface-datastore: 6.1.1
-      ipfs-unixfs: 6.0.9
-      multiaddr: 10.0.1_node-fetch@2.7.0
-      multiformats: 9.9.0
-    transitivePeerDependencies:
-      - node-fetch
-      - supports-color
-    dev: false
-
-  /ipfs-core-utils/0.14.3_node-fetch@2.7.0:
-    resolution: {integrity: sha512-aBkewVhgAj3NWXPwu6imj0wADGiGVZmJzqKzODOJsibDjkx6FGdMv8kvvqtLnK8LS/dvSk9yk32IDtuDyYoV7Q==}
-    deprecated: js-IPFS has been deprecated in favour of Helia - please see https://github.com/ipfs/js-ipfs/issues/4336 for details
-    dependencies:
-      any-signal: 3.0.1
-      blob-to-it: 1.0.4
-      browser-readablestream-to-it: 1.0.3
-      debug: 4.3.4
-      err-code: 3.0.1
-      ipfs-core-types: 0.10.3_node-fetch@2.7.0
-      ipfs-unixfs: 6.0.9
-      ipfs-utils: 9.0.14
-      it-all: 1.0.6
-      it-map: 1.0.6
-      it-peekable: 1.0.3
-      it-to-stream: 1.0.0
-      merge-options: 3.0.4
-      multiaddr: 10.0.1_node-fetch@2.7.0
-      multiaddr-to-uri: 8.0.0_node-fetch@2.7.0
-      multiformats: 9.9.0
-      nanoid: 3.3.6
-      parse-duration: 1.1.0
-      timeout-abort-controller: 3.0.0
-      uint8arrays: 3.1.1
-    transitivePeerDependencies:
-      - encoding
-      - node-fetch
-      - supports-color
-    dev: false
-
-  /ipfs-http-client/56.0.0_node-fetch@2.7.0:
-    resolution: {integrity: sha512-JF3on9c0hB9XHk/UCxbyC6rSpERuj8F/0QcN/HImZoHNUKZ0/T8DpgVopocKdmGi1gr3Izlop7poaXomSt8Nug==}
-    engines: {node: '>=15.0.0', npm: '>=3.0.0'}
-    deprecated: js-IPFS has been deprecated in favour of Helia - please see https://github.com/ipfs/js-ipfs/issues/4336 for details
-    dependencies:
-      '@ipld/dag-cbor': 7.0.3
-      '@ipld/dag-json': 8.0.11
-      '@ipld/dag-pb': 2.1.18
-      any-signal: 3.0.1
-      dag-jose: 1.0.0
-      debug: 4.3.4
-      err-code: 3.0.1
-      ipfs-core-types: 0.10.3_node-fetch@2.7.0
-      ipfs-core-utils: 0.14.3_node-fetch@2.7.0
-      ipfs-utils: 9.0.14
-      it-first: 1.0.7
-      it-last: 1.0.6
-      merge-options: 3.0.4
-      multiaddr: 10.0.1_node-fetch@2.7.0
-      multiformats: 9.9.0
-      parse-duration: 1.1.0
-      stream-to-it: 0.2.4
-      uint8arrays: 3.1.1
-    transitivePeerDependencies:
-      - encoding
-      - node-fetch
-      - supports-color
     dev: false
 
   /ipfs-unixfs-importer/12.0.1:
@@ -7406,44 +6900,12 @@ packages:
       - supports-color
     dev: false
 
-  /ipfs-unixfs/6.0.9:
-    resolution: {integrity: sha512-0DQ7p0/9dRB6XCb0mVCTli33GzIzSVx5udpJuVM47tGcD+W+Bl4LsnoLswd3ggNnNEakMv1FdoFITiEnchXDqQ==}
-    engines: {node: '>=16.0.0', npm: '>=7.0.0'}
-    dependencies:
-      err-code: 3.0.1
-      protobufjs: 6.11.4
-    dev: false
-
   /ipfs-unixfs/9.0.1:
     resolution: {integrity: sha512-jh2CbXyxID+v3jLml9CqMwjdSS9ZRnsGfQGGPOfem0/hT/L48xUeTPvh7qLFWkZcIMhZtG+fnS1teei8x5uGBg==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
     dependencies:
       err-code: 3.0.1
       protobufjs: 7.2.5
-    dev: false
-
-  /ipfs-utils/9.0.14:
-    resolution: {integrity: sha512-zIaiEGX18QATxgaS0/EOQNoo33W0islREABAcxXE8n7y2MGAlB+hdsxXn4J0hGZge8IqVQhW8sWIb+oJz2yEvg==}
-    engines: {node: '>=16.0.0', npm: '>=7.0.0'}
-    dependencies:
-      any-signal: 3.0.1
-      browser-readablestream-to-it: 1.0.3
-      buffer: 6.0.3
-      electron-fetch: 1.9.1
-      err-code: 3.0.1
-      is-electron: 2.2.2
-      iso-url: 1.2.1
-      it-all: 1.0.6
-      it-glob: 1.0.2
-      it-to-stream: 1.0.0
-      merge-options: 3.0.4
-      nanoid: 3.3.6
-      native-fetch: 3.0.0_node-fetch@2.7.0
-      node-fetch: 2.7.0
-      react-native-fetch-api: 3.0.0
-      stream-to-it: 0.2.4
-    transitivePeerDependencies:
-      - encoding
     dev: false
 
   /is-arguments/1.1.1:
@@ -7513,10 +6975,6 @@ packages:
       has-tostringtag: 1.0.0
     dev: true
 
-  /is-electron/2.2.2:
-    resolution: {integrity: sha512-FO/Rhvz5tuw4MCWkpMzHFKWD2LsfHzIb7i6MdPYZ/KW7AlxawyLkqdy+jPZP1WubqEADE3O4FUENlJHDfQASRg==}
-    dev: false
-
   /is-extendable/0.1.1:
     resolution: {integrity: sha512-5BMULNob1vgFX6EjQw5izWDxrecWK9AM72rugNr0TFldMOi0fj6Jk+zeKIt0xGj4cEfQIJth4w3OKWOJ4f+AFw==}
     engines: {node: '>=0.10.0'}
@@ -7556,13 +7014,6 @@ packages:
   /is-hex-prefixed/1.0.0:
     resolution: {integrity: sha512-WvtOiug1VFrE9v1Cydwm+FnXd3+w9GaeVUss5W4v/SLy3UW00vP+6iNF2SdnfiBoLy4bTqVdkftNGTUeOFVsbA==}
     engines: {node: '>=6.5.0', npm: '>=3'}
-    dev: false
-
-  /is-ip/3.1.0:
-    resolution: {integrity: sha512-35vd5necO7IitFPjd/YBeqwWnyDWbuLH9ZXQdMfDA8TEo7pv5X8yfrvVO3xbJbLUlERCMvf6X0hTUamQxCYJ9Q==}
-    engines: {node: '>=8'}
-    dependencies:
-      ip-regex: 4.3.0
     dev: false
 
   /is-map/2.0.2:
@@ -7685,11 +7136,6 @@ packages:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
     dev: true
 
-  /iso-url/1.2.1:
-    resolution: {integrity: sha512-9JPDgCN4B7QPkLtYAAOrEuAWvP9rWvR5offAr0/SeF046wIkglqH3VXgYYP6NcsKslH80UIVgmPqNe3j7tG2ng==}
-    engines: {node: '>=12'}
-    dev: false
-
   /isomorphic-unfetch/3.1.0:
     resolution: {integrity: sha512-geDJjpoZ8N0kWexiwkX8F9NkTsXhetLPVbZFQ+JTW239QNOwvB0gniuR1Wc6f0AMTn7/mFGyXvHTifrCp/GH8Q==}
     dependencies:
@@ -7709,10 +7155,6 @@ packages:
 
   /isstream/0.1.2:
     resolution: {integrity: sha512-Yljz7ffyPbrLpLngrMtZ7NduUgVvi6wG9RJ9IUcyCd59YQ911PBJphODUcbOVbqYfxe1wuYf/LJ8PauMRwsM/g==}
-    dev: false
-
-  /it-all/1.0.6:
-    resolution: {integrity: sha512-3cmCc6Heqe3uWi3CVM/k51fa/XbMFpQVzFoDsV0IZNHSQDyAXl3c4MjHkFX5kF3922OGj7Myv1nSEUgRtcuM1A==}
     dev: false
 
   /it-all/2.0.1:
@@ -7735,28 +7177,9 @@ packages:
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
     dev: false
 
-  /it-first/1.0.7:
-    resolution: {integrity: sha512-nvJKZoBpZD/6Rtde6FXqwDqDZGF1sCADmr2Zoc0hZsIvnE449gRFnGctxDf09Bzc/FWnHXAdaHVIetY6lrE0/g==}
-    dev: false
-
   /it-first/2.0.1:
     resolution: {integrity: sha512-noC1oEQcWZZMUwq7VWxHNLML43dM+5bviZpfmkxkXlvBe60z7AFRqpZSga9uQBo792jKv9otnn1IjA4zwgNARw==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
-    dev: false
-
-  /it-glob/1.0.2:
-    resolution: {integrity: sha512-Ch2Dzhw4URfB9L/0ZHyY+uqOnKvBNeS/SMcRiPmJfpHiM0TsUZn+GkpcZxAoF3dJVdPm/PuIk3A4wlV7SUo23Q==}
-    dependencies:
-      '@types/minimatch': 3.0.5
-      minimatch: 3.1.2
-    dev: false
-
-  /it-last/1.0.6:
-    resolution: {integrity: sha512-aFGeibeiX/lM4bX3JY0OkVCFkAw8+n9lkukkLNivbJRvNz8lI3YXv5xcqhFUV2lDJiraEK3OXRDbGuevnnR67Q==}
-    dev: false
-
-  /it-map/1.0.6:
-    resolution: {integrity: sha512-XT4/RM6UHIFG9IobGlQPFQUrlEKkU4eBUFG3qhWhfAdh1JfF2x11ShCrKCdmZ0OiZppPfoLuzcfA4cey6q3UAQ==}
     dev: false
 
   /it-parallel-batch/2.0.1:
@@ -7766,24 +7189,9 @@ packages:
       it-batch: 2.0.1
     dev: false
 
-  /it-peekable/1.0.3:
-    resolution: {integrity: sha512-5+8zemFS+wSfIkSZyf0Zh5kNN+iGyccN02914BY4w/Dj+uoFEoPSvj5vaWn8pNZJNSxzjW0zHRxC3LUb2KWJTQ==}
-    dev: false
-
   /it-take/2.0.1:
     resolution: {integrity: sha512-DL7kpZNjuoeSTnB9dMAJ0Z3m2T29LRRAU+HIgkiQM+1jH3m8l9e/1xpWs8JHTlbKivbqSFrQMTc8KVcaQNmsaA==}
     engines: {node: '>=16.0.0', npm: '>=7.0.0'}
-    dev: false
-
-  /it-to-stream/1.0.0:
-    resolution: {integrity: sha512-pLULMZMAB/+vbdvbZtebC0nWBTbG581lk6w8P7DfIIIKUfa8FbY7Oi0FxZcFPbxvISs7A9E+cMpLDBc1XhpAOA==}
-    dependencies:
-      buffer: 6.0.3
-      fast-fifo: 1.3.2
-      get-iterator: 1.0.2
-      p-defer: 3.0.0
-      p-fifo: 1.0.0
-      readable-stream: 3.6.2
     dev: false
 
   /iterator.prototype/1.1.2:
@@ -8520,31 +7928,6 @@ packages:
   /ms/2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
-  /multiaddr-to-uri/8.0.0_node-fetch@2.7.0:
-    resolution: {integrity: sha512-dq4p/vsOOUdVEd1J1gl+R2GFrXJQH8yjLtz4hodqdVbieg39LvBOdMQRdQnfbg5LSM/q1BYNVf5CBbwZFFqBgA==}
-    deprecated: This module is deprecated, please upgrade to @multiformats/multiaddr-to-uri
-    dependencies:
-      multiaddr: 10.0.1_node-fetch@2.7.0
-    transitivePeerDependencies:
-      - node-fetch
-      - supports-color
-    dev: false
-
-  /multiaddr/10.0.1_node-fetch@2.7.0:
-    resolution: {integrity: sha512-G5upNcGzEGuTHkzxezPrrD6CaIHR9uo+7MwqhNVcXTs33IInon4y7nMiGxl2CY5hG7chvYQUQhz5V52/Qe3cbg==}
-    deprecated: This module is deprecated, please upgrade to @multiformats/multiaddr
-    dependencies:
-      dns-over-http-resolver: 1.2.3_node-fetch@2.7.0
-      err-code: 3.0.1
-      is-ip: 3.1.0
-      multiformats: 9.9.0
-      uint8arrays: 3.1.1
-      varint: 6.0.0
-    transitivePeerDependencies:
-      - node-fetch
-      - supports-color
-    dev: false
-
   /multibase/0.6.1:
     resolution: {integrity: sha512-pFfAwyTjbbQgNc3G7D48JkJxWtoJoBMaR4xQUOuB8RnCgRqaYmWNFeJTTvrJ2w51bjLq2zTby6Rqj9TQ9elSUw==}
     deprecated: This module has been superseded by the multiformats module
@@ -8637,14 +8020,6 @@ packages:
     resolution: {integrity: sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
-
-  /native-fetch/3.0.0_node-fetch@2.7.0:
-    resolution: {integrity: sha512-G3Z7vx0IFb/FQ4JxvtqGABsOTIqRWvgQz6e+erkB+JJD6LrszQtMozEHI4EkmgZQvnGHrpLVzUWk7t4sJCIkVw==}
-    peerDependencies:
-      node-fetch: '*'
-    dependencies:
-      node-fetch: 2.7.0
-    dev: false
 
   /natural-compare/1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
@@ -8964,18 +8339,6 @@ packages:
     engines: {node: '>=12.20'}
     dev: false
 
-  /p-defer/3.0.0:
-    resolution: {integrity: sha512-ugZxsxmtTln604yeYd29EGrNhazN2lywetzpKhfmQjW/VJmhpDmWbiX+h0zL8V91R0UXkhb3KtPmyq9PZw3aYw==}
-    engines: {node: '>=8'}
-    dev: false
-
-  /p-fifo/1.0.0:
-    resolution: {integrity: sha512-IjoCxXW48tqdtDFz6fqo5q1UfFVjjVZe8TC1QRflvNUJtNfCUhxOUw6MOVZhDPjqhSzc26xKdugsO17gmzd5+A==}
-    dependencies:
-      fast-fifo: 1.3.2
-      p-defer: 3.0.0
-    dev: false
-
   /p-limit/1.3.0:
     resolution: {integrity: sha512-vvcXsLAJ9Dr5rQOPk7toZQZJApBl2K4J6dANSsEuh6QI41JYcsS/qhTGa9ErIUUgK3WNQoJYvylxvjqmiqEA9Q==}
     engines: {node: '>=4'}
@@ -9040,10 +8403,6 @@ packages:
     dependencies:
       callsites: 3.1.0
     dev: true
-
-  /parse-duration/1.1.0:
-    resolution: {integrity: sha512-z6t9dvSJYaPoQq7quMzdEagSFtpGu+utzHqqxmpVWNNZRIXnvqyCvn9XsTdh7c/w0Bqmdz3RB3YnRaKtpRtEXQ==}
-    dev: false
 
   /parse-headers/2.0.5:
     resolution: {integrity: sha512-ft3iAoLOB/MlwbNXgzy43SWGP6sQki2jQvAyBg/zDFAgr9bfNWZIUj42Kw2eJIl8kEi4PbgE6U1Zau/HwI75HA==}
@@ -9571,12 +8930,6 @@ packages:
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
-  /react-native-fetch-api/3.0.0:
-    resolution: {integrity: sha512-g2rtqPjdroaboDKTsJCTlcmtw54E25OjyaunUP0anOZn4Fuo2IKs8BVfe02zVggA/UysbmfSnRJIqtNkAgggNA==}
-    dependencies:
-      p-defer: 3.0.0
-    dev: false
-
   /react-query/3.39.3_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-nLfLz7GiohKTJDuT4us4X3h/8unOh+00MLb2yJoGTPjxKs2bc1iDhkNx2bd5MKklXnOD3NrVZ+J2UXujA5In4g==}
     peerDependencies:
@@ -9681,12 +9034,6 @@ packages:
   /real-require/0.1.0:
     resolution: {integrity: sha512-r/H9MzAWtrv8aSVjPCMFpDMl5q66GqtmmRkRjpHTsp4zBAa+snZyiQNlMONiUmEJcsnaw0wCauJ2GWODr/aFkg==}
     engines: {node: '>= 12.13.0'}
-    dev: false
-
-  /receptacle/1.3.2:
-    resolution: {integrity: sha512-HrsFvqZZheusncQRiEE7GatOAETrARKV/lnfYicIm8lbvp/JQOdADOfhjBd2DajvoszEyxSM6RlAAIZgEoeu/A==}
-    dependencies:
-      ms: 2.1.3
     dev: false
 
   /redent/2.0.0:
@@ -9807,10 +9154,6 @@ packages:
     resolution: {integrity: sha512-4gl03wn3hj1HP3yzgdI7d3lCkF95F21Pz4BPGvKHinyQzALR5CapwC8yIi0Rh58DEMQ/SguC03wFj2k0M/mHhw==}
     dependencies:
       lowercase-keys: 2.0.0
-    dev: false
-
-  /retimer/3.0.0:
-    resolution: {integrity: sha512-WKE0j11Pa0ZJI5YIk0nflGI7SQsfl2ljihVy7ogh7DeQSeYAUi0ubZ/yEueGtDfUPk6GH5LRw1hBdLq4IwUBWA==}
     dev: false
 
   /reusify/1.0.4:
@@ -10197,12 +9540,6 @@ packages:
     resolution: {integrity: sha512-AiisoFqQ0vbGcZgQPY1cdP2I76glaVA/RauYR4G4thNFgkTqr90yXTo4LYX60Jl+sIlPNHHdGSwo01AvbKUSVQ==}
     dev: false
 
-  /stream-to-it/0.2.4:
-    resolution: {integrity: sha512-4vEbkSs83OahpmBybNJXlJd7d6/RxzkkSdT3I0mnGt79Xd2Kk+e1JqbvAvsQfCeKj3aKb0QIWkyK3/n0j506vQ==}
-    dependencies:
-      get-iterator: 1.0.2
-    dev: false
-
   /streamsearch/1.1.0:
     resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
     engines: {node: '>=10.0.0'}
@@ -10519,12 +9856,6 @@ packages:
   /timed-out/4.0.1:
     resolution: {integrity: sha512-G7r3AhovYtr5YKOWQkta8RKAPb+J9IsO4uVmzjl8AZwfhs8UcUwTiD6gcJYSgOtzyjvQKrKYn41syHbUWMkafA==}
     engines: {node: '>=0.10.0'}
-    dev: false
-
-  /timeout-abort-controller/3.0.0:
-    resolution: {integrity: sha512-O3e+2B8BKrQxU2YRyEjC/2yFdb33slI22WRdUaDx6rvysfi9anloNZyR2q0l6LnePo5qH7gSM7uZtvvwZbc2yA==}
-    dependencies:
-      retimer: 3.0.0
     dev: false
 
   /to-fast-properties/2.0.0:
@@ -10965,10 +10296,6 @@ packages:
 
   /varint/5.0.2:
     resolution: {integrity: sha512-lKxKYG6H03yCZUpAGOPOsMcGxd1RHCu1iKvEHYDPmTyq2HueGhD73ssNBqqQWfvYs04G9iUFRvmAVLW20Jw6ow==}
-    dev: false
-
-  /varint/6.0.0:
-    resolution: {integrity: sha512-cXEIW6cfr15lFv563k4GuVuW/fiwjknytD37jIOLSdSWuOI6WnO/oKwmP2FQTU2l01LP8/M5TSAJpzUaGe3uWg==}
     dev: false
 
   /vary/1.1.2:
