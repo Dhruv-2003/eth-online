@@ -11,9 +11,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-// import {startAConversation,sendMessage, fetchAllMessages, listConverstaions,checkIfOnNetwork} from "../../utils/xmtpchat";
-import { useAccount } from "wagmi";
-import { useCallback } from "react";
 import { providers } from "ethers";
 import { Client, DecodedMessage } from "@xmtp/xmtp-js";
 import { callGenerateEndpoint } from "@/utils/intent";
@@ -32,7 +29,7 @@ export default function ChatWindow() {
   const [outgoingMessage, setOutgoingMessage] = useState<string>("");
   const [messages, setMessages] = useState<DecodedMessage[]>();
   const [users, setUsers] = useState<any>();
-  const [option, setOption] = useState<string>("intent");
+  const [option, setOption] = useState<string>("");
   const [intentResult, setIntentResult] = useState<any>();
 
   const initXmtp = async () => {
