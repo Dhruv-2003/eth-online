@@ -9,8 +9,14 @@ export default function Rewards() {
         Claim your rewards
       </div>
       <div className="  mx-auto max-w-6xl flex-wrap flex items-center justify-between gap-4">
-        <RewardCard index={0} />
-        <RewardCard index={1} />
+        <RewardCard />
+        <RewardCard />
+        <RewardCard />
+        <RewardCard />
+        <RewardCard />
+        <RewardCard />
+        <RewardCard />
+        <RewardCard />
       </div>
     </DashboardNavigation>
   );
