@@ -1,6 +1,10 @@
 import { ethers } from "ethers";
 import { GelatoRelayPack } from "@safe-global/relay-kit";
-import Safe, { EthersAdapter, SafeFactory } from "@safe-global/protocol-kit";
+import Safe, {
+  EthersAdapter,
+  SafeConfig,
+  SafeFactory,
+} from "@safe-global/protocol-kit";
 import {
   MetaTransactionData,
   MetaTransactionOptions,
@@ -29,17 +33,42 @@ const optionsSyncFee = {
 // initialise Safe SDK and relay Kit
 export const intializeSDK = async (
   signerOrProvider: ethers.Signer | ethers.providers.Provider,
-  safeAddress: string
+  safeAddress: string,
+  isPredicted: boolean,
+  ownerAddress: string,
+  nonce: string // auth Method Id
 ): Promise<{ safeSDK: Safe; relayKit: GelatoRelayPack }> => {
   const ethAdapter = new EthersAdapter({
     ethers,
     signerOrProvider: signerOrProvider,
   });
 
-  const safeSDK = await Safe.create({
-    ethAdapter,
-    safeAddress,
-  });
+  const owners = [ownerAddress];
+  const threshold = 1;
+
+  let config: SafeConfig;
+  if (isPredicted) {
+    config = {
+      ethAdapter,
+      predictedSafe: {
+        safeAccountConfig: {
+          owners,
+          threshold,
+        },
+        safeDeploymentConfig: {
+          saltNonce: nonce,
+        },
+      },
+    };
+  } else {
+    config = {
+      ethAdapter,
+      safeAddress,
+    };
+  }
+
+  const safeSDK = await Safe.create(config);
+
   const relayKit = new GelatoRelayPack(GELATO_RELAY_API_KEY);
 
   return { safeSDK, relayKit };
@@ -64,22 +93,26 @@ export const prepareSendNativeTransactionData = async (
   });
 
   // safeSDK.getContractManager().safeContract?.encode
+  console.log(safeTransaction);
+  const signedSafeTx = await safeSDK.signTransaction(safeTransaction);
 
-  // const signedSafeTx = await safeSDK.signTransaction(safeTransaction);
   if (!safeSDK) return;
   const encodedTx = safeSDK
     .getContractManager()
     .safeContract?.encode("execTransaction", [
-      safeTransaction.data.to,
-      safeTransaction.data.value,
-      safeTransaction.data.data,
-      safeTransaction.data.operation,
-      safeTransaction.data.safeTxGas,
-      safeTransaction.data.baseGas,
-      safeTransaction.data.gasPrice,
-      safeTransaction.data.gasToken,
-      safeTransaction.data.refundReceiver,
+      signedSafeTx.data.to,
+      signedSafeTx.data.value,
+      signedSafeTx.data.data,
+      signedSafeTx.data.operation,
+      signedSafeTx.data.safeTxGas,
+      signedSafeTx.data.baseGas,
+      signedSafeTx.data.gasPrice,
+      signedSafeTx.data.gasToken,
+      signedSafeTx.data.refundReceiver,
+      signedSafeTx.encodedSignatures(),
     ]);
+
+  console.log(encodedTx);
 
   return encodedTx;
 };
@@ -208,7 +241,7 @@ const intializeSafeAPI = (signer: ethers.Signer) => {
   });
 
   const safeSAPIService = new SafeApiKit({
-    txServiceUrl: "https://safe-transaction-goerli.safe.global",
+    txServiceUrl: SAFE_API_SERVICE_URL,
     ethAdapter,
   });
 
@@ -238,8 +271,9 @@ export const enableModule = async (safeSdk: Safe, moduleAddress: string) => {
   return txResponse;
 };
 
-const createSafeWallet = async (
-  signer: ethers.Signer
+export const createSafeWallet = async (
+  signer: ethers.Signer,
+  nonce: string // Auth Method Id
 ): Promise<Safe | undefined> => {
   try {
     const ethAdapter = new EthersAdapter({
@@ -249,11 +283,6 @@ const createSafeWallet = async (
 
     const safeFactory = await SafeFactory.create({
       ethAdapter: ethAdapter,
-    });
-
-    const safeService = new SafeApiKit({
-      txServiceUrl: SAFE_API_SERVICE_URL,
-      ethAdapter,
     });
 
     const owners = [`${await signer.getAddress()}`];
@@ -273,7 +302,10 @@ const createSafeWallet = async (
 
     console.log(safeAccountConfig);
     // / Will it have gas fees to deploy this safe tx
-    const safeSdk = await safeFactory.deploySafe({ safeAccountConfig });
+    const safeSdk = await safeFactory.deploySafe({
+      safeAccountConfig,
+      saltNonce: nonce,
+    });
 
     console.log("Creating and deploying the new safe");
 
@@ -284,6 +316,45 @@ const createSafeWallet = async (
 
     /// On Continue, direct to the home page
     return safeSdk;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const predictSafeWalletAddress = async (
+  signerOrProvider: ethers.Signer | ethers.providers.Provider,
+  ownerAddress: string,
+  nonce: string // auth Method Id
+): Promise<string | undefined> => {
+  try {
+    const ethAdapter = new EthersAdapter({
+      ethers,
+      signerOrProvider: signerOrProvider,
+    });
+
+    const safeFactory = await SafeFactory.create({
+      ethAdapter: ethAdapter,
+    });
+
+    const owners = [ownerAddress];
+    const threshold = 1;
+
+    const safeAccountConfig = {
+      owners,
+      threshold,
+    };
+
+    console.log(safeAccountConfig);
+    // / Will it have gas fees to deploy this safe tx
+    const predictedSafeAddress = await safeFactory.predictSafeAddress(
+      safeAccountConfig,
+      nonce
+    );
+
+    console.log("Predicted Safe Address", predictSafeWalletAddress);
+
+    /// On Continue, direct to the home page
+    return predictedSafeAddress;
   } catch (error) {
     console.log(error);
   }
