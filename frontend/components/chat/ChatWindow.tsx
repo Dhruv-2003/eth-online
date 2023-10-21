@@ -37,7 +37,7 @@ export default function ChatWindow() {
   const [option, setOption] = useState<string>("intent");
   const [intentResult, setIntentResult] = useState<any>();
 
-  const [showChat, setShowChat] = useState<boolean>(false);
+  const [showChat, setShowChat] = useState<boolean>(true);
 
   const initXmtp = async () => {
     // @ts-ignore
