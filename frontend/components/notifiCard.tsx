@@ -6,6 +6,7 @@ import { NotifiContext } from "@notifi-network/notifi-react-card";
 // import { Modal } from "./Modal";
 import { useSignMessage } from "wagmi";
 import { arrayify } from "ethers/lib/utils.js";
+import { providers } from "ethers";
 
 // type Props = {
 //   show: boolean;
@@ -14,8 +15,12 @@ import { arrayify } from "ethers/lib/utils.js";
 
 export const NotifiCard = () => {
   const { conversations } = useXmtpStore();
-  const { address } = useAccount();
-  const { signMessageAsync } = useSignMessage();
+  // const { address } = useAccount();
+  const address = "0x62C43323447899acb61C18181e34168903E033Bf";
+  // const { signMessageAsync } = useSignMessage();
+
+  const provider = new providers.Web3Provider(window?.ethereum);
+  const signer = provider.getSigner();
 
   const buildContentTopic = (name: string): string => `/xmtp/0/${name}/proto`;
 
@@ -29,7 +34,7 @@ export const NotifiCard = () => {
 
   let topics = useMemo<string[]>(
     () => [buildUserInviteTopic(), buildUserIntroTopic()],
-    [buildUserIntroTopic, buildUserInviteTopic],
+    [buildUserIntroTopic, buildUserInviteTopic]
   );
 
   const addTopic = (topicName: string) => {
@@ -38,21 +43,17 @@ export const NotifiCard = () => {
     }
   };
 
-//   conversations.forEach((e:any) => {
-//     addTopic(e.topic);
-//   });
+  //   conversations.forEach((e:any) => {
+  //     addTopic(e.topic);
+  //   });
 
   return (
-    <Modal
-      title=""
-      size="sm"
-      show={true}
-      onClose={() => console.log("closed")}>
+    <>
       {!address ? (
         <>Loading...</>
       ) : (
         <NotifiContext
-          dappAddress="<YOUR DAPP ADDRESS HERE>"
+          dappAddress="ethonline"
           env="Production"
           signMessage={async (message: Uint8Array) => {
             const result = await signMessageAsync({ message });
@@ -62,11 +63,11 @@ export const NotifiCard = () => {
           walletBlockchain="ETHEREUM"
         >
           <NotifiSubscriptionCard
-            inputs={{ XMTPTopics: topics }}
-            cardId="<YOUR CARD ID HERE>"
+            inputs={{ XMTP: topics }}
+            cardId="59be5e6037c94b489cecb9a7020cd5af"
           />
         </NotifiContext>
       )}
-    </Modal>
+    </>
   );
 };

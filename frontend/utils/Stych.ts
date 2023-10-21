@@ -1,4 +1,5 @@
 import * as stytch from "stytch";
+import { computePublicKey } from "./Lit";
 
 const STYTCH_PROJECT_ID: string | undefined =
   process.env.NEXT_PUBLIC_STYTCH_PROJECT_ID;
@@ -149,3 +150,33 @@ const stytchOtpMethod = async (
 // Methods that can be used to loginOrCreateUser
 // 1. OTPs
 // 2. MagicLink
+
+export const getStytchPubKey = async (
+  mobile: string | undefined,
+  email: string | undefined
+): Promise<{ publicKey: string | undefined; userId: any } | undefined> => {
+  try {
+    const res = await fetch("/api/getUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ mobile, email }),
+    });
+    const result = await res.json();
+    const user_id = result.user[0].user_id;
+    console.log(user_id);
+
+    if (!STYTCH_PROJECT_ID) {
+      throw Error("Could not find stytch project secret or id in enviorment");
+    }
+
+    // compute public Key
+    //   console.log(user_id, STYTCH_PROJECT_ID);
+    const publicKey = await computePublicKey(user_id, STYTCH_PROJECT_ID);
+    console.log(publicKey);
+    return { publicKey, userId: user_id };
+  } catch (error) {
+    console.log(error);
+  }
+};

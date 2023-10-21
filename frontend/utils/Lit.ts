@@ -10,7 +10,6 @@ import { PKPEthersWallet } from "@lit-protocol/pkp-ethers";
 import { PKPWalletConnect } from "@lit-protocol/pkp-walletconnect";
 
 import * as publicKeyToAddress from "ethereum-public-key-to-address";
-//   import prompts from "prompts";
 import dotenv from "dotenv";
 dotenv.config();
 import * as stytch from "stytch";
@@ -41,20 +40,13 @@ const STYTCH_SECRET: string | undefined = process.env.NEXT_PUBLIC_STYTCH_SECRET;
 
 if (!STYTCH_PROJECT_ID || !STYTCH_SECRET) {
   throw Error("Could not find stytch project secret or id in enviorment");
-  // console.log("Could not find stytch project secret or id in enviorment")
 }
-// const litNodeClient = new LitNodeClientNodeJs({
-//   litNetwork: "cayenne",
-//   debug: true,
-// });
 
 const litNodeClient = new LitNodeClient({
   litNetwork: "cayenne",
   debug: true,
 });
 
-// await litNodeClient.connect();
-console.log(LIT_RELAY_API_KEY);
 const litAuthClient = new LitAuthClient({
   litRelayConfig: {
     relayApiKey: `${LIT_RELAY_API_KEY}`,
@@ -102,7 +94,7 @@ export const prepareDiscordAuthMethod = async (): Promise<{
   const provider = litAuthClient.initProvider<DiscordProvider>(
     ProviderType.Discord,
     {
-      redirectUri: "http://localhost:3000/authenticate",
+      redirectUri: "http://localhost:3000/get-started",
       clientId: DISCORD_CLIENT_ID,
     }
   );
@@ -119,7 +111,7 @@ export const prepareGoogleAuthMethod = async (): Promise<{
   const provider = litAuthClient.initProvider<GoogleProvider>(
     ProviderType.Google,
     {
-      redirectUri: "http://localhost:3000/authenticate",
+      redirectUri: "http://localhost:3000/get-started",
     }
   );
 
@@ -175,7 +167,7 @@ export const handleDiscordRedirect = async (): Promise<{
   const provider = litAuthClient.initProvider<DiscordProvider>(
     ProviderType.Discord,
     {
-      redirectUri: "http://localhost:3000/authenticate",
+      redirectUri: "http://localhost:3000/get-started",
       clientId: DISCORD_CLIENT_ID,
     }
   );
@@ -189,10 +181,10 @@ export const handleGoogleRedirect = async (): Promise<{
   authMethod: AuthMethod;
   authProvider: BaseProvider;
 }> => {
-  const provider = litAuthClient.initProvider<DiscordProvider>(
+  const provider = litAuthClient.initProvider<GoogleProvider>(
     ProviderType.Google,
     {
-      redirectUri: "http://localhost:3000/authenticate",
+      redirectUri: "http://localhost:3000/get-started",
     }
   );
   const authMethod = await provider.authenticate();
@@ -205,7 +197,10 @@ export const handleWebAuthnLogin = async (): Promise<{
   authMethod: AuthMethod;
   authProvider: BaseProvider;
 }> => {
-  const provider = litAuthClient.getProvider(ProviderType.WebAuthn);
+  const provider = litAuthClient.initProvider<WebAuthnProvider>(
+    ProviderType.WebAuthn
+  );
+
   const authMethod = await provider.authenticate();
   console.log(authMethod);
 
@@ -278,7 +273,7 @@ export const generateSessionSigs = async (
       pkpPublicKey: pkp.publicKey,
       expiration: params.expiration,
       resources: params.resources,
-      chainId: 1,
+      chainId: 1101,
     });
     return response.authSig;
   };
@@ -286,7 +281,7 @@ export const generateSessionSigs = async (
   try {
     const sessionSigs = await litNodeClient
       .getSessionSigs({
-        chain: "ethereum",
+        chain: "zkEVM",
         expiration: new Date(
           Date.now() + 1000 * 60 * 60 * 24 * 7
         ).toISOString(),

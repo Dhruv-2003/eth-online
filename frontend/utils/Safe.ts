@@ -51,7 +51,7 @@ export const prepareSendNativeTransactionData = async (
   destinationAddress: string,
   withdrawAmount: string,
   safeSDK: Safe
-) => {
+): Promise<string | undefined> => {
   const safeTransactionData: SafeTransactionDataPartial = {
     to: destinationAddress,
     data: "0x", // leave blank for native token transfers
@@ -63,21 +63,22 @@ export const prepareSendNativeTransactionData = async (
     safeTransactionData,
   });
 
-  const signedSafeTx = await safeSDK.signTransaction(safeTransaction);
+  // safeSDK.getContractManager().safeContract?.encode
+
+  // const signedSafeTx = await safeSDK.signTransaction(safeTransaction);
   if (!safeSDK) return;
   const encodedTx = safeSDK
     .getContractManager()
     .safeContract?.encode("execTransaction", [
-      signedSafeTx.data.to,
-      signedSafeTx.data.value,
-      signedSafeTx.data.data,
-      signedSafeTx.data.operation,
-      signedSafeTx.data.safeTxGas,
-      signedSafeTx.data.baseGas,
-      signedSafeTx.data.gasPrice,
-      signedSafeTx.data.gasToken,
-      signedSafeTx.data.refundReceiver,
-      signedSafeTx.encodedSignatures(),
+      safeTransaction.data.to,
+      safeTransaction.data.value,
+      safeTransaction.data.data,
+      safeTransaction.data.operation,
+      safeTransaction.data.safeTxGas,
+      safeTransaction.data.baseGas,
+      safeTransaction.data.gasPrice,
+      safeTransaction.data.gasToken,
+      safeTransaction.data.refundReceiver,
     ]);
 
   return encodedTx;
