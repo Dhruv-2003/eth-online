@@ -1,6 +1,6 @@
 import Image from "next/image";
 import * as stytch from "stytch";
-import { prepareDiscordAuthMethod } from "@/utils/Lit";
+import { prepareDiscordAuthMethod, prepareGoogleAuthMethod } from "@/utils/Lit";
 
 export default function Home() {
   return (

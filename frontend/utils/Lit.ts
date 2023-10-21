@@ -10,7 +10,6 @@ import { PKPEthersWallet } from "@lit-protocol/pkp-ethers";
 import { PKPWalletConnect } from "@lit-protocol/pkp-walletconnect";
 
 import * as publicKeyToAddress from "ethereum-public-key-to-address";
-//   import prompts from "prompts";
 import dotenv from "dotenv";
 dotenv.config();
 import * as stytch from "stytch";
@@ -41,20 +40,13 @@ const STYTCH_SECRET: string | undefined = process.env.NEXT_PUBLIC_STYTCH_SECRET;
 
 if (!STYTCH_PROJECT_ID || !STYTCH_SECRET) {
   throw Error("Could not find stytch project secret or id in enviorment");
-  // console.log("Could not find stytch project secret or id in enviorment")
 }
-// const litNodeClient = new LitNodeClientNodeJs({
-//   litNetwork: "cayenne",
-//   debug: true,
-// });
 
 const litNodeClient = new LitNodeClient({
   litNetwork: "cayenne",
   debug: true,
 });
 
-// await litNodeClient.connect();
-console.log(LIT_RELAY_API_KEY);
 const litAuthClient = new LitAuthClient({
   litRelayConfig: {
     relayApiKey: `${LIT_RELAY_API_KEY}`,
