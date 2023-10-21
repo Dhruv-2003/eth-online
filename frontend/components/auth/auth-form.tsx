@@ -28,6 +28,10 @@ import { AuthMethod } from "@lit-protocol/types";
 import { BaseProvider, isSignInRedirect } from "@lit-protocol/lit-auth-client";
 import { useRouter } from "next/router";
 import { useStytchSession, useStytchUser } from "@stytch/nextjs";
+import { PKPEthersWallet } from "@lit-protocol/pkp-ethers";
+import { POLYGON_ZKEVM } from "@/constants/networks";
+import { Payments } from "@/utils/payments";
+import { ethers } from "ethers";
 
 export function CreateAccount() {
   const [email, setEmail] = useState<string>();
@@ -43,7 +47,12 @@ export function CreateAccount() {
   const {
     authMethod,
     authProvider,
-  }: { authMethod: AuthMethod; authProvider: BaseProvider } = useAuth();
+    pkpWallet,
+  }: {
+    authMethod: AuthMethod;
+    authProvider: BaseProvider;
+    pkpWallet: PKPEthersWallet;
+  } = useAuth();
 
   const completeStytchAuth = async () => {
     try {
@@ -118,6 +127,29 @@ export function CreateAccount() {
     }
   };
 
+  // const signMessage = async () => {
+  //   try {
+  //     if (pkpWallet) {
+  //       await pkpWallet.init();
+  //       await pkpWallet.setRpc(POLYGON_ZKEVM);
+  //       // const signature = await pkpWallet?.signMessage("GM Frens");
+  //       // console.log(signature);
+  //       console.log(pkpWallet?._isSigner);
+
+  //       // const tx = await Payments();
+  //       // const signature2 = await pkpWallet?.signTransaction(tx);
+  //       // console.log(signature2);
+  //       pkpWallet.rpcProvider;
+
+  //       console.log(pkpWallet.rpcProvider);
+
+  //       // pkpWallet.connect();
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   return (
     <>
       <Tabs defaultValue="email" className="w-2/3">
@@ -178,7 +210,7 @@ export function CreateAccount() {
             <CardHeader>
               <CardTitle>Social Login</CardTitle>
               <CardDescription>
-              Login using your social accounts like Google and Discord
+                Login using your social accounts like Google and Discord
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
@@ -211,6 +243,14 @@ export function CreateAccount() {
                 </Button>
               </div>
             </CardContent>
+            <CardFooter>
+              {/* <Button onClick={fetchPKPsandPrepare} className=" w-full">
+                Complete Auth
+              </Button> */}
+              {/* <Button onClick={signMessage} className=" w-full">
+                Sign
+              </Button> */}
+            </CardFooter>
           </Card>
         </TabsContent>
       </Tabs>

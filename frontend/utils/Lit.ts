@@ -94,7 +94,7 @@ export const prepareDiscordAuthMethod = async (): Promise<{
   const provider = litAuthClient.initProvider<DiscordProvider>(
     ProviderType.Discord,
     {
-      redirectUri: "http://localhost:3000/authenticate",
+      redirectUri: "http://localhost:3000/get-started",
       clientId: DISCORD_CLIENT_ID,
     }
   );
@@ -111,7 +111,7 @@ export const prepareGoogleAuthMethod = async (): Promise<{
   const provider = litAuthClient.initProvider<GoogleProvider>(
     ProviderType.Google,
     {
-      redirectUri: "http://localhost:3000/authenticate",
+      redirectUri: "http://localhost:3000/get-started",
     }
   );
 
@@ -167,7 +167,7 @@ export const handleDiscordRedirect = async (): Promise<{
   const provider = litAuthClient.initProvider<DiscordProvider>(
     ProviderType.Discord,
     {
-      redirectUri: "http://localhost:3000/authenticate",
+      redirectUri: "http://localhost:3000/get-started",
       clientId: DISCORD_CLIENT_ID,
     }
   );
@@ -184,7 +184,7 @@ export const handleGoogleRedirect = async (): Promise<{
   const provider = litAuthClient.initProvider<GoogleProvider>(
     ProviderType.Google,
     {
-      redirectUri: "http://localhost:3000/authenticate",
+      redirectUri: "http://localhost:3000/get-started",
     }
   );
   const authMethod = await provider.authenticate();

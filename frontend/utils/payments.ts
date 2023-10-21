@@ -1,9 +1,9 @@
 import { SDAI_ABI, SDAI_TOKEN_ZKEVM } from "@/constants/contracts";
 import { POLYGON_ZKEVM } from "@/constants/networks";
-import { ethers } from "ethers";
+import { ethers, PopulatedTransaction } from "ethers";
 import { prepareSendTransaction } from "wagmi/actions";
 
-export const Payments = async () => {
+export const Payments = async (): Promise<PopulatedTransaction> => {
   const recieverAddress: `0x${string}` =
     "0x898d0DBd5850e086E6C09D2c83A26Bb5F1ff8C33";
   const amount = "1";
@@ -24,16 +24,18 @@ export const Payments = async () => {
     throw new Error("invalid token address supplied");
   }
 
-  const { data } = await tokenContract.populateTransaction.transfer(
+  const txData = await tokenContract.populateTransaction.transfer(
     recieverAddress, // receiver address
     ethers.utils.parseUnits(amount.toString(), decimals)
   );
 
-  const tx = {
-    to: SDAI_TOKEN_ZKEVM,
-    data: data,
-    value: "0",
-  };
+  // const tx = {
+  //   to: SDAI_TOKEN_ZKEVM,
+  //   data: data,
+  //   value: "0",
+  // };
+
+  return txData;
 
   // tx can be signed and then sent via relayer or directly
 };

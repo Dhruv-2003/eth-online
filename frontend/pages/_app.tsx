@@ -102,11 +102,11 @@ export default function App({ Component, pageProps }: AppProps) {
         const PKPs = await fetchPkps(authProvider, authMethod);
         console.log(PKPs);
         if (PKPs?.length) {
-          const sigs = await generateSessionSigs(authMethod, PKPs[1]);
-          setPKP(PKPs[1]);
+          const sigs = await generateSessionSigs(authMethod, PKPs[0]);
+          setPKP(PKPs[0]);
           if (sigs) {
             setSessionSigs(sigs);
-            const wallet = await preparePKPWallet(PKPs[1], sigs, POLYGON_ZKEVM);
+            const wallet = await preparePKPWallet(PKPs[0], sigs, POLYGON_ZKEVM);
             console.log(wallet);
             setPkpWallet(wallet);
             // const pkpClient = new pkpWalletConnect(PKPs[1], sigs);

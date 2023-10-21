@@ -34,7 +34,7 @@ export default function ChatWindow() {
   const [option, setOption] = useState<string>("");
   const [intentResult, setIntentResult] = useState<any>();
 
-  const [showChat, setShowChat] = useState<boolean>(true);
+  const [showChat, setShowChat] = useState<boolean>(false);
 
   const initXmtp = async () => {
     // @ts-ignore
@@ -207,13 +207,13 @@ export default function ChatWindow() {
               />
               <Button
                 onClick={() => {
-              if (option === "message") {
-                sendMessage();
-              }
-              if (option === "intent") {
-                getIntentResult();
-              }
-            }}
+                  if (option === "message") {
+                    sendMessage();
+                  }
+                  if (option === "intent") {
+                    getIntentResult();
+                  }
+                }}
                 className=" absolute right-20 top-2"
               >
                 Send
