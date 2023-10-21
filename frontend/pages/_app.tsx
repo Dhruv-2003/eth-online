@@ -88,6 +88,7 @@ export default function App({ Component, pageProps }: AppProps) {
           console.log(claimRes);
           // const mint = await authProvider?.mintPKPThroughRelayer(authMethod);
           // console.log(mint);
+          // create Safe for the user
         }
       }
     } catch (error) {
