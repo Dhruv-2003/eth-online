@@ -34,7 +34,7 @@ export default function ChatWindow() {
   const [option, setOption] = useState<string>("");
   const [intentResult, setIntentResult] = useState<any>();
 
-  const [showChat, setShowChat] = useState<boolean>(false);
+  const [showChat, setShowChat] = useState<boolean>(true);
 
   const initXmtp = async () => {
     // @ts-ignore
@@ -167,73 +167,74 @@ export default function ChatWindow() {
     // dark:bg-[#0a0811] border rounded-xl  border-slate-200 dark:border-slate-700
     <>
       {showChat ? (
-        <div className=" min-w-[80vw] mx-auto flex flex-col max-h-[83vh] h-[83vh] border rounded-xl b-[#18181b] p-6">
-          <div className="flex flex-col items-start justify-normal w-full">
-            {messages &&
-              messages.map((message, key) => {
-                return (
-                  <div key={key} className="self-start">
-                    {message.senderAddress == peerAddress && (
-                      <Message color={receiver} message={message} />
-                    )}
-                  </div>
-                );
-              })}
-            {messages &&
-              messages.map((message, key) => {
-                return (
-                  <div key={key} className="self-end">
-                    {message.senderAddress != peerAddress && (
-                      <Message color={sender} message={message} />
-                    )}
-                  </div>
-                );
-              })}
-            <div className="self-end">
-              <PayMessage status="S" color={sender} amount={300} />
+        <div className=" flex items-center justify-center gap-x-4">
+          <UserList />
+          <div className=" min-w-[60vw] mx-auto flex flex-col max-h-[83vh] h-[83vh] border rounded-xl b-[#18181b] p-6">
+            <div className="flex flex-col items-start justify-normal w-full">
+              {messages &&
+                messages.map((message, key) => {
+                  return (
+                    <div key={key} className="self-start">
+                      {message.senderAddress == peerAddress && (
+                        <Message color={receiver} message={message} />
+                      )}
+                    </div>
+                  );
+                })}
+              {messages &&
+                messages.map((message, key) => {
+                  return (
+                    <div key={key} className="self-end">
+                      {message.senderAddress != peerAddress && (
+                        <Message color={sender} message={message} />
+                      )}
+                    </div>
+                  );
+                })}
+              <div className="self-end">
+                <PayMessage status="S" color={sender} amount={300} />
+              </div>
+              <div className="self-start">
+                <PayMessage status="R" color={sender} amount={300} />
+              </div>
             </div>
-            <div className="self-start">
-              <PayMessage status="R" color={sender} amount={300} />
+            {/* <div className=" mt-auto bg-black p-3 border rounded-md border-slate-700 "> */}
+            <div className=" flex items-center mt-auto justify-between gap-x-3">
+              <div className=" relative w-10/12">
+                <Input
+                  value={outgoingMessage}
+                  onChange={(e) => setOutgoingMessage(e.target.value)}
+                  className="  py-7 px-4"
+                  placeholder=" Chat or enter amount to pay "
+                />
+                <Button
+                  onClick={() => {
+                    if (option === "message") {
+                      sendMessage();
+                    }
+                    if (option === "intent") {
+                      getIntentResult();
+                    }
+                  }}
+                  className=" absolute right-20 top-2"
+                >
+                  Send
+                </Button>
+                <Button className=" absolute right-3 top-2">Pay</Button>
+              </div>
+              <Select>
+                <SelectTrigger className="w-[180px] py-7">
+                  <SelectValue placeholder="Select a type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="message">Message</SelectItem>
+                    <SelectItem value="intent">Intent</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
             </div>
           </div>
-          {/* <div className=" mt-auto bg-black p-3 border rounded-md border-slate-700 "> */}
-          <div className=" flex items-center mt-auto justify-between gap-x-3">
-            <div className=" relative w-10/12">
-              <Input
-                value={outgoingMessage}
-                onChange={(e) => setOutgoingMessage(e.target.value)}
-                className="  py-7 px-4"
-                placeholder=" Chat or enter amount to pay "
-              />
-              <Button
-                onClick={() => {
-                  if (option === "message") {
-                    sendMessage();
-                  }
-                  if (option === "intent") {
-                    getIntentResult();
-                  }
-                }}
-                className=" absolute right-20 top-2"
-              >
-                Send
-              </Button>
-              <Button className=" absolute right-3 top-2">Pay</Button>
-            </div>
-            <Select>
-              <SelectTrigger className="w-[180px] py-7">
-                <SelectValue placeholder="Select a type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="message">Message</SelectItem>
-                  <SelectItem value="intent">Intent</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* </div> */}
         </div>
       ) : (
         <Card className=" min-w-[80vw] mx-auto flex flex-col items-center justify-center max-h-[83vh] h-[83vh] border rounded-xl bg-transparent p-6">
@@ -282,6 +283,46 @@ const PayMessage = ({
       <div className="">{status === "S" && "You Sent"}</div>
       <div className="">{status === "R" && "You Received"}</div>
       <div className=" text-3xl font-semibold tracking-wide"> $ {amount}</div>
+    </div>
+  );
+};
+
+const UserList = () => {
+  return (
+    <div className=" border  w-64 max-h-[83vh] h-[83vh] overflow-auto scrollbar-hide  rounded-xl relative">
+      {/* fixed w-60 mx-auto  */}
+      <div className=" px-4 py-2 text-lg font-semibold tracking-wide  bg-opacity-20 backdrop-blur-md bg-indigo-950  rounded-t-xl">
+        Users
+      </div>
+      <div className="px-4 pt14 py-3">
+        <User name="Alice" />
+        <User name="Bob" />
+        <User name="Dhruv" />
+        <User name="Archit" />
+        <User name="Kushagra" />
+        <User name="Alice" />
+        <User name="Bob" />
+        <User name="Dhruv" />
+        <User name="Archit" />
+        <User name="Kushagra" />
+        <User name="Alice" />
+        <User name="Bob" />
+        <User name="Dhruv" />
+        <User name="Archit" />
+        <User name="Kushagra" />
+        <User name="Alice" />
+        <User name="Bob" />
+        <User name="Dhruv" />
+        <User name="Archit" />
+        <User name="Kushagra" />
+      </div>
+    </div>
+  );
+};
+const User = ({ name }: { name: string }) => {
+  return (
+    <div className=" px-4 py-2.5  w-full h-full rounded-md my-2 bg-indigo-950 bg-opacity-60 hover:bg-indigo-950 hover:bg-opacity-100  hover:cursor-pointer">
+      <div>{name}</div>
     </div>
   );
 };
