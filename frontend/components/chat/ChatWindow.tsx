@@ -291,7 +291,7 @@ const PayMessage = ({
 
 const UserList = () => {
   return (
-    <div className=" border  w-64 max-h-[83vh] h-[83vh] overflow-auto scrollbar-hide  rounded-xl relative">
+    <div className=" border  w-72 max-h-[83vh] h-[83vh] overflow-auto scrollbar-hide  rounded-xl relative">
       {/* fixed w-60 mx-auto  */}
       <div className=" px-4 py-2 text-lg font-semibold tracking-wide  bg-opacity-20 backdrop-blur-md bg-indigo-950  rounded-t-xl">
         Users
@@ -311,7 +311,7 @@ const UserList = () => {
 };
 const User = ({ name, lastMessage }: { name: string; lastMessage: string }) => {
   return (
-    <div className=" flex items-center justify-noraml gap-x-3 px-4 py-2.5  w-full h-full rounded-md my-2 bg-indigo-950 bg-opacity-60 hover:bg-indigo-950 hover:bg-opacity-100  hover:cursor-pointer">
+    <div className=" flex items-center justify-noraml gap-x-3 px-4 py-3  w-full h-full rounded-md my-3 bg-indigo-950 bg-opacity-60 hover:bg-indigo-950 hover:bg-opacity-100  hover:cursor-pointer">
       <Image
         className=" w-10 h-10 rounded-full border-2 border-indigo-900 "
         src={user}
@@ -319,7 +319,7 @@ const User = ({ name, lastMessage }: { name: string; lastMessage: string }) => {
       />
       <div>
         <div className=" font-semibold tracking-wide">{name}</div>
-        <div className=" line-clamp-1 pt-0.5 text-xs">{lastMessage}</div>
+        <div className=" line-clamp-1 pt-1.5 text-xs">{lastMessage}</div>
       </div>
     </div>
   );

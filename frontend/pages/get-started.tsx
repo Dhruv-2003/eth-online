@@ -22,8 +22,9 @@ export default function Onboarding() {
           et id dicta?
         </p>
       </div>
-      <div className=" h-screen w-1/2  flex-col dark:bg-fixed dark:bg-gradient-to-t from-[#070a12] via-[#0c0214] to-[#120131] flex items-center justify-center">
+      <div className=" relative h-screen w-1/2  flex-col dark:bg-fixed dark:bg-gradient-to-t from-[#070a12] via-[#0c0214] to-[#120131] flex items-center justify-center">
         <CreateAccount />
+        <Link className=" absolute bottom-2 right-4 text-black" href={"/dashboard"}>Dashboard</Link>
       </div>
     </div>
   );

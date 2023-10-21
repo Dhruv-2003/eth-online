@@ -32,6 +32,10 @@ import { PKPEthersWallet } from "@lit-protocol/pkp-ethers";
 import { POLYGON_ZKEVM } from "@/constants/networks";
 import { Payments } from "@/utils/payments";
 import { ethers } from "ethers";
+import { TaskSuccessful } from "../invite-modal";
+import Image from "next/image";
+import check from "@/assets/check.gif";
+import Link from "next/link";
 
 export function CreateAccount() {
   const [email, setEmail] = useState<string>();
@@ -41,6 +45,7 @@ export function CreateAccount() {
   const router = useRouter();
   const { user } = useStytchUser();
   const { session } = useStytchSession();
+  const [accountCreated, setAccountCreated] = useState<boolean | null>(null);
 
   const { setAuthMethod, setAuthProvider } = useAuth();
   const { mintOrClaimPKP, fetchPKPsandPrepare } = useAuth();
@@ -152,110 +157,175 @@ export function CreateAccount() {
 
   return (
     <>
-      <Tabs defaultValue="email" className="w-2/3">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="email">Account</TabsTrigger>
-          <TabsTrigger value="social">Social</TabsTrigger>
-        </TabsList>
-        <TabsContent value="email">
-          <Card className="min-h-[300px]">
-            <CardHeader>
-              <CardTitle>Email Login</CardTitle>
-              <CardDescription>
-                Create a new OnBoardr account using your email.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="name">Email</Label>
-                <Input
-                  onChange={(e) => setEmail(e.target.value)}
-                  type="email"
-                  id="email"
-                  placeholder="example@mail.com"
-                />
-                {sendRes && (
+      {accountCreated === false && (
+        <Tabs defaultValue="email" className="w-2/3">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="email">Account</TabsTrigger>
+            <TabsTrigger value="social">Social</TabsTrigger>
+          </TabsList>
+          <TabsContent value="email">
+            <Card className="min-h-[300px]">
+              <CardHeader>
+                <CardTitle>Email Login</CardTitle>
+                <CardDescription>
+                  Create a new OnBoardr account using your email.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="space-y-1">
+                  <Label htmlFor="name">Email</Label>
                   <Input
-                    onChange={(e) => setOTP(e.target.value)}
-                    type="password"
-                    id="otp"
-                    placeholder="enter OTP"
+                    onChange={(e) => setEmail(e.target.value)}
+                    type="email"
+                    id="email"
+                    placeholder="example@mail.com"
                   />
-                )}
-              </div>
-            </CardContent>
-            <CardFooter>
-              {/* Need OTP Input Form */}
-              {OTP ? (
-                <Button onClick={completeStytchAuth} className=" w-full">
-                  Create Account
-                </Button>
-              ) : (
-                <Button
-                  onClick={async () => {
-                    const res = await stytchSendOTP(email, mobile);
-                    setSendRes(res);
-                    console.log("OTP SENT");
-                  }}
-                  className=" w-full"
-                >
-                  SendOTP
-                </Button>
-              )}
-            </CardFooter>
-          </Card>
-        </TabsContent>
-        <TabsContent value="social">
-          <Card className=" min-h-[300px]">
-            <CardHeader>
-              <CardTitle>Social Login</CardTitle>
-              <CardDescription>
-                Login using your social accounts like Google and Discord
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="grid grid-cols-2 gap-6">
-                <Button
-                  onClick={prepareGoogleAuthMethod}
-                  className=" col-span-2"
-                  variant="outline"
-                >
-                  <Icons.google className="mr-2 h-4 w-4" />
-                  Google
-                </Button>
-                <div className=" col-span-2 relative">
-                  <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t" />
-                  </div>
-                  <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-muted-foreground">
-                      Or continue with
-                    </span>
-                  </div>
+                  {sendRes && (
+                    <Input
+                      onChange={(e) => setOTP(e.target.value)}
+                      type="password"
+                      id="otp"
+                      placeholder="enter OTP"
+                    />
+                  )}
                 </div>
-                <Button
-                  onClick={prepareDiscordAuthMethod}
-                  className=" col-span-2"
-                  variant="outline"
-                >
-                  <Icons.discord className="mr-2 h-4 w-4" />
-                  Discord
-                </Button>
-              </div>
-            </CardContent>
-            <CardFooter>
-              {/* <Button onClick={fetchPKPsandPrepare} className=" w-full">
-                Complete Auth
-              </Button> */}
-              {/* <Button onClick={signMessage} className=" w-full">
-                Sign
-              </Button> */}
-            </CardFooter>
-          </Card>
-        </TabsContent>
-      </Tabs>
+              </CardContent>
+              <CardFooter>
+                {/* Need OTP Input Form */}
+                {OTP ? (
+                  <Button onClick={completeStytchAuth} className=" w-full">
+                    Create Account
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={async () => {
+                      const res = await stytchSendOTP(email, mobile);
+                      setSendRes(res);
+                      console.log("OTP SENT");
+                    }}
+                    className=" w-full"
+                  >
+                    SendOTP
+                  </Button>
+                )}
+              </CardFooter>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="social">
+            <Card className=" min-h-[300px]">
+              <CardHeader>
+                <CardTitle>Social Login</CardTitle>
+                <CardDescription>
+                  Login using your social accounts like Google and Discord
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="grid grid-cols-2 gap-6">
+                  <Button
+                    onClick={prepareGoogleAuthMethod}
+                    className=" col-span-2"
+                    variant="outline"
+                  >
+                    <Icons.google className="mr-2 h-4 w-4" />
+                    Google
+                  </Button>
+                  <div className=" col-span-2 relative">
+                    <div className="absolute inset-0 flex items-center">
+                      <span className="w-full border-t" />
+                    </div>
+                    <div className="relative flex justify-center text-xs uppercase">
+                      <span className="bg-background px-2 text-muted-foreground">
+                        Or continue with
+                      </span>
+                    </div>
+                  </div>
+                  <Button
+                    onClick={prepareDiscordAuthMethod}
+                    className=" col-span-2"
+                    variant="outline"
+                  >
+                    <Icons.discord className="mr-2 h-4 w-4" />
+                    Discord
+                  </Button>
+                </div>
+              </CardContent>
+              <CardFooter>
+                {/* <Button onClick={fetchPKPsandPrepare} className=" w-full">
+                    Complete Auth
+                  </Button>
+                  <Button onClick={signMessage} className=" w-full">
+                    Sign
+                  </Button> */}
+              </CardFooter>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      )}
+      {accountCreated && (
+        <Card className=" w-2/3 py-6 min-h-[300px] flex flex-col items-center justify-center">
+          <LoginSuccessful
+            message="Your account have been created"
+            subHeading="Head over to dashboard to explore OnBoardr and kickstrat your journey "
+          />
+          <Link href={"/dashboard"} className=" my-2">
+            <Button>Dashboard</Button>
+          </Link>
+        </Card>
+      )}
+      {accountCreated === null && (
+        <Card className=" w-2/3 py-6 min-h-[300px] gap-y-6 flex flex-col items-center justify-center">
+          <h1 className="  text-xl font-semibold tracking-wide">
+            You need to mint your PKP to create your account
+          </h1>
+
+          <Button>Mint</Button>
+          <p className=" text-center text-gray-400 text-sm max-w-[90%]">
+            PKP is blockchain Account associated with their your Social/Email
+            Accounts
+          </p>
+        </Card>
+      )}
       {/* // dark:bg-fixed dark:bg-gradient-to-t to-[#070a12] via-[#0c0214]
       from-[#120131] */}
     </>
   );
 }
+
+const LoginSuccessful = ({
+  message,
+  subHeading,
+}: {
+  message: string;
+  subHeading?: string;
+}) => {
+  return (
+    <div className=" py-4 flex flex-col items-center justify-center gap-y-6 w-full h-full">
+      <h1 className="  text-xl font-semibold tracking-wide">{message}</h1>
+      <div className="  border-4 border-green-600 rounded-full w-24 h-24 p-5 mx-auto">
+        <Image className=" max-w-[40px] mx-auto  " src={check} alt="check" />
+      </div>
+      <p className=" text-center text-gray-400 text-sm">{subHeading}</p>
+      {/* <TaskSuccessful message="Your account have been created succesfully" /> */}
+    </div>
+  );
+};
+
+// const MintPKP = ({
+//   message,
+//   subHeading,
+// }: {
+//   message: string;
+//   subHeading?: string;
+// }) => {
+//   return (
+//     <div className=" py-4 flex flex-col items-center justify-center gap-y-6 w-full h-full">
+//       <h1 className="  text-xl font-semibold tracking-wide">{message}</h1>
+//       {/* <div className="  border-4 border-green-600 rounded-full w-24 h-24 p-5 mx-auto">
+//         <Image className=" max-w-[40px] mx-auto  " src={check} alt="check" />
+//       </div> */}
+//       <p className=" text-center text-gray-400 text-sm">{subHeading}</p>
+//       {/* <TaskSuccessful message="Your account have been created succesfully" /> */}
+//     </div>
+//   );
+// };
