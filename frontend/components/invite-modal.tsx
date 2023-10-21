@@ -58,32 +58,37 @@ export function InviteFriend() {
             </DialogFooter>
           </>
         ) : (
-          <InviteSuccessful />
+          <TaskSuccessful
+            message="Invitation has been sent to your friend"
+            subHeading="You will recieve your reward once your friend joins OnBoardr"
+          />
         )}
       </DialogContent>
     </Dialog>
   );
 }
 
-const InviteSuccessful = () => {
+export const TaskSuccessful = ({
+  message,
+  subHeading,
+}: {
+  message: string;
+  subHeading?: string;
+}) => {
   return (
     <div className=" relative w-full h-[350px]">
       {/* <Confetti width={460} height={350} /> */}
       <Image
         className=" w-full ob object-cover z-20  max-h-[350px]"
         src={success}
-        alt="Invitation Successful"
+        alt={message}
       />
-      <div className=" py-4 flex flex-col items-center justify-center gap-y-6 bg-gray-950 bg-opacity-10 backdrop-blur-md absolute top-0 w-full h-full">
-        <h1 className="text-xl font-semibold tracking-wide">
-          Invitation has been sent to your friend
-        </h1>
+      <div className=" py-4 flex flex-col items-center justify-center gap-y-6 bg-gray-950 bg-opacity-10 backdrop-blur-[2px] absolute top-0 w-full h-full">
+        <h1 className="text-xl font-semibold tracking-wide">{message}</h1>
         <div className="  border-4 border-green-600 rounded-full w-24 h-24 p-5 mx-auto">
           <Image className=" max-w-[40px] mx-auto  " src={check} alt="check" />
         </div>
-        <p className=" text-center text-gray-400 text-sm">
-          You will recieve your reward once your friend joins OnBoardr
-        </p>
+        <p className=" text-center text-gray-400 text-sm">{subHeading}</p>
       </div>
     </div>
   );
