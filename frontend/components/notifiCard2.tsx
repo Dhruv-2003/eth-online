@@ -5,7 +5,7 @@ import {
   NotifiInputSeparators,
   NotifiSubscriptionCard,
 } from "@notifi-network/notifi-react-card";
-import "@notifi-network/notifi-react-card/dist/index.css";
+// import "@notifi-network/notifi-react-card/dist/index.css";
 import { useEthers } from "@usedapp/core";
 import { providers } from "ethers";
 import React, { useMemo } from "react";
@@ -44,23 +44,23 @@ export const NotifiCard2: React.FC = () => {
   };
 
   return (
-      <NotifiContext
-        dappAddress="junitest.xyz"
-        env="Development"
-        signMessage={async (message: Uint8Array) => {
-          const result = await signer.signMessage(message);
-          return arrayify(result);
-        }}
-        walletPublicKey={account}
-        walletBlockchain="ETHEREUM"
-      >
-        <NotifiSubscriptionCard
-          cardId="005736525c6e40219fd4a704eb0a8374"
-          inputLabels={inputLabels}
-          inputSeparators={inputSeparators}
-          darkMode
-          buttonText="hello"
-        />
-      </NotifiContext>
+    <NotifiContext
+      dappAddress="junitest.xyz"
+      env="Development"
+      signMessage={async (message: Uint8Array) => {
+        const result = await signer.signMessage(message);
+        return arrayify(result);
+      }}
+      walletPublicKey={account}
+      walletBlockchain="ETHEREUM"
+    >
+      <NotifiSubscriptionCard
+        cardId="005736525c6e40219fd4a704eb0a8374"
+        inputLabels={inputLabels}
+        inputSeparators={inputSeparators}
+        darkMode
+        buttonText="hello"
+      />
+    </NotifiContext>
   );
 };
