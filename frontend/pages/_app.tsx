@@ -7,9 +7,10 @@ import "@notifi-network/notifi-react-card/dist/index.css";
 // import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 // import { WagmiConfig, createClient, goerli, configureChains } from "wagmi";
 // import { createPublicClient, http } from "viem";
-import { Lato as FontLato } from "next/font/google";
+import { Montserrat as FontLato } from "next/font/google";
 import { Navbar } from "@/components/ui/Navbar";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import { useRouter } from "next/router";
 
 export const font = FontLato({
   weight: ["300", "400", "700"],
@@ -58,24 +59,28 @@ const stytchClient = createStytchUIClient(STYTCH_PUBLIC_TOKEN as string);
 
 export default function App({ Component, pageProps }: AppProps) {
   const value = {};
+  const router = useRouter();
   return (
     // <QueryClientProvider client={queryClient}>
     //   <WagmiConfig config={config}>
-        <AuthContext.Provider value={value}>
-          <StytchProvider stytch={stytchClient}>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <div className={`${font.className}`}>
-                <Navbar />
-                <Component {...pageProps} />
-              </div>
-            </ThemeProvider>
-          </StytchProvider>
-        </AuthContext.Provider>
+    <AuthContext.Provider value={value}>
+      <StytchProvider stytch={stytchClient}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {/* , ,  */}
+          <div
+            className={`${font.className} dark:bg-fixed dark:bg-gradient-to-t from-[#070a12] via-[#0c0214] to-[#120131]`}
+          >
+            {router.asPath !== "/get-started" && <Navbar />}
+            <Component {...pageProps} />
+          </div>
+        </ThemeProvider>
+      </StytchProvider>
+    </AuthContext.Provider>
     //   {/* </WagmiConfig>
     // </QueryClientProvider> */}
   );

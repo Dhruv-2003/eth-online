@@ -2,6 +2,15 @@ import React, { useState, useRef, useEffect } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import clsx from "clsx";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 // import {startAConversation,sendMessage, fetchAllMessages, listConverstaions,checkIfOnNetwork} from "../../utils/xmtpchat";
 import { useAccount } from "wagmi";
 import { useCallback } from "react";
@@ -173,20 +182,35 @@ export default function ChatWindow() {
         </div>
       </div>
       {/* <div className=" mt-auto bg-black p-3 border rounded-md border-slate-700 "> */}
-      <div className=" relative mt-auto">
-        <Input
-          className="  py-7 px-4"
-          placeholder=" Chat or enter amount to pay "
-          value={outgoingMessage}
-          onChange={(e) => setOutgoingMessage(e.target.value)}
-        />
-        <Button
-          onClick={() => sendMessage()}
-          className=" absolute right-3 top-2"
-        >
-          Send
-        </Button>
+      <div className=" flex items-center mt-auto justify-between gap-x-3">
+        <div className=" relative w-10/12">
+          <Input
+            value={outgoingMessage}
+            onChange={(e) => setOutgoingMessage(e.target.value)}
+            className="  py-7 px-4"
+            placeholder=" Chat or enter amount to pay "
+          />
+          <Button
+            onClick={() => sendMessage()}
+            className=" absolute right-20 top-2"
+          >
+            Send Message
+          </Button>
+          <Button className=" absolute right-3 top-2">Pay</Button>
+        </div>
+        <Select>
+          <SelectTrigger className="w-[180px] py-7">
+            <SelectValue placeholder="Select a type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectItem value="message">Message</SelectItem>
+              <SelectItem value="intent">Intent</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       </div>
+
       {/* </div> */}
     </div>
   );

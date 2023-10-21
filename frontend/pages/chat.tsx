@@ -10,7 +10,7 @@ export default function Chat() {
       {/* <div className=" mb-1">
         <Button>Send new</Button>
       </div> */}
-      <div className=" mt-10 w-full">
+      <div className=" mt-10 w-full flex items-center justify-center">
         <ChatWindow />
       </div>
     </DashboardNavigation>
