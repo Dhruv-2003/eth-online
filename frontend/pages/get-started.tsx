@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function Onboarding() {
   return (
     <div className=" flex items-center justify-center min-h-screen">
-      <div className=" relative px-20 w-1/2 border-r h-screen bg-white text-black flex flex-col items-center justify-center">
+      <div className=" relative px-20 w-1/2 border-r h-screen bg-[#fbfbfb] text-black flex flex-col items-center justify-center">
         <Link
           href={"/"}
           className=" left-10 text-3xl font-semibold tracking-wide absolute top-10"
