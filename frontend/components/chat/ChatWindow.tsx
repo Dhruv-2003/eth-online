@@ -16,6 +16,8 @@ import { useAccount } from "wagmi";
 import { useCallback } from "react";
 import { providers } from "ethers";
 import { Client, DecodedMessage } from "@xmtp/xmtp-js";
+import { Card, CardTitle } from "../ui/card";
+import { InviteFriend } from "../invite-modal";
 
 const sender = " bg-black text-white dark:bg-white dark:text-black";
 const receiver = " bg-indigo-600 text-white";
@@ -31,6 +33,8 @@ export default function ChatWindow() {
   const [outgoingMessage, setOutgoingMessage] = useState<string>("");
   const [messages, setMessages] = useState<DecodedMessage[]>();
   const [users, setUsers] = useState<any>();
+
+  const [showChat, setShowChat] = useState<boolean>(false);
 
   const initXmtp = async () => {
     // @ts-ignore
@@ -144,6 +148,7 @@ export default function ChatWindow() {
     // @ts-ignore
     const xmtpClient = await xmtp_client;
     if (xmtpClient && window) {
+      // @ts-ignore
       const provider = new providers.Web3Provider(window?.ethereum);
       const [address] = await provider.listAccounts();
       const isOnNetwork = await xmtpClient.canMessage(address);
@@ -152,67 +157,80 @@ export default function ChatWindow() {
   };
 
   return (
-    <div className=" min-w-[80vw] mx-auto flex flex-col max-h-[83vh] h-[83vh]  b-[#18181b] dark:bg-[#0a0811] border rounded-xl  border-slate-200 dark:border-slate-700 p-6">
-      <div className="flex flex-col items-start justify-normal w-full">
-        {messages &&
-          messages.map((message, key) => {
-            return (
-              <div key={key} className="self-start">
-                {message.senderAddress == peerAddress && (
-                  <Message color={receiver} message={message} />
-                )}
-              </div>
-            );
-          })}
-        {messages &&
-          messages.map((message, key) => {
-            return (
-              <div key={key} className="self-end">
-                {message.senderAddress != peerAddress && (
-                  <Message color={sender} message={message} />
-                )}
-              </div>
-            );
-          })}
-        <div className="self-end">
-          <PayMessage status="S" color={sender} amount={300} />
-        </div>
-        <div className="self-start">
-          <PayMessage status="R" color={sender} amount={300} />
-        </div>
-      </div>
-      {/* <div className=" mt-auto bg-black p-3 border rounded-md border-slate-700 "> */}
-      <div className=" flex items-center mt-auto justify-between gap-x-3">
-        <div className=" relative w-10/12">
-          <Input
-            value={outgoingMessage}
-            onChange={(e) => setOutgoingMessage(e.target.value)}
-            className="  py-7 px-4"
-            placeholder=" Chat or enter amount to pay "
-          />
-          <Button
-            onClick={() => sendMessage()}
-            className=" absolute right-20 top-2"
-          >
-            Send Message
-          </Button>
-          <Button className=" absolute right-3 top-2">Pay</Button>
-        </div>
-        <Select>
-          <SelectTrigger className="w-[180px] py-7">
-            <SelectValue placeholder="Select a type" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectItem value="message">Message</SelectItem>
-              <SelectItem value="intent">Intent</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div>
+    // dark:bg-[#0a0811] border rounded-xl  border-slate-200 dark:border-slate-700
+    <>
+      {showChat ? (
+        <div className=" min-w-[80vw] mx-auto flex flex-col max-h-[83vh] h-[83vh] border rounded-xl b-[#18181b] p-6">
+          <div className="flex flex-col items-start justify-normal w-full">
+            {messages &&
+              messages.map((message, key) => {
+                return (
+                  <div key={key} className="self-start">
+                    {message.senderAddress == peerAddress && (
+                      <Message color={receiver} message={message} />
+                    )}
+                  </div>
+                );
+              })}
+            {messages &&
+              messages.map((message, key) => {
+                return (
+                  <div key={key} className="self-end">
+                    {message.senderAddress != peerAddress && (
+                      <Message color={sender} message={message} />
+                    )}
+                  </div>
+                );
+              })}
+            <div className="self-end">
+              <PayMessage status="S" color={sender} amount={300} />
+            </div>
+            <div className="self-start">
+              <PayMessage status="R" color={sender} amount={300} />
+            </div>
+          </div>
+          {/* <div className=" mt-auto bg-black p-3 border rounded-md border-slate-700 "> */}
+          <div className=" flex items-center mt-auto justify-between gap-x-3">
+            <div className=" relative w-10/12">
+              <Input
+                value={outgoingMessage}
+                onChange={(e) => setOutgoingMessage(e.target.value)}
+                className="  py-7 px-4"
+                placeholder=" Chat or enter amount to pay "
+              />
+              <Button
+                onClick={() => sendMessage()}
+                className=" absolute right-20 top-2"
+              >
+                Send Message
+              </Button>
+              <Button className=" absolute right-3 top-2">Pay</Button>
+            </div>
+            <Select>
+              <SelectTrigger className="w-[180px] py-7">
+                <SelectValue placeholder="Select a type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="message">Message</SelectItem>
+                  <SelectItem value="intent">Intent</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
 
-      {/* </div> */}
-    </div>
+          {/* </div> */}
+        </div>
+      ) : (
+        <Card className=" min-w-[80vw] mx-auto flex flex-col items-center justify-center max-h-[83vh] h-[83vh] border rounded-xl bg-transparent p-6">
+          <CardTitle>Invite your friends to chat with them or pay</CardTitle>
+          <div className=" mt-3">
+            <InviteFriend />
+          </div>
+          {/* <Button className=" mt-3">Invite</Button> */}
+        </Card>
+      )}
+    </>
   );
 }
 
