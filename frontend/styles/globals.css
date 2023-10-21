@@ -75,3 +75,15 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* body {
+  background: linear-gradient(to top, rgb(17, 24, 39), rgb(88, 28, 135), rgb(124, 58, 237));
+  background: linear-gradient(to top, #070a12, #0c0214, #120131);
+  background-attachment: fixed;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: white;
+  }
+} */

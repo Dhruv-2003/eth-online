@@ -16,20 +16,27 @@ import { ModeToggle } from "./toggle-theme";
 
 export function Navbar() {
   return (
-    <div className="border-slate-200 border-b dark:border-slate-700 flex items-center justify-between px-12 py-3">
-      <Link className=" text-xl tracking-wide font-semibold" href={"/"}>OnBoardr</Link>
+    <div className=" border-slate-200 border-b dark:border-slate-700 flex items-center justify-between px-12 py-3">
+      <Link className=" text-xl tracking-wide font-semibold" href={"/"}>
+        OnBoardr
+      </Link>
       <div className=" flex items-center justify-normal gap-x-3">
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <Link href="/get-started" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Get Started
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+        {/* <NavigationMenu> */}
+        {/* <NavigationMenuList> */}
+        {/* <NavigationMenuItem> */}
+        <Link
+          className=" cursor-pointer text-sm"
+          href="/get-started"
+          legacyBehavior
+          passHref
+        >
+          {/* <NavigationMenuLink className={navigationMenuTriggerStyle()}> */}
+          Get Started
+          {/* </NavigationMenuLink> */}
+        </Link>
+        {/* </NavigationMenuItem> */}
+        {/* </NavigationMenuList> */}
+        {/* </NavigationMenu> */}
         <ModeToggle />
       </div>
     </div>

@@ -6,7 +6,7 @@ import mascoot from "@/assets/mascoot.png";
 export default function Dashboard() {
   return (
     <DashboardNavigation>
-      <div>
+      <div className="">
         Dashboard
         {/* <Image src={mascoot}
         className=" max-h-[600px] object-cover object-center" alt="mascoot" /> */}
