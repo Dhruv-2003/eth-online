@@ -14,6 +14,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     // the message will show the user has received a message , a payment or some sort of reward
     // If new user , will get an onboarding message along with the info
 
+    // 1. Inviting : senderName , recieverName , pfp , email , inviteLink , shortMessage(type)
+    // 2. Reward User by Company : marketing email, send rewards
+
     const { to, subject, name, sender, templateType, shortMessage } = body;
 
     const data = await resend.emails.send({

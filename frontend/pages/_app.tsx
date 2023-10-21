@@ -4,9 +4,9 @@ import { createStytchUIClient } from "@stytch/nextjs/ui";
 import { StytchProvider } from "@stytch/nextjs";
 import { AuthContext } from "@/context/authContext";
 import "@notifi-network/notifi-react-card/dist/index.css";
-// import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-// import { WagmiConfig, createClient, goerli, configureChains } from "wagmi";
-// import { createPublicClient, http } from "viem";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { WagmiConfig, createClient, goerli, configureChains } from "wagmi";
+import { createPublicClient, http } from "viem";
 import { Montserrat as FontLato } from "next/font/google";
 import { Navbar } from "@/components/ui/Navbar";
 import { ThemeProvider } from "@/components/ui/theme-provider";
@@ -31,14 +31,14 @@ export const font = FontLato({
   subsets: ["latin"],
   variable: "--font-lato",
 });
-// import { alchemyProvider } from "wagmi/providers/alchemy";
-// import { publicProvider } from "wagmi/providers/public";
-// import { InjectedConnector } from "wagmi/connectors/injected";
+import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
+import { InjectedConnector } from "wagmi/connectors/injected";
 
-// const { chains } = configureChains(
-//   [goerli],
-//   [alchemyProvider({ apiKey: "yourAlchemyApiKey" }), publicProvider()]
-// );
+const { chains } = configureChains(
+  [goerli],
+  [alchemyProvider({ apiKey: "yourAlchemyApiKey" }), publicProvider()]
+);
 
 // const config = createClient({
 //   autoConnect: true,
@@ -64,7 +64,7 @@ if (!STYTCH_PUBLIC_TOKEN) {
   throw Error("Could not find stytch project secret or id in enviorment");
 }
 
-// const queryClient = new QueryClient();
+const queryClient = new QueryClient();
 
 const stytchClient = createStytchUIClient(STYTCH_PUBLIC_TOKEN as string);
 
@@ -88,6 +88,7 @@ export default function App({ Component, pageProps }: AppProps) {
           console.log(claimRes);
           // const mint = await authProvider?.mintPKPThroughRelayer(authMethod);
           // console.log(mint);
+          // create Safe for the user
         }
       }
     } catch (error) {
@@ -144,27 +145,27 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const router = useRouter();
   return (
-    // <QueryClientProvider client={queryClient}>
-    //   <WagmiConfig config={config}>
-    <AuthContext.Provider value={value}>
-      <StytchProvider stytch={stytchClient}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {/* , ,  */}
-          <div
-            className={`${font.className} dark:bg-fixed dark:bg-gradient-to-t from-[#070a12] via-[#0c0214] to-[#120131]`}
+    <QueryClientProvider client={queryClient}>
+      {/* <WagmiConfig config={config}> */}
+      <AuthContext.Provider value={value}>
+        <StytchProvider stytch={stytchClient}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
           >
-            {router.asPath !== "/get-started" && <Navbar />}
-            <Component {...pageProps} />
-          </div>
-        </ThemeProvider>
-      </StytchProvider>
-    </AuthContext.Provider>
-    //   {/* </WagmiConfig>
-    // </QueryClientProvider> */}
+            {/* , ,  */}
+            <div
+              className={`${font.className} dark:bg-fixed dark:bg-gradient-to-t from-[#070a12] via-[#0c0214] to-[#120131]`}
+            >
+              {router.asPath !== "/get-started" && <Navbar />}
+              <Component {...pageProps} />
+            </div>
+          </ThemeProvider>
+        </StytchProvider>
+      </AuthContext.Provider>
+      {/* </WagmiConfig> */}
+    </QueryClientProvider>
   );
 }
