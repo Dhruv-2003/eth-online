@@ -32,6 +32,7 @@ import { PKPEthersWallet } from "@lit-protocol/pkp-ethers";
 import { POLYGON_ZKEVM } from "@/constants/networks";
 import { Payments } from "@/utils/payments";
 import { ethers } from "ethers";
+import { intializeSDK, prepareSendNativeTransactionData } from "@/utils/Safe";
 
 export function CreateAccount() {
   const [email, setEmail] = useState<string>();
@@ -127,28 +128,53 @@ export function CreateAccount() {
     }
   };
 
-  // const signMessage = async () => {
-  //   try {
-  //     if (pkpWallet) {
-  //       await pkpWallet.init();
-  //       await pkpWallet.setRpc(POLYGON_ZKEVM);
-  //       // const signature = await pkpWallet?.signMessage("GM Frens");
-  //       // console.log(signature);
-  //       console.log(pkpWallet?._isSigner);
+  // complete Signup after fetching the PKP , also creating a Safe Account for this address
 
-  //       // const tx = await Payments();
-  //       // const signature2 = await pkpWallet?.signTransaction(tx);
-  //       // console.log(signature2);
-  //       pkpWallet.rpcProvider;
+  const signMessage = async () => {
+    try {
+      if (pkpWallet) {
+        await pkpWallet.init();
+        await pkpWallet.setRpc(POLYGON_ZKEVM);
+        const signature = await pkpWallet?.signMessage("GM Frens");
+        console.log(signature);
+        console.log(pkpWallet?._isSigner);
 
-  //       console.log(pkpWallet.rpcProvider);
+        // const tx = await Payments();
+        // const signature2 = await pkpWallet?.signTransaction(tx);
+        // console.log(signature2);
+        pkpWallet.rpcProvider;
 
-  //       // pkpWallet.connect();
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+        console.log(pkpWallet.rpcProvider);
+
+        // pkpWallet.connect();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const signSafeMessage = async () => {
+    try {
+      const safeAddress = "0x6F41C6cF94FB847ceb3Dea47f03B5473b7889B51";
+      if (pkpWallet) {
+        const provider = new ethers.providers.JsonRpcProvider(POLYGON_ZKEVM);
+        await pkpWallet.init();
+        await pkpWallet.setRpc(POLYGON_ZKEVM);
+        const resData = await intializeSDK(provider, safeAddress);
+        console.log(resData.safeSDK);
+        const amount = ethers.utils.parseEther("1");
+        const response = await prepareSendNativeTransactionData(
+          "0x62C43323447899acb61C18181e34168903E033Bf",
+          `${amount}`,
+          resData.safeSDK
+        );
+
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -244,12 +270,12 @@ export function CreateAccount() {
               </div>
             </CardContent>
             <CardFooter>
-              {/* <Button onClick={fetchPKPsandPrepare} className=" w-full">
+              <Button onClick={fetchPKPsandPrepare} className=" w-full">
                 Complete Auth
-              </Button> */}
-              {/* <Button onClick={signMessage} className=" w-full">
+              </Button>
+              <Button onClick={signMessage} className=" w-full">
                 Sign
-              </Button> */}
+              </Button>
             </CardFooter>
           </Card>
         </TabsContent>

@@ -273,7 +273,7 @@ export const generateSessionSigs = async (
       pkpPublicKey: pkp.publicKey,
       expiration: params.expiration,
       resources: params.resources,
-      chainId: 1,
+      chainId: 1101,
     });
     return response.authSig;
   };
@@ -281,7 +281,7 @@ export const generateSessionSigs = async (
   try {
     const sessionSigs = await litNodeClient
       .getSessionSigs({
-        chain: "ethereum",
+        chain: "zkEVM",
         expiration: new Date(
           Date.now() + 1000 * 60 * 60 * 24 * 7
         ).toISOString(),

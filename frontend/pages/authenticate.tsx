@@ -26,6 +26,8 @@ import { POLYGON_ZKEVM, POLYGON_ZKEVM_TEST } from "@/constants/networks";
 import { PKPEthersWallet } from "@lit-protocol/pkp-ethers";
 import { ethers } from "ethers";
 import { intializeSDK, prepareSendNativeTransactionData } from "@/utils/Safe";
+// import { NotifiCard2 } from "@/components/notifiCard2";
+// import { NotifiCard } from "@/components/notifiCard";
 
 const STYTCH_PROJECT_ID: string | undefined =
   process.env.NEXT_PUBLIC_STYTCH_PROJECT_ID;
@@ -314,6 +316,7 @@ export default function Authenticate() {
       <button onClick={prepareWebAuthnMethod}>Sign in With WebAuthn</button>
       <button onClick={handleWebAuthnLogin}>Auth WebAuthn</button>
       <br />
+      {/* <NotifiCard /> */}
       <button onClick={prepareDiscordAuthMethod}>Google Auth</button>
     </div>
   );
