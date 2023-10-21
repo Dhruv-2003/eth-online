@@ -16,6 +16,8 @@ import { Client, DecodedMessage } from "@xmtp/xmtp-js";
 import { Card, CardTitle } from "../ui/card";
 import { InviteFriend } from "../invite-modal";
 import { callGenerateEndpoint } from "@/utils/intent";
+import Image from "next/image";
+import user from "@/assets/panda.jpg";
 
 const sender = " bg-black text-white dark:bg-white dark:text-black";
 const receiver = " bg-indigo-600 text-white";
@@ -170,7 +172,7 @@ export default function ChatWindow() {
         <div className=" flex items-center justify-center gap-x-4">
           <UserList />
           <div className=" min-w-[60vw] mx-auto flex flex-col max-h-[83vh] h-[83vh] border rounded-xl b-[#18181b] p-6">
-            <div className="flex flex-col items-start justify-normal w-full">
+            <div className=" max-h-[70vh] h-[70vh] overflow-auto scrollbar-hide flex flex-col items-start justify-normal w-full">
               {messages &&
                 messages.map((message, key) => {
                   return (
@@ -295,34 +297,30 @@ const UserList = () => {
         Users
       </div>
       <div className="px-4 pt14 py-3">
-        <User name="Alice" />
-        <User name="Bob" />
-        <User name="Dhruv" />
-        <User name="Archit" />
-        <User name="Kushagra" />
-        <User name="Alice" />
-        <User name="Bob" />
-        <User name="Dhruv" />
-        <User name="Archit" />
-        <User name="Kushagra" />
-        <User name="Alice" />
-        <User name="Bob" />
-        <User name="Dhruv" />
-        <User name="Archit" />
-        <User name="Kushagra" />
-        <User name="Alice" />
-        <User name="Bob" />
-        <User name="Dhruv" />
-        <User name="Archit" />
-        <User name="Kushagra" />
+        <User lastMessage={"OnBoardr is just amazing"} name="Dhruv" />
+        <User lastMessage={"Yeah I know about that"} name="Alice" />
+        <User lastMessage={"Hey saw your tweet about OnBoardr "} name="Bob" />
+        <User lastMessage={"What you building"} name="Archit" />
+        <User
+          lastMessage={"How's the hackathon project coming up"}
+          name="Kushagra"
+        />
       </div>
     </div>
   );
 };
-const User = ({ name }: { name: string }) => {
+const User = ({ name, lastMessage }: { name: string; lastMessage: string }) => {
   return (
-    <div className=" px-4 py-2.5  w-full h-full rounded-md my-2 bg-indigo-950 bg-opacity-60 hover:bg-indigo-950 hover:bg-opacity-100  hover:cursor-pointer">
-      <div>{name}</div>
+    <div className=" flex items-center justify-noraml gap-x-3 px-4 py-2.5  w-full h-full rounded-md my-2 bg-indigo-950 bg-opacity-60 hover:bg-indigo-950 hover:bg-opacity-100  hover:cursor-pointer">
+      <Image
+        className=" w-10 h-10 rounded-full border-2 border-indigo-900 "
+        src={user}
+        alt="user"
+      />
+      <div>
+        <div className=" font-semibold tracking-wide">{name}</div>
+        <div className=" line-clamp-1 pt-0.5 text-xs">{lastMessage}</div>
+      </div>
     </div>
   );
 };
