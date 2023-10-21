@@ -4,9 +4,12 @@ import {
   fetchPkps,
   generateSessionSigs,
   handleGoogleRedirect,
+  handleWebAuthnLogin,
   pkpWalletConnect,
+  prepareGoogleAuthMethod,
   preparePKPWallet,
   prepareStytchAuthMethod,
+  prepareWebAuthnMethod,
 } from "@/utils/Lit";
 import { getUser } from "@/utils/Stych";
 import { authenticateOtp, stytchSendOTP } from "@/utils/StychUI";
@@ -200,14 +203,14 @@ export default function Authenticate() {
         const PKPs = await fetchPkps(provider, authMethod);
         console.log(PKPs);
         if (PKPs?.length) {
-          const sigs = await generateSessionSigs(authMethod, PKPs[0]);
-          setPKP(PKPs[0]);
+          const sigs = await generateSessionSigs(authMethod, PKPs[1]);
+          setPKP(PKPs[1]);
           if (sigs) {
             setSessionSigs(sigs);
-            const wallet = await preparePKPWallet(PKPs[0], sigs, POLYGON_ZKEVM);
+            const wallet = await preparePKPWallet(PKPs[1], sigs, POLYGON_ZKEVM);
             console.log(wallet);
             setPkpWallet(wallet);
-            const pkpClient = new pkpWalletConnect(PKPs[0], sigs);
+            const pkpClient = new pkpWalletConnect(PKPs[1], sigs);
             await pkpClient.initialise();
             console.log(pkpClient);
             setPkpClient(pkpClient);
@@ -307,6 +310,11 @@ export default function Authenticate() {
       <br />
       <button onClick={signMessage}>Sign</button>
       {/* <Notifi/> */}
+      <br />
+      <button onClick={prepareWebAuthnMethod}>Sign in With WebAuthn</button>
+      <button onClick={handleWebAuthnLogin}>Auth WebAuthn</button>
+      <br />
+      <button onClick={prepareDiscordAuthMethod}>Google Auth</button>
     </div>
   );
 }

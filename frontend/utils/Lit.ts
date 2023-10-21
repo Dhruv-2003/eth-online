@@ -189,7 +189,7 @@ export const handleGoogleRedirect = async (): Promise<{
   authMethod: AuthMethod;
   authProvider: BaseProvider;
 }> => {
-  const provider = litAuthClient.initProvider<DiscordProvider>(
+  const provider = litAuthClient.initProvider<GoogleProvider>(
     ProviderType.Google,
     {
       redirectUri: "http://localhost:3000/authenticate",
@@ -205,7 +205,10 @@ export const handleWebAuthnLogin = async (): Promise<{
   authMethod: AuthMethod;
   authProvider: BaseProvider;
 }> => {
-  const provider = litAuthClient.getProvider(ProviderType.WebAuthn);
+  const provider = litAuthClient.initProvider<WebAuthnProvider>(
+    ProviderType.WebAuthn
+  );
+
   const authMethod = await provider.authenticate();
   console.log(authMethod);
 
