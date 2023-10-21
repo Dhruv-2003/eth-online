@@ -4,12 +4,11 @@ const { transactionData } = require("../data/trainingData");
 
 const getClassifier = async () => {
   console.log('this is data ', transactionData)
-  transactionData.map((data) =>
+  transactionData.map((data, index) =>
     classifier.addDocument(data.statement, data.type)
   );
-  console.log('data trained');
   await classifier.train();
-
+  console.log('data trained');
   return classifier;
 }
 

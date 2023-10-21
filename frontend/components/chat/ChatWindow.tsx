@@ -16,6 +16,7 @@ import { useAccount } from "wagmi";
 import { useCallback } from "react";
 import { providers } from "ethers";
 import { Client, DecodedMessage } from "@xmtp/xmtp-js";
+import { callGenerateEndpoint } from "@/utils/intent";
 
 const sender = " bg-black text-white dark:bg-white dark:text-black";
 const receiver = " bg-indigo-600 text-white";
@@ -31,6 +32,8 @@ export default function ChatWindow() {
   const [outgoingMessage, setOutgoingMessage] = useState<string>("");
   const [messages, setMessages] = useState<DecodedMessage[]>();
   const [users, setUsers] = useState<any>();
+  const [option, setOption] = useState<string>("intent");
+  const [intentResult, setIntentResult] = useState<any>();
 
   const initXmtp = async () => {
     // @ts-ignore
@@ -60,17 +63,17 @@ export default function ChatWindow() {
     setxmtp_client(xmtp);
   };
 
-  useEffect(() => {
-    if (clientRef) {
-      setIsOnNetwork(true);
-    }
-    if (xmtp_client) {
-      listConverstaions();
-      fetchAllMessages();
-    } else {
-      initXmtp();
-    }
-  }, [xmtp_client]);
+  // useEffect(() => {
+  //   if (clientRef) {
+  //     setIsOnNetwork(true);
+  //   }
+  //   if (xmtp_client) {
+  //     listConverstaions();
+  //     fetchAllMessages();
+  //   } else {
+  //     initXmtp();
+  //   }
+  // }, [xmtp_client]);
 
   const startAConversation = async function () {
     const xmtpClient = await xmtp_client;
@@ -151,6 +154,13 @@ export default function ChatWindow() {
     }
   };
 
+  const getIntentResult = async () => {
+    const result = await callGenerateEndpoint(outgoingMessage);
+    console.log(result);
+    await setIntentResult(result);
+    console.log(intentResult.address);
+  };
+
   return (
     <div className=" min-w-[80vw] mx-auto flex flex-col max-h-[83vh] h-[83vh]  b-[#18181b] dark:bg-[#0a0811] border rounded-xl  border-slate-200 dark:border-slate-700 p-6">
       <div className="flex flex-col items-start justify-normal w-full">
@@ -191,10 +201,17 @@ export default function ChatWindow() {
             placeholder=" Chat or enter amount to pay "
           />
           <Button
-            onClick={() => sendMessage()}
+            onClick={() => {
+              if (option === "message") {
+                sendMessage();
+              }
+              if (option === "intent") {
+                getIntentResult();
+              }
+            }}
             className=" absolute right-20 top-2"
           >
-            Send Message
+            Send
           </Button>
           <Button className=" absolute right-3 top-2">Pay</Button>
         </div>
