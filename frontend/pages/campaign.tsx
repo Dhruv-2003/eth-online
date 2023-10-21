@@ -4,7 +4,7 @@ import React from "react";
 export default function Campaign() {
   return (
     <DashboardNavigation>
-      <div>campaign</div>
+      <div>Campaign</div>
     </DashboardNavigation>
   );
 }

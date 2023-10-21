@@ -123,15 +123,14 @@ export function CreateAccount() {
       <Tabs defaultValue="email" className="w-2/3">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="email">Account</TabsTrigger>
-          <TabsTrigger value="social">Password</TabsTrigger>
+          <TabsTrigger value="social">Social</TabsTrigger>
         </TabsList>
         <TabsContent value="email">
           <Card className="min-h-[300px]">
             <CardHeader>
-              <CardTitle>Account</CardTitle>
+              <CardTitle>Email Login</CardTitle>
               <CardDescription>
-                Make changes to your email here. Click save when you&#39;re
-                done.
+                Create a new OnBoardr account using your email.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
@@ -177,10 +176,9 @@ export function CreateAccount() {
         <TabsContent value="social">
           <Card className=" min-h-[300px]">
             <CardHeader>
-              <CardTitle>Password</CardTitle>
+              <CardTitle>Social Login</CardTitle>
               <CardDescription>
-                Change your password here. After saving, you&#39;ll be logged
-                out.
+              Login using your social accounts like Google and Discord
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">

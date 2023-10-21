@@ -15,6 +15,6 @@ app.use(cors(corsOptions));
 
 app.use('/solve', solveRoute)
 
-app.listen("3001", (req, res) => {
+app.listen("3000", (req, res) => {
     console.log("Listening your req...");
 });

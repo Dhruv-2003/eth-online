@@ -29,13 +29,13 @@ export default function DashboardNavigation({
 }) {
   const router = useRouter();
   return (
-    <div className=" w-screen flex  items-start justify-normal  bg-white dark:bg-background">
+    <div className=" w-screen flex  items-start justify-normal  bg-white  dark:bg-fixed dark:bg-gradient-to-t from-[#070a12] via-[#0c0214] to-[#120131]">
       <aside
         id="sidebar"
         className=" left-0 bottom-0 z-40 h-[92vh] w-72 transition-transform"
         aria-label="Sidebar"
       >
-        <div className="flex h-full flex-col overflow-y-auto border-r border-slate-200 bg-white px-3 py-4 dark:border-slate-700 dark:bg-background">
+        <div className="flex h-full flex-col overflow-y-auto border-r border-slate-200 bg-white px-3 py-4 dark:border-slate-700  dark:bg-fixed dark:bg-gradient-to-t from-[#070a12] via-[#0c0214] to-[#120131]">
           <ul className="space-y-2 text-sm font-medium">
             {paths.map(({ path, label }, index) => (
               <Link
@@ -44,7 +44,7 @@ export default function DashboardNavigation({
                 className={clsx(
                   router.asPath === path &&
                     " dark:bg-[#a7cce629] bg-slate-100 text-black darkbg-indigo-700",
-                  "flex items-center rounded-lg px-3 py-2 dark:hover:bg-[#a7cce629] text-slate-900 hover:bg-slate-100 dark:text-white dark:hover:bg-indigo-600"
+                  "flex items-center rounded-lg px-3 py-2 dark:hover:bg-[#a7cce629] text-slate-900 hover:bg-slate-100 dark:text-white ark:hover:bg-indigo-600"
                 )}
               >
                 <span className="ml-3 flex-1 whitespace-nowrap">{label}</span>
@@ -79,7 +79,7 @@ export default function DashboardNavigation({
         </div>
       </aside>
 
-      <div className=" px-6 py-4">{children}</div>
+      <div className=" px-6 py-4 w-full">{children}</div>
     </div>
   );
 }
