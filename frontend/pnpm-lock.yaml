@@ -81,7 +81,7 @@ dependencies:
     version: 12.0.0(@stytch/vanilla-js@3.0.1)(react-dom@18.2.0)(react@18.2.0)
   '@stytch/vanilla-js':
     specifier: ^3.0.1
-    version: 3.0.1(@babel/core@7.23.2)(csstype@3.1.2)(react-is@16.13.1)
+    version: 3.0.1(@babel/core@7.23.2)(csstype@3.1.2)(react-is@18.2.0)
   '@usedapp/core':
     specifier: ^1.2.5
     version: 1.2.13(ethers@5.7.2)(node-fetch@2.7.0)(react@18.2.0)
@@ -139,6 +139,9 @@ dependencies:
   react-query:
     specifier: ^3.39.3
     version: 3.39.3(react-dom@18.2.0)(react-native@0.72.6)(react@18.2.0)
+  react-rewards:
+    specifier: ^2.0.4
+    version: 2.0.4(react-dom@18.2.0)(react@18.2.0)
   resend:
     specifier: ^1.1.0
     version: 1.1.0
@@ -5872,12 +5875,12 @@ packages:
       react: '>= 17.0.2'
       react-dom: '>= 17.0.2'
     dependencies:
-      '@stytch/vanilla-js': 3.0.1(@babel/core@7.23.2)(csstype@3.1.2)(react-is@16.13.1)
+      '@stytch/vanilla-js': 3.0.1(@babel/core@7.23.2)(csstype@3.1.2)(react-is@18.2.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@stytch/vanilla-js@3.0.1(@babel/core@7.23.2)(csstype@3.1.2)(react-is@16.13.1):
+  /@stytch/vanilla-js@3.0.1(@babel/core@7.23.2)(csstype@3.1.2)(react-is@18.2.0):
     resolution: {integrity: sha512-QczoGljgXX/mI+Z96SDzxzXeanDZ5+6FvSoQb+uW4bDFwU0EMz3fiC6JEGFzcouYzza6eMNbp4yaWTEppzxu6w==}
     dependencies:
       '@github/webauthn-json': 1.0.3
@@ -5890,7 +5893,7 @@ packages:
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
       react-hot-toast: 2.2.0(csstype@3.1.2)(react-dom@17.0.2)(react@17.0.2)
-      styled-components: 5.3.5(@babel/core@7.23.2)(react-dom@18.2.0)(react-is@16.13.1)(react@18.2.0)
+      styled-components: 5.3.5(@babel/core@7.23.2)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
       swr: 2.1.1(react@17.0.2)
       uuid: 8.3.2
     transitivePeerDependencies:
@@ -7621,7 +7624,7 @@ packages:
       '@babel/plugin-syntax-jsx': 7.22.5(@babel/core@7.23.2)
       lodash: 4.17.21
       picomatch: 2.3.1
-      styled-components: 5.3.5(@babel/core@7.23.2)(react-dom@18.2.0)(react-is@16.13.1)(react@18.2.0)
+      styled-components: 5.3.5(@babel/core@7.23.2)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
     transitivePeerDependencies:
       - '@babel/core'
     dev: false
@@ -14490,6 +14493,16 @@ packages:
       use-sidecar: 1.1.2(@types/react@18.2.28)(react@18.2.0)
     dev: false
 
+  /react-rewards@2.0.4(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Lw7gIhD8yPDzC6boaVmcXwuTHRLSLAdqB3kZc+29YWvdHWsuc3fdAZlxI8Cm8fvD8fhP+3JkZBtzX224czw15w==}
+    peerDependencies:
+      react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /react-shallow-renderer@16.15.0(react@18.2.0):
     resolution: {integrity: sha512-oScf2FqQ9LFVQgA73vr86xl2NaOIX73rh+YFqcOp68CWj56tSfgtGKrEbyhCj0rSijyG9M1CYprTh39fBi5hzA==}
     peerDependencies:
@@ -14497,7 +14510,7 @@ packages:
     dependencies:
       object-assign: 4.1.1
       react: 18.2.0
-      react-is: 16.13.1
+      react-is: 18.2.0
     dev: false
 
   /react-style-singleton@2.2.1(@types/react@18.2.28)(react@18.2.0):
@@ -15434,7 +15447,7 @@ packages:
     resolution: {integrity: sha512-H2N9c26eXjzL/S/K+i/RHHcFanE74dptvvjM8iwzwbVcWY/zjBbgRqF3K0DY4+OD+uTTASTBvDoxPDaPN02D7g==}
     dev: false
 
-  /styled-components@5.3.5(@babel/core@7.23.2)(react-dom@18.2.0)(react-is@16.13.1)(react@18.2.0):
+  /styled-components@5.3.5(@babel/core@7.23.2)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-ndETJ9RKaaL6q41B69WudeqLzOpY1A/ET/glXkNZ2T7dPjPqpPCXXQjDFYZWwNnE5co0wX+gTCqx9mfxTmSIPg==}
     engines: {node: '>=10'}
     requiresBuild: true
@@ -15453,7 +15466,7 @@ packages:
       hoist-non-react-statics: 3.3.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      react-is: 16.13.1
+      react-is: 18.2.0
       shallowequal: 1.1.0
       supports-color: 5.5.0
     transitivePeerDependencies:

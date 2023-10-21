@@ -17,7 +17,7 @@ import check from "@/assets/check.gif";
 import { useState } from "react";
 
 export function InviteFriend() {
-  const [inviteSuccess, setInviteSuccess] = useState<boolean>(true);
+  const [inviteSuccess, setInviteSuccess] = useState<boolean>(false);
 
   return (
     <Dialog>

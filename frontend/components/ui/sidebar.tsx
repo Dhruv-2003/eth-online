@@ -64,10 +64,10 @@ export default function DashboardNavigation({
                 aria-roledescription="more menu"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
+                strokeWidth="2"
                 className="h-5 w-5 text-black dark:text-white"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 // className="lucide lucide-more-horizontal"
               >
                 <circle cx="12" cy="12" r="1" />

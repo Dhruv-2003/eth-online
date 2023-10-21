@@ -55,6 +55,7 @@
     "react-confetti": "^6.1.0",
     "react-dom": "^18",
     "react-query": "^3.39.3",
+    "react-rewards": "^2.0.4",
     "resend": "^1.1.0",
     "stytch": "^9.0.2",
     "tailwind-merge": "^1.14.0",
