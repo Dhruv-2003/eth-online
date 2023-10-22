@@ -4,7 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import DashboardNavigation from "@/components/ui/sidebar";
 import { createSafeWallet } from "@/utils/Safe";
-import { getEncodedPaymentsTx } from "@/utils/payments";
+import {
+  getEncodedPaymentsTx,
+  performPayTransactionSafe,
+} from "@/utils/payments";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { providers } from "ethers";
 import React, { useState } from "react";
@@ -13,14 +16,22 @@ export default function Campaign() {
   const [payAmount, setPayAmount] = useState<string>();
   const [reciever, setReciever] = useState<string>();
 
-  const createSafe = async () => {
+  const handlePay = async () => {
     try {
+      const receiverAddress = "0x8a51D7A312ED079b653D16be724023442f1F3f47";
       const provider = new providers.Web3Provider(window?.ethereum);
       const [address] = await provider.listAccounts();
       const signer = provider.getSigner(address);
-      const res = await createSafeWallet(address, "1");
-      const safeAddress = await res?.getAddress();
-      console.log(safeAddress);
+      console.log(address);
+
+      if (!receiverAddress) return;
+      if (!payAmount) return;
+
+      const tx = await performPayTransactionSafe(
+        signer,
+        receiverAddress,
+        `${payAmount}`
+      );
     } catch (error) {
       console.log(error);
     }
@@ -32,7 +43,7 @@ export default function Campaign() {
         {/* <Notifi />
         <NotifiCard /> */}
         <div>
-          {/* <ConnectButton /> */}
+          <ConnectButton />
           <Input
             value={reciever}
             onChange={(e) => setReciever(e.target.value)}
@@ -45,7 +56,7 @@ export default function Campaign() {
             className="  py-7 px-4"
             placeholder="amount"
           />
-          <Button onClick={() => createSafe()} className="">
+          <Button onClick={() => handlePay()} className="">
             Pay
           </Button>
         </div>

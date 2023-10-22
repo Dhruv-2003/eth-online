@@ -29,6 +29,7 @@ import { useAuth } from "@/context/authContext";
 import { PKPEthersWallet } from "@lit-protocol/pkp-ethers";
 import { Pay } from "../pay";
 import { Label } from "../ui/label";
+import { performPayTransactionSafe } from "@/utils/payments";
 
 const sender = " bg-black text-white dark:bg-white dark:text-black";
 const receiver = " bg-indigo-600 text-white";
@@ -221,6 +222,26 @@ export default function ChatWindow() {
       return null;
     }
   }
+
+  const handlePay = async () => {
+    try {
+      const receiverAddress = "0x8a51D7A312ED079b653D16be724023442f1F3f47";
+      const provider = new providers.Web3Provider(window?.ethereum);
+      const [address] = await provider.listAccounts();
+      const signer = provider.getSigner(address);
+
+      if (!receiverAddress) return;
+      if (!amount) return;
+
+      const tx = await performPayTransactionSafe(
+        signer,
+        receiverAddress,
+        `${amount}`
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     // dark:bg-[#0a0811] border rounded-xl  border-slate-200 dark:border-slate-700

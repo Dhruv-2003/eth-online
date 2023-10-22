@@ -217,6 +217,7 @@ export const sendTransactionSyncFee = async (
     signedSafeTransaction,
     safeSDK
   );
+  console.log(response);
 
   console.log(
     `Relay Transaction Task ID: https://relay.gelato.digital/tasks/status/${response.taskId}`
