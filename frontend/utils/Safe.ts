@@ -84,6 +84,25 @@ export const intializeSDK = async (
   return { safeSDK, relayKit };
 };
 
+export const intializeSDKNormal = async (
+  signerOrProvider: ethers.Signer | ethers.providers.Provider,
+  safeAddress: string
+): Promise<{ safeSDK: Safe; relayKit: GelatoRelayPack }> => {
+  const ethAdapter = new EthersAdapter({
+    ethers,
+    signerOrProvider: signerOrProvider,
+  });
+
+  const safeSDK = await Safe.create({
+    ethAdapter,
+    safeAddress,
+  });
+
+  const relayKit = new GelatoRelayPack();
+
+  return { safeSDK, relayKit };
+};
+
 // txData =  "0x" in case of Native
 // prepare Native send tx
 export const prepareSendNativeTransactionData = async (
@@ -180,6 +199,7 @@ export const sendTransactionSyncFee = async (
       value: value,
     },
   ];
+  console.log(safeTransactionData);
 
   //   const safeTransaction = await safeSDK.createTransaction({
   //     safeTransactionData,
@@ -190,6 +210,7 @@ export const sendTransactionSyncFee = async (
     transactions: safeTransactionData,
   });
 
+  console.log(safeTransaction);
   const signedSafeTransaction = await safeSDK.signTransaction(safeTransaction);
 
   const response = await relayKit.executeRelayTransaction(
@@ -373,3 +394,6 @@ export const predictSafeWalletAddress = async (
     console.log(error);
   }
 };
+
+// demo Acc Safe Address = 0xFa6Ed5f1B20857992cF3fFA7276d42d0a3C08D06
+// demo 2 = 0x3BE69B4DC26d9a5c233FACac01667954Cf6f647c

@@ -45,8 +45,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-
+} from "@/components/ui/dialog";
 
 export const font = FontLato({
   weight: ["300", "400", "700"],
@@ -167,6 +166,26 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   };
 
+  const connectAndInitWallet = async (uri: string) => {
+    try {
+      console.log(pkpClient);
+      if (PKP && sessionSigs) {
+        const pkpClient = new pkpWalletConnect(PKP, sessionSigs);
+        await pkpClient.initialise();
+        //   const sessions  = await pkpClient.pkpWcClient.getActiveSessions()
+        //  await pkpClient.pkpWcClient
+        console.log(pkpClient);
+        setPkpClient(pkpClient);
+        await pkpClient.pair(uri);
+        console.log(pkpClient);
+      } else {
+        console.log("Sigs misssing");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const value = {
     authMethod,
     setAuthMethod,
@@ -186,6 +205,7 @@ export default function App({ Component, pageProps }: AppProps) {
     setSafeSDK,
     mintOrClaimPKP,
     fetchPKPsandPrepare,
+    connectAndInitWallet,
   };
 
   // if there is not AuthMethod Defined , fetch the sessionKey in case it's a stytch login
@@ -209,7 +229,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 <div
                   className={`${font.className} dark:bg-fixed dark:bg-gradient-to-t from-[#070a12] via-[#0c0214] to-[#120131]`}
                 >
-                  {router.asPath !== ("/get-started" ) && <Navbar />}
+                  {router.asPath !== "/get-started" && <Navbar />}
                   <Component {...pageProps} />
                 </div>
               </ThemeProvider>

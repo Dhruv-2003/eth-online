@@ -403,4 +403,8 @@ export class pkpWalletConnect {
       );
     });
   }
+
+  // async disconnect() {
+  //   this.pkpWcClient.
+  // }
 }
