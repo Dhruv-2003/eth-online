@@ -64,7 +64,7 @@ export function CreateAccount() {
   const router = useRouter();
   const { user } = useStytchUser();
   const { session } = useStytchSession();
-  const [accountCreated, setAccountCreated] = useState<boolean | null>(null);
+  const [accountCreated, setAccountCreated] = useState<boolean | null>(false);
   const [name, setName] = useState<string>("");
   const [selectedImage, setSelectedImage] = useState<
     StaticImageData | null | string
