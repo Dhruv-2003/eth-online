@@ -21,6 +21,8 @@ import user from "@/assets/panda.jpg";
 import user2 from "@/assets/user2.jpg";
 import user3 from "@/assets/user3.webp";
 import user4 from "@/assets/user4.jpg";
+import { collection, doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase/firebaseConfig";
 
 const sender = " bg-black text-white dark:bg-white dark:text-black";
 const receiver = " bg-indigo-600 text-white";
@@ -38,14 +40,16 @@ export default function ChatWindow() {
   const [users, setUsers] = useState<any>();
   const [option, setOption] = useState<string>("message");
   const [intentResult, setIntentResult] = useState<any>();
-
+  const [userAddress, setUserAddress] = useState<any>();
   const [showChat, setShowChat] = useState<boolean>(true);
+  const [userName, setUserName] = useState<any>();
 
   const initXmtp = async () => {
     // @ts-ignore
     const provider = new providers.Web3Provider(window?.ethereum);
     const [address] = await provider.listAccounts();
     const signer = provider.getSigner(address);
+    setUserAddress(address);
     const xmtp = await Client.create(signer, { env: "dev" });
     console.log(xmtp);
 
@@ -69,17 +73,17 @@ export default function ChatWindow() {
     setxmtp_client(xmtp);
   };
 
-  // useEffect(() => {
-  //   if (clientRef) {
-  //     setIsOnNetwork(true);
-  //   }
-  //   if (xmtp_client) {
-  //     listConverstaions();
-  //     fetchAllMessages();
-  //   } else {
-  //     initXmtp();
-  //   }
-  // }, [xmtp_client]);
+  useEffect(() => {
+    if (clientRef) {
+      setIsOnNetwork(true);
+    }
+    if (xmtp_client) {
+      listConverstaions();
+      fetchAllMessages(peerAddress);
+    } else {
+      initXmtp();
+    }
+  }, [xmtp_client]);
 
   const startAConversation = async function () {
     const xmtpClient = await xmtp_client;
@@ -110,7 +114,7 @@ export default function ChatWindow() {
         );
         console.log(conversation);
         await conversation.send(outgoingMessage);
-        await fetchAllMessages();
+        await fetchAllMessages(peerAddress);
         setOutgoingMessage("");
       }
     } catch (error) {
@@ -118,7 +122,7 @@ export default function ChatWindow() {
     }
   };
 
-  const fetchAllMessages = async () => {
+  const fetchAllMessages = async (peerAddress: string) => {
     const xmtpClient = await xmtp_client;
     if (!xmtpClient) {
       initXmtp();
@@ -168,12 +172,59 @@ export default function ChatWindow() {
     console.log(intentResult.address);
   };
 
+  const setChats = async (e: any) => {
+    setPeerAddress(e);
+    await fetchAllMessages(e);
+  };
+
+  const resolveAddress = async (e: any) => {
+    const colRef = await collection(db, "UserDetails");
+    const docRef = await doc(colRef, e);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const userNames = await docSnap.data().name;
+      console.log(userNames);
+      setUserName(userNames);
+    } else {
+      console.log("No such document!");
+    }
+  };
+
   return (
     // dark:bg-[#0a0811] border rounded-xl  border-slate-200 dark:border-slate-700
     <>
       {showChat ? (
         <div className=" flex items-center justify-center gap-x-4">
-          <UserList />
+          {/* <UserList /> */}
+          <div className=" border  w-72 max-h-[83vh] h-[83vh] overflow-auto scrollbar-hide  rounded-xl relative">
+            {/* fixed w-60 mx-auto  */}
+            <div className=" px-4 py-2 text-lg font-semibold tracking-wide  bg-opacity-20 backdrop-blur-md bg-indigo-950  rounded-t-xl">
+              Users
+            </div>
+            <div className="px-4 py-3">
+              {users &&
+                users.map((user: any, key: any) => {
+                  return (
+                    <div
+                      onClick={async () => {
+                        await setChats(user.peerAddress);
+                        await resolveAddress(user.peerAddress);
+                      }}
+                      key={key}
+                    >
+                      <User
+                        image={user2}
+                        name={
+                          userName
+                            ? `${userName}`
+                            : `${user.peerAddress.slice(0, 14)}...`
+                        }
+                      />
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
           <div className=" min-w-[60vw] mx-auto flex flex-col max-h-[83vh] h-[83vh] border rounded-xl b-[#18181b] p-6">
             <div className=" max-h-[70vh] h-[70vh] overflow-auto scrollbar-hide flex flex-col items-start justify-normal w-full">
               {messages &&
@@ -302,23 +353,27 @@ const UserList = () => {
       <div className="px-4 pt14 py-3">
         <User
           image={user}
-          lastMessage={"OnBoardr is just amazing"}
+          // lastMessage={"OnBoardr is just amazing"}
           name="Dhruv"
         />
         <User
           image={user2}
-          lastMessage={"Yeah I know about that"}
+          // lastMessage={"Yeah I know about that"}
           name="Alice"
         />
         <User
           image={user3}
-          lastMessage={"Hey saw your tweet about OnBoardr "}
+          // lastMessage={"Hey saw your tweet about OnBoardr "}
           name="Bob"
         />
-        <User image={user4} lastMessage={"What you building"} name="Archit" />
+        <User
+          image={user4}
+          //  lastMessage={"What you building"}
+          name="Archit"
+        />
         <User
           image={user}
-          lastMessage={"How's the hackathon project coming up"}
+          // lastMessage={"How's the hackathon project coming up"}
           name="Kushagra"
         />
       </div>
@@ -327,11 +382,11 @@ const UserList = () => {
 };
 const User = ({
   name,
-  lastMessage,
+  // lastMessage,
   image,
 }: {
   name: string;
-  lastMessage: string;
+  // lastMessage: string;
   image: string | StaticImageData;
 }) => {
   return (
@@ -343,7 +398,7 @@ const User = ({
       />
       <div>
         <div className=" font-semibold tracking-wide">{name}</div>
-        <div className=" line-clamp-1 pt-1.5 text-xs">{lastMessage}</div>
+        {/* <div className=" line-clamp-1 pt-1.5 text-xs">{lastMessage}</div> */}
       </div>
     </div>
   );
