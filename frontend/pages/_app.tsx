@@ -159,7 +159,7 @@ export default function App({ Component, pageProps }: AppProps) {
             <div
               className={`${font.className} dark:bg-fixed dark:bg-gradient-to-t from-[#070a12] via-[#0c0214] to-[#120131]`}
             >
-              {router.asPath !== "/get-started" && <Navbar />}
+              {router.asPath !== ("/get-started" ) && <Navbar />}
               <Component {...pageProps} />
             </div>
           </ThemeProvider>

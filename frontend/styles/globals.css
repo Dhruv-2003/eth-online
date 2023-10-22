@@ -235,6 +235,9 @@
   filter: drop-shadow(0 4px 4px #000);
   user-select: none;
   will-change: transform;
+  /* color: #110e15; */
+  /* color: #0a090a;
+  color: #161825; */
 }
 
 .scratch-card-image.animate {
