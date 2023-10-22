@@ -3,24 +3,24 @@ import React, { SetStateAction, useCallback, useMemo } from "react";
 import { useAccount } from "wagmi";
 import { useXmtpStore } from "../utils/helpers";
 import { NotifiContext } from "@notifi-network/notifi-react-card";
-// import { Modal } from "./Modal";
 import { useSignMessage } from "wagmi";
 import { arrayify } from "ethers/lib/utils.js";
 import { providers } from "ethers";
+import dynamic from "next/dynamic";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { IoNotificationsOutline } from "react-icons/io5";
 
-// type Props = {
-//   show: boolean;
-//   setShowNotifiModal: React.Dispatch<SetStateAction<boolean>>;
-// };
-
-export const NotifiCard = () => {
+const NotifiCard = () => {
   const { conversations } = useXmtpStore();
   const { address } = useAccount();
-  // const address = "0x62C43323447899acb61C18181e34168903E033Bf";
   const { signMessageAsync } = useSignMessage();
-
-  // const provider = new providers.Web3Provider(window?.ethereum);
-  // const signer = provider.getSigner();
 
   const buildContentTopic = (name: string): string => `/xmtp/0/${name}/proto`;
 
@@ -43,34 +43,42 @@ export const NotifiCard = () => {
     }
   };
 
-  conversations.forEach((e: any) => {
-    addTopic(e.topic);
-  });
+  // conversations.forEach((e: any) => {
+  //   addTopic(e.topic);
+  // });
 
   console.log(conversations);
 
   return (
-    <>
-      {!address ? (
-        <>Loading...</>
-      ) : (
-        <NotifiContext
-          dappAddress="ethonline"
-          env="Production"
-          signMessage={async (message: Uint8Array) => {
-            var stringRes = new TextDecoder().decode(message);
-            const result = await signMessageAsync({ message: stringRes });
-            return arrayify(result);
-          }}
-          walletPublicKey={address ?? ""}
-          walletBlockchain="ETHEREUM"
-        >
-          <NotifiSubscriptionCard
-            inputs={{ XMTPTopics: topics }}
-            cardId="59be5e6037c94b489cecb9a7020cd5af"
-          />
-        </NotifiContext>
-      )}
-    </>
+    <Dialog>
+      <DialogTrigger className="text-2xl">
+        <IoNotificationsOutline />
+      </DialogTrigger>
+      <DialogContent>
+        {!address ? (
+          <>Loading...</>
+        ) : (
+          <NotifiContext
+            dappAddress="ethonline"
+            env="Production"
+            signMessage={async (message: Uint8Array) => {
+              var stringRes = new TextDecoder().decode(message);
+              const result = await signMessageAsync({ message: stringRes });
+              return arrayify(result);
+            }}
+            walletPublicKey={address ?? ""}
+            walletBlockchain="ETHEREUM"
+          >
+            <NotifiSubscriptionCard
+              inputs={{ XMTPTopics: topics }}
+              cardId="59be5e6037c94b489cecb9a7020cd5af"
+              darkMode
+            />
+          </NotifiContext>
+        )}
+      </DialogContent>
+    </Dialog>
   );
 };
+
+export default dynamic(() => Promise.resolve(NotifiCard), { ssr: false });

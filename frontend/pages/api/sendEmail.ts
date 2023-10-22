@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import {
-  InviteUserEmail,
+  InviteUserEmailTemplate,
   MoneySentTemplate,
 } from "../../components/email/emailTemplate";
 import { Resend } from "resend";
@@ -36,7 +36,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (templateType == "invite") {
       subject = `You are invited to Onboardr by ${senderName} , Embark on the blockchain journey now`;
-      ReactTemplate = InviteUserEmail({
+      ReactTemplate = InviteUserEmailTemplate({
         username: inviteeName,
         invitedByUsername: senderName,
         invitedByEmail: senderEmail,

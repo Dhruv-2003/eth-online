@@ -34,7 +34,7 @@ interface InviteUserEmailProps {
   inviteFromLocation?: string;
 }
 
-export const InviteUserEmail = ({
+export const InviteUserEmailTemplate = ({
   username = "zenorocha",
   userImage = user2,
   invitedByUsername = "bukinoshita",

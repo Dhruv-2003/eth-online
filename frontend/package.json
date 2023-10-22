@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.8.1",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@lit-protocol/auth-helpers": "^3.0.14",
     "@lit-protocol/constants": "^3.0.14",
     "@lit-protocol/lit-auth-client": "^3.0.14",
@@ -51,6 +54,7 @@
     "ethereum-public-key-to-address": "^0.0.5",
     "ethers": "^5.7.0",
     "firebase": "^10.5.0",
+    "framer-motion": "^10.16.4",
     "langchain": "^0.0.169",
     "lucide-react": "^0.288.0",
     "next": "13.5.4",
@@ -60,6 +64,7 @@
     "react-confetti": "^6.1.0",
     "react-dom": "^18",
     "react-email": "^1.9.5",
+    "react-icons": "^4.11.0",
     "react-query": "^3.39.3",
     "react-rewards": "^2.0.4",
     "resend": "^1.1.0",
