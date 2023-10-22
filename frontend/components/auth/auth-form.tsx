@@ -44,6 +44,7 @@ import {
   prepareSendNativeTransactionData,
 } from "@/utils/Safe";
 import { addUser } from "../firebase/methods";
+// @ts-ignore
 import * as publicKeyToAddress from "ethereum-public-key-to-address";
 import { Client } from "@xmtp/xmtp-js";
 
