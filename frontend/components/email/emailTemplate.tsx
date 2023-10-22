@@ -16,10 +16,15 @@ import {
   Text,
 } from "@react-email/components";
 import * as React from "react";
+import user from "@/assets/panda.jpg";
+import user2 from "@/assets/user2.jpg";
+import user3 from "@/assets/user3.webp";
+import user4 from "@/assets/user4.jpg";
+import { StaticImageData } from "next/image";
 
 interface InviteUserEmailProps {
   username?: string;
-  userImage?: string;
+  userImage?: StaticImageData | string;
   invitedByUsername?: string;
   invitedByEmail?: string;
   teamName?: string;
@@ -31,10 +36,10 @@ interface InviteUserEmailProps {
 
 export const InviteUserEmail = ({
   username = "zenorocha",
-  userImage = ``,
+  userImage = user2,
   invitedByUsername = "bukinoshita",
   invitedByEmail = "bukinoshita@example.com",
-  inviteLink = "https://vercel.com/teams/invite/foo",
+  inviteLink = "http://localhost:3000/invite/get-started",
 }: InviteUserEmailProps) => {
   const previewText = `Join ${invitedByUsername} on Onboardr`;
 
@@ -76,7 +81,7 @@ export const InviteUserEmail = ({
               <Row>
                 <Column align="center">
                   <Img
-                    src={userImage}
+                    src={`@/assets/user2.jpg`}
                     width="12"
                     height="9"
                     alt="invited you to"

@@ -46,6 +46,7 @@ import {
 import { addUser } from "../firebase/methods";
 import * as publicKeyToAddress from "ethereum-public-key-to-address";
 import { Client } from "@xmtp/xmtp-js";
+import dynamic from "next/dynamic";
 
 export function CreateAccount() {
   const [email, setEmail] = useState<string>();

@@ -4,14 +4,54 @@ const PASS = process.env.NEXT_PUBLIC_PASS;
 const RESEND_API_KEY = process.env.NEXT_PUBLIC_RESEND;
 import * as React from "react";
 
-export async function sendEmail(to: string) {
+export async function sendInviteEmail(
+  to: string,
+  inviteeName: string,
+  senderName: string,
+  senderEmail: string
+) {
   try {
     const response = await fetch("/api/sendEmail", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ to }),
+      body: JSON.stringify({
+        to,
+        inviteeName,
+        senderName,
+        senderEmail,
+        templateType: "invite",
+      }),
+    });
+
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function sendPaymentEmail(
+  to: string,
+  inviteeName: string,
+  senderName: string,
+  senderEmail: string,
+  paidAmount: string
+) {
+  try {
+    const response = await fetch("/api/sendEmail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        to,
+        inviteeName,
+        senderName,
+        senderEmail,
+        templateType: "invite",
+        paidAmount,
+      }),
     });
 
     console.log(response);

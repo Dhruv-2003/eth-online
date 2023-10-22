@@ -18,7 +18,7 @@ import { useState } from "react";
 import { computePublicKey } from "@/utils/Lit";
 import { createSafeWallet } from "@/utils/Safe";
 import { addUser } from "./firebase/methods";
-import { sendEmail } from "@/utils/mail";
+import { sendEmail, sendInviteEmail } from "@/utils/mail";
 
 const STYTCH_PROJECT_ID: string | undefined =
   process.env.NEXT_PUBLIC_STYTCH_PROJECT_ID;
@@ -30,26 +30,38 @@ export function InviteFriend({ modalTrigger }: { modalTrigger?: JSX.Element }) {
   const [email, setEmail] = useState<string>();
   const [mobile, setMobile] = useState<string>();
   const [name, setName] = useState<string>();
+  const [userAddress, setUserAddress] = useState<string>();
+  const [safeAddress, setSafeAddress] = useState<string>();
 
   const completeInvite = async () => {
     try {
       // take the inputs
       // calculate the user address
       const data = await getPubKey();
+      console.log(data);
+
       if (!data) {
         console.log("Pub Key can't be calculate");
         return;
       }
+      setUserAddress(data.address);
       // create safeFortheUser
       const safeSDK = await createSafeWallet(data?.address, "9");
       // safe SDK instance is provider & safeAddress
       const safeAddress = await safeSDK?.getAddress();
+      setSafeAddress(safeAddress);
 
-      // store data on firebase , add(name , email , pkpAddress, safeAddress)
+      // store data on firebase , add(name , email , pkpAddress, safeAddress) => new Person
       // addUser();
+
+      // add pending invite to the current user => old Person (current)
+      // pending message
 
       // initiate an email invite  , with inviting user to the platform
       // sendEmail()
+      // sendInviteEmail(email , )
+
+      setInviteSuccess(true);
     } catch (error) {
       console.log(error);
     }
@@ -147,6 +159,13 @@ export function InviteFriend({ modalTrigger }: { modalTrigger?: JSX.Element }) {
           <TaskSuccessful
             message="Invitation has been sent to your friend"
             subHeading="You will recieve your reward once your friend joins OnBoardr"
+            userInfo={
+              <div>
+                Lit PKP Address: {}
+                <br />
+                Safe Address : {}
+              </div>
+            }
           />
         )}
       </DialogContent>
@@ -157,9 +176,11 @@ export function InviteFriend({ modalTrigger }: { modalTrigger?: JSX.Element }) {
 export const TaskSuccessful = ({
   message,
   subHeading,
+  userInfo,
 }: {
   message: string;
   subHeading?: string;
+  userInfo?: JSX.Element;
 }) => {
   return (
     <div className=" relative w-full h-[350px]">
@@ -175,6 +196,9 @@ export const TaskSuccessful = ({
           <Image className=" max-w-[40px] mx-auto  " src={check} alt="check" />
         </div>
         <p className=" text-center text-gray-400 text-sm">{subHeading}</p>
+        {userInfo && (
+          <p className=" text-center text-gray-400 text-sm">{userInfo}</p>
+        )}
       </div>
     </div>
   );

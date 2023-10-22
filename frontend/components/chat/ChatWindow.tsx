@@ -23,6 +23,7 @@ import user3 from "@/assets/user3.webp";
 import user4 from "@/assets/user4.jpg";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const sender = " bg-black text-white dark:bg-white dark:text-black";
 const receiver = " bg-indigo-600 text-white";
@@ -201,6 +202,7 @@ export default function ChatWindow() {
             <div className=" px-4 py-2 text-lg font-semibold tracking-wide  bg-opacity-20 backdrop-blur-md bg-indigo-950  rounded-t-xl">
               Users
             </div>
+            <ConnectButton />
             <div className="px-4 py-3">
               {users &&
                 users.map((user: any, key: any) => {
@@ -223,6 +225,9 @@ export default function ChatWindow() {
                     </div>
                   );
                 })}
+              <div className="mt-auto self-end">
+                <InviteFriend />
+              </div>
             </div>
           </div>
           <div className=" min-w-[60vw] mx-auto flex flex-col max-h-[83vh] h-[83vh] border rounded-xl b-[#18181b] p-6">
@@ -278,7 +283,11 @@ export default function ChatWindow() {
                 </Button>
                 <Button className=" absolute right-3 top-2">Pay</Button>
               </div>
-              <Select>
+              <Select
+                onValueChange={(e) => {
+                  console.log(e);
+                }}
+              >
                 <SelectTrigger className="w-[180px] py-7">
                   <SelectValue placeholder="Select a type" />
                 </SelectTrigger>
