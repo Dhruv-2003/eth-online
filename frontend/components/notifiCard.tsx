@@ -15,12 +15,12 @@ import { providers } from "ethers";
 
 export const NotifiCard = () => {
   const { conversations } = useXmtpStore();
-  // const { address } = useAccount();
-  const address = "0x62C43323447899acb61C18181e34168903E033Bf";
-  // const { signMessageAsync } = useSignMessage();
+  const { address } = useAccount();
+  // const address = "0x62C43323447899acb61C18181e34168903E033Bf";
+  const { signMessageAsync } = useSignMessage();
 
-  const provider = new providers.Web3Provider(window?.ethereum);
-  const signer = provider.getSigner();
+  // const provider = new providers.Web3Provider(window?.ethereum);
+  // const signer = provider.getSigner();
 
   const buildContentTopic = (name: string): string => `/xmtp/0/${name}/proto`;
 
@@ -43,9 +43,11 @@ export const NotifiCard = () => {
     }
   };
 
-  //   conversations.forEach((e:any) => {
-  //     addTopic(e.topic);
-  //   });
+  conversations.forEach((e: any) => {
+    addTopic(e.topic);
+  });
+
+  console.log(conversations);
 
   return (
     <>
@@ -56,14 +58,15 @@ export const NotifiCard = () => {
           dappAddress="ethonline"
           env="Production"
           signMessage={async (message: Uint8Array) => {
-            const result = await signMessageAsync({ message });
+            var stringRes = new TextDecoder().decode(message);
+            const result = await signMessageAsync({ message: stringRes });
             return arrayify(result);
           }}
           walletPublicKey={address ?? ""}
           walletBlockchain="ETHEREUM"
         >
           <NotifiSubscriptionCard
-            inputs={{ XMTP: topics }}
+            inputs={{ XMTPTopics: topics }}
             cardId="59be5e6037c94b489cecb9a7020cd5af"
           />
         </NotifiContext>

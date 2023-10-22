@@ -27,7 +27,7 @@ const receiver = " bg-indigo-600 text-white";
 
 export default function ChatWindow() {
   const [peerAddress, setPeerAddress] = useState<any>(
-    "0x3fdF69DA53299Cf8c179B19A644664a3bb6b7bBf"
+    "0x62C43323447899acb61C18181e34168903E033Bf"
   );
   const convRef = useRef<any>(null);
   const clientRef = useRef<any>(null);
@@ -36,7 +36,7 @@ export default function ChatWindow() {
   const [outgoingMessage, setOutgoingMessage] = useState<string>("");
   const [messages, setMessages] = useState<DecodedMessage[]>();
   const [users, setUsers] = useState<any>();
-  const [option, setOption] = useState<string>("");
+  const [option, setOption] = useState<string>("message");
   const [intentResult, setIntentResult] = useState<any>();
 
   const [showChat, setShowChat] = useState<boolean>(true);
@@ -300,11 +300,24 @@ const UserList = () => {
         Users
       </div>
       <div className="px-4 pt14 py-3">
-        <User image={user} lastMessage={"OnBoardr is just amazing"} name="Dhruv" />
-        <User image={user2} lastMessage={"Yeah I know about that"} name="Alice" />
-        <User image={user3} lastMessage={"Hey saw your tweet about OnBoardr "} name="Bob" />
+        <User
+          image={user}
+          lastMessage={"OnBoardr is just amazing"}
+          name="Dhruv"
+        />
+        <User
+          image={user2}
+          lastMessage={"Yeah I know about that"}
+          name="Alice"
+        />
+        <User
+          image={user3}
+          lastMessage={"Hey saw your tweet about OnBoardr "}
+          name="Bob"
+        />
         <User image={user4} lastMessage={"What you building"} name="Archit" />
-        <User image={user}
+        <User
+          image={user}
           lastMessage={"How's the hackathon project coming up"}
           name="Kushagra"
         />
