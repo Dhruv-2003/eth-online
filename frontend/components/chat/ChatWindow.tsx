@@ -23,6 +23,7 @@ import user3 from "@/assets/user3.webp";
 import user4 from "@/assets/user4.jpg";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import NotifiCard from "../notifiCard";
 
 const sender = " bg-black text-white dark:bg-white dark:text-black";
@@ -218,6 +219,7 @@ export default function ChatWindow() {
                 <NotifiCard />
               </div>
             </div>
+            {/* <ConnectButton /> */}
             <div className="px-4 py-3">
               {users &&
                 users.map((user: any, key: any) => {
@@ -240,6 +242,9 @@ export default function ChatWindow() {
                     </div>
                   );
                 })}
+              <div className="mt-auto self-end">
+                <InviteFriend />
+              </div>
             </div>
           </div>
           <div className=" min-w-[60vw] mx-auto flex flex-col max-h-[83vh] h-[83vh] border rounded-xl b-[#18181b] p-6">
@@ -317,7 +322,11 @@ export default function ChatWindow() {
                   Pay
                 </Button>
               </div>
-              <Select>
+              <Select
+                onValueChange={(e) => {
+                  console.log(e);
+                }}
+              >
                 <SelectTrigger className="w-[180px] py-7">
                   <SelectValue placeholder="Select a type" />
                 </SelectTrigger>

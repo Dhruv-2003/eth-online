@@ -251,30 +251,30 @@ export default function Authenticate() {
     }
   };
 
-  const signSafeMessage = async () => {
-    try {
-      const safeAddress = "0x6F41C6cF94FB847ceb3Dea47f03B5473b7889B51";
-      if (pkpWallet) {
-        const provider = new ethers.providers.JsonRpcProvider(POLYGON_ZKEVM);
-        await pkpWallet.init();
-        await pkpWallet.setRpc(POLYGON_ZKEVM);
-        const resData = await intializeSDK(provider, safeAddress);
-        console.log(resData.safeSDK);
-        const amount = ethers.utils.parseEther("1");
-        const response = await prepareSendNativeTransactionData(
-          "0x62C43323447899acb61C18181e34168903E033Bf",
-          `${amount}`,
-          resData.safeSDK
-        );
+  // const signSafeMessage = async () => {
+  //   try {
+  //     const safeAddress = "0x6F41C6cF94FB847ceb3Dea47f03B5473b7889B51";
+  //     if (pkpWallet) {
+  //       const provider = new ethers.providers.JsonRpcProvider(POLYGON_ZKEVM);
+  //       await pkpWallet.init();
+  //       await pkpWallet.setRpc(POLYGON_ZKEVM);
+  //       const resData = await intializeSDK(provider, safeAddress);
+  //       console.log(resData.safeSDK);
+  //       const amount = ethers.utils.parseEther("1");
+  //       const response = await prepareSendNativeTransactionData(
+  //         "0x62C43323447899acb61C18181e34168903E033Bf",
+  //         `${amount}`,
+  //         resData.safeSDK
+  //       );
 
-        if (response) {
-          const signature = await pkpWallet?.signMessage("GM Frens");
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //       if (response) {
+  //         const signature = await pkpWallet?.signMessage("GM Frens");
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div>
@@ -317,7 +317,7 @@ export default function Authenticate() {
       <button onClick={handleWebAuthnLogin}>Auth WebAuthn</button>
       <br />
       {/* <NotifiCard /> */}
-      <button onClick={prepareDiscordAuthMethod}>Google Auth</button>
+      <button onClick={prepareGoogleAuthMethod}>Google Auth</button>
     </div>
   );
 }
