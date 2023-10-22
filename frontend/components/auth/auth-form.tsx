@@ -122,12 +122,12 @@ export function CreateAccount() {
         response.authMethod,
         response.authProvider
       );
-      // if (pkpData) {
-      //   setAccountCreated(true);
-      // } else {
-      //   setAccountCreated(null);
-      // }
-      setAccountCreated(null);
+      if (pkpData) {
+        setAccountCreated(true);
+      } else {
+        setAccountCreated(null);
+      }
+      // setAccountCreated(null);
     } else if (queryParams.provider == "discord") {
       console.log("Redirect Called Discord");
       const response = await handleDiscordRedirect();

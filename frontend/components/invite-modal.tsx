@@ -135,9 +135,9 @@ export function InviteFriend({ modalTrigger }: { modalTrigger?: JSX.Element }) {
               </div>
             </div>
             <DialogFooter>
-              <Button type="submit" onClick={getPubKey}>
+              {/* <Button type="submit" onClick={getPubKey}>
                 Get User address
-              </Button>
+              </Button> */}
               <Button type="submit" onClick={completeInvite}>
                 Send Invitataion
               </Button>
