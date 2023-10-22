@@ -16,6 +16,11 @@ const config = {
       },
     },
     extend: {
+      screens: {
+        tablet: "640px", // Assuming the tablet width is 640px
+        laptop: "1280px", // Assuming the 13-inch laptop width is 1280px
+        desktop: "1920px", // Assuming the 24-inch desktop width is 1920px
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
