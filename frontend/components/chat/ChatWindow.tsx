@@ -189,6 +189,21 @@ export default function ChatWindow() {
     }
   };
 
+  const sendMoneyMessage = async (amount: Number) => {
+    setOutgoingMessage(`Payed $${amount} to you`);
+  };
+
+  function extractAmount(text: any) {
+    const regex = /\$\d+\.\d{2}/;
+    const match = text.match(regex);
+
+    if (match) {
+      return match[0];
+    } else {
+      return null;
+    }
+  }
+
   return (
     // dark:bg-[#0a0811] border rounded-xl  border-slate-200 dark:border-slate-700
     <>
@@ -239,7 +254,7 @@ export default function ChatWindow() {
                     </div>
                   );
                 })}
-              {messages &&
+              {messages ? (
                 messages.map((message, key) => {
                   return (
                     <div key={key} className="self-end">
@@ -248,12 +263,29 @@ export default function ChatWindow() {
                       )}
                     </div>
                   );
-                })}
+                })
+              ) : (
+                <p className="text-center items-center text-xl mx-auto mt-2">
+                  Select a chat
+                </p>
+              )}
               <div className="self-end">
-                <PayMessage status="S" color={sender} amount={300} />
-              </div>
-              <div className="self-start">
-                <PayMessage status="R" color={sender} amount={300} />
+                {messages &&
+                  messages.map((message, key) => {
+                    const amount = extractAmount(message.content);
+                    if (message.content.slice(0, 5) == "Payed") {
+                      return (
+                        <PayMessage
+                          key={key}
+                          status="S"
+                          color={amount}
+                          amount={300}
+                        />
+                      );
+                    } else {
+                      <p></p>;
+                    }
+                  })}
               </div>
             </div>
             {/* <div className=" mt-auto bg-black p-3 border rounded-md border-slate-700 "> */}
@@ -278,7 +310,12 @@ export default function ChatWindow() {
                 >
                   Send
                 </Button>
-                <Button className=" absolute right-3 top-2">Pay</Button>
+                <Button
+                  onClick={() => sendMoneyMessage(100)}
+                  className=" absolute right-3 top-2"
+                >
+                  Pay
+                </Button>
               </div>
               <Select>
                 <SelectTrigger className="w-[180px] py-7">
