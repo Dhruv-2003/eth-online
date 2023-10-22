@@ -16,8 +16,11 @@ import { Client, DecodedMessage } from "@xmtp/xmtp-js";
 import { Card, CardTitle } from "../ui/card";
 import { InviteFriend } from "../invite-modal";
 import { callGenerateEndpoint } from "@/utils/intent";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import user from "@/assets/panda.jpg";
+import user2 from "@/assets/user2.jpg";
+import user3 from "@/assets/user3.webp";
+import user4 from "@/assets/user4.jpg";
 
 const sender = " bg-black text-white dark:bg-white dark:text-black";
 const receiver = " bg-indigo-600 text-white";
@@ -297,11 +300,11 @@ const UserList = () => {
         Users
       </div>
       <div className="px-4 pt14 py-3">
-        <User lastMessage={"OnBoardr is just amazing"} name="Dhruv" />
-        <User lastMessage={"Yeah I know about that"} name="Alice" />
-        <User lastMessage={"Hey saw your tweet about OnBoardr "} name="Bob" />
-        <User lastMessage={"What you building"} name="Archit" />
-        <User
+        <User image={user} lastMessage={"OnBoardr is just amazing"} name="Dhruv" />
+        <User image={user2} lastMessage={"Yeah I know about that"} name="Alice" />
+        <User image={user3} lastMessage={"Hey saw your tweet about OnBoardr "} name="Bob" />
+        <User image={user4} lastMessage={"What you building"} name="Archit" />
+        <User image={user}
           lastMessage={"How's the hackathon project coming up"}
           name="Kushagra"
         />
@@ -309,12 +312,20 @@ const UserList = () => {
     </div>
   );
 };
-const User = ({ name, lastMessage }: { name: string; lastMessage: string }) => {
+const User = ({
+  name,
+  lastMessage,
+  image,
+}: {
+  name: string;
+  lastMessage: string;
+  image: string | StaticImageData;
+}) => {
   return (
     <div className=" flex items-center justify-noraml gap-x-3 px-4 py-3  w-full h-full rounded-md my-3 bg-indigo-950 bg-opacity-60 hover:bg-indigo-950 hover:bg-opacity-100  hover:cursor-pointer">
       <Image
         className=" w-10 h-10 rounded-full border-2 border-indigo-900 "
-        src={user}
+        src={image}
         alt="user"
       />
       <div>

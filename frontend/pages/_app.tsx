@@ -5,7 +5,7 @@ import { StytchProvider } from "@stytch/nextjs";
 import { AuthContext } from "@/context/authContext";
 import "@notifi-network/notifi-react-card/dist/index.css";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-import { WagmiConfig, createClient, goerli, configureChains } from "wagmi";
+import { WagmiConfig, configureChains } from "wagmi";
 import { createPublicClient, http } from "viem";
 import { Montserrat as FontLato } from "next/font/google";
 import { Navbar } from "@/components/ui/Navbar";
@@ -29,6 +29,14 @@ import {
   prepareStytchAuthMethod,
 } from "@/utils/Lit";
 import { POLYGON_ZKEVM } from "@/constants/networks";
+import "@rainbow-me/rainbowkit/styles.css";
+import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { createConfig } from "wagmi";
+import { polygon, polygonZkEvm, polygonZkEvmTestnet } from "wagmi/chains";
+import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { ethers } from "ethers";
 
 export const font = FontLato({
   weight: ["300", "400", "700"],
@@ -36,15 +44,23 @@ export const font = FontLato({
   subsets: ["latin"],
   variable: "--font-lato",
 });
-import { alchemyProvider } from "wagmi/providers/alchemy";
-import { publicProvider } from "wagmi/providers/public";
-import { InjectedConnector } from "wagmi/connectors/injected";
-import { ethers } from "ethers";
 
-const { chains } = configureChains(
-  [goerli],
-  [alchemyProvider({ apiKey: "yourAlchemyApiKey" }), publicProvider()]
+const { chains, publicClient } = configureChains(
+  [polygon, polygonZkEvm, polygonZkEvmTestnet],
+  [publicProvider()]
 );
+
+const { connectors } = getDefaultWallets({
+  appName: "My RainbowKit App",
+  projectId: "YOUR_PROJECT_ID",
+  chains,
+});
+
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors,
+  publicClient,
+});
 
 // const config = createClient({
 //   autoConnect: true,
@@ -164,26 +180,28 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <WagmiConfig config={config}> */}
-      <AuthContext.Provider value={value}>
-        <StytchProvider stytch={stytchClient}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {/* , ,  */}
-            <div
-              className={`${font.className} dark:bg-fixed dark:bg-gradient-to-t from-[#070a12] via-[#0c0214] to-[#120131]`}
-            >
-              {router.asPath !== "/get-started" && <Navbar />}
-              <Component {...pageProps} />
-            </div>
-          </ThemeProvider>
-        </StytchProvider>
-      </AuthContext.Provider>
-      {/* </WagmiConfig> */}
+      <WagmiConfig config={wagmiConfig}>
+        <RainbowKitProvider chains={chains}>
+          <AuthContext.Provider value={value}>
+            <StytchProvider stytch={stytchClient}>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                {/* , ,  */}
+                <div
+                  className={`${font.className} dark:bg-fixed dark:bg-gradient-to-t from-[#070a12] via-[#0c0214] to-[#120131]`}
+                >
+                  {router.asPath !== "/get-started" && <Navbar />}
+                  <Component {...pageProps} />
+                </div>
+              </ThemeProvider>
+            </StytchProvider>
+          </AuthContext.Provider>
+        </RainbowKitProvider>
+      </WagmiConfig>
     </QueryClientProvider>
   );
 }

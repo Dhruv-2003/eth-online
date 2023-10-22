@@ -16,13 +16,13 @@ import success from "@/assets/popper.gif";
 import check from "@/assets/check.gif";
 import { useState } from "react";
 
-export function InviteFriend() {
+export function InviteFriend({ modalTrigger }: { modalTrigger?: JSX.Element }) {
   const [inviteSuccess, setInviteSuccess] = useState<boolean>(false);
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Invite a Friend</Button>
+        {modalTrigger ? modalTrigger : <Button>Invite a Friend</Button>}
       </DialogTrigger>
       <DialogContent className="sm:max-w-lg">
         {!inviteSuccess ? (

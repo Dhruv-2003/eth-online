@@ -12,10 +12,10 @@ const paths = [
     path: "/chat",
     label: "Chat",
   },
-  {
-    path: "/rewards",
-    label: "Rewards",
-  },
+  // {
+  //   path: "/rewards",
+  //   label: "Rewards",
+  // },
   {
     path: "/campaign",
     label: "Campaign",
@@ -29,10 +29,11 @@ export default function DashboardNavigation({
 }) {
   const router = useRouter();
   return (
-    <div className=" w-screen flex  items-start justify-normal  bg-white  dark:bg-fixed dark:bg-gradient-to-t from-[#070a12] via-[#0c0214] to-[#120131]">
+    // w-screen
+    <div className="  flex  items-start justify-normal  bg-white  dark:bg-fixed dark:bg-gradient-to-t from-[#070a12] via-[#0c0214] to-[#120131]">
       <aside
         id="sidebar"
-        className=" left-0 bottom-0 z-40 h-[92vh] w-72 transition-transform"
+        className=" left-0 bottom-0 z-40 h-[93vh] w-72 transition-transform"
         aria-label="Sidebar"
       >
         <div className="flex h-full flex-col overflow-y-auto border-r border-slate-200 bg-white px-3 py-4 dark:border-slate-700  dark:bg-fixed dark:bg-gradient-to-t from-[#070a12] via-[#0c0214] to-[#120131]">
@@ -79,7 +80,7 @@ export default function DashboardNavigation({
         </div>
       </aside>
 
-      <div className=" px-6 py-4 w-full">{children}</div>
+      <div className=" px-6 py-4 w-full max-h-[93vh] overflow-auto scrollbar-hide">{children}</div>
     </div>
   );
 }
