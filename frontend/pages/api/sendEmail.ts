@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { EmailTemplate } from "../../components/email/emailTemplate";
+import { InviteUserEmailTemplate, MoneySentTemplate } from "../../components/email/emailTemplate";
 import { Resend } from "resend";
 import dotenv from "dotenv";
 dotenv.config();

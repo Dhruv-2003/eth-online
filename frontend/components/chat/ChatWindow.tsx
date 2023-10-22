@@ -23,14 +23,13 @@ import user3 from "@/assets/user3.webp";
 import user4 from "@/assets/user4.jpg";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
+import NotifiCard from "../notifiCard";
 
 const sender = " bg-black text-white dark:bg-white dark:text-black";
 const receiver = " bg-indigo-600 text-white";
 
 export default function ChatWindow() {
-  const [peerAddress, setPeerAddress] = useState<any>(
-    "0x62C43323447899acb61C18181e34168903E033Bf"
-  );
+  const [peerAddress, setPeerAddress] = useState<any>("");
   const convRef = useRef<any>(null);
   const clientRef = useRef<any>(null);
   const [xmtp_client, setxmtp_client] = useState<Client>();
@@ -79,7 +78,7 @@ export default function ChatWindow() {
     }
     if (xmtp_client) {
       listConverstaions();
-      fetchAllMessages(peerAddress);
+      // fetchAllMessages(peerAddress);
     } else {
       initXmtp();
     }
@@ -198,8 +197,11 @@ export default function ChatWindow() {
           {/* <UserList /> */}
           <div className=" border  w-72 max-h-[83vh] h-[83vh] overflow-auto scrollbar-hide  rounded-xl relative">
             {/* fixed w-60 mx-auto  */}
-            <div className=" px-4 py-2 text-lg font-semibold tracking-wide  bg-opacity-20 backdrop-blur-md bg-indigo-950  rounded-t-xl">
-              Users
+            <div className=" px-4 py-2 text-lg font-semibold tracking-wide flex justify-between bg-opacity-20 backdrop-blur-md bg-indigo-950  rounded-t-xl">
+              <div>Users</div>
+              <div className="mt-1">
+                <NotifiCard />
+              </div>
             </div>
             <div className="px-4 py-3">
               {users &&
