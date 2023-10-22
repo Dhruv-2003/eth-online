@@ -202,7 +202,7 @@ export default function ChatWindow() {
             <div className=" px-4 py-2 text-lg font-semibold tracking-wide  bg-opacity-20 backdrop-blur-md bg-indigo-950  rounded-t-xl">
               Users
             </div>
-            <ConnectButton />
+            {/* <ConnectButton /> */}
             <div className="px-4 py-3">
               {users &&
                 users.map((user: any, key: any) => {
