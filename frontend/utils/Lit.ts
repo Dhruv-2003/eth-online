@@ -69,7 +69,7 @@ const litAuthClient = new LitAuthClient({
 export const computePublicKey = async (
   userId: string,
   appId: string
-): Promise<string | undefined> => {
+): Promise<{ address: string; pubKey: string } | undefined> => {
   await litNodeClient.connect();
 
   try {
@@ -78,10 +78,10 @@ export const computePublicKey = async (
     const managedKeyId = keyId.substring(2);
     const publicKey = litNodeClient.computeHDPubKey(managedKeyId);
     console.log(publicKey);
+    console.log("user public key will be: ", publicKey);
     const address = publicKeyToAddress(publicKey);
     console.log(address);
-    console.log("user public key will be: ", publicKey);
-    return publicKey;
+    return { address, pubKey: publicKey };
   } catch (error) {
     console.log(error);
     return;

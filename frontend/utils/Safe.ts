@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { Wallet, ethers } from "ethers";
 import { GelatoRelayPack } from "@safe-global/relay-kit";
 import Safe, {
   EthersAdapter,
@@ -13,12 +13,22 @@ import {
   SafeTransactionDataPartial,
 } from "@safe-global/safe-core-sdk-types";
 import SafeApiKit from "@safe-global/api-kit";
+import { POLYGON_ZKEVM } from "@/constants/networks";
 
 const GELATO_RELAY_API_KEY = process.env.NEXT_PUBLIC_GELATO_RELAY_API_KEY;
 console.log(GELATO_RELAY_API_KEY);
 const chainId = 5;
 const gasLimit = 100000;
 const SAFE_API_SERVICE_URL = "https://safe-transaction-zkevm.safe.global/";
+
+const APP_PRIVATE_KEY: string | undefined = process.env.NEXT_PUBLIC_PRIVATE_KEY;
+
+if (!APP_PRIVATE_KEY) {
+  throw Error("Could not find priv Key in enviorment");
+}
+
+const AppProvider = new ethers.providers.JsonRpcProvider(POLYGON_ZKEVM);
+const AppSigner = new Wallet(APP_PRIVATE_KEY, AppProvider);
 
 const options = {
   gasLimit: ethers.BigNumber.from(gasLimit),
@@ -155,18 +165,19 @@ export const prepareSendTransactionData = async (
 };
 
 // send any type of encoded Data vias Sync FEE , paid from the Safe
-export const sendTokenTransactionSyncFee = async (
+export const sendTransactionSyncFee = async (
   destinationAddress: string,
   safeSDK: Safe,
   relayKit: GelatoRelayPack,
-  encodedData: string
+  encodedData: string,
+  value: string
 ) => {
   const safeTransactionData: MetaTransactionData[] = [
     {
       to: destinationAddress,
       data: encodedData, // leave blank for native token transfers
       operation: OperationType.Call,
-      value: "0",
+      value: value,
     },
   ];
 
@@ -192,18 +203,19 @@ export const sendTokenTransactionSyncFee = async (
 };
 
 // send any tx via 1 balance , Paid through the gas Tank
-export const sendTokenTransaction1Balance = async (
+export const sendTransaction1Balance = async (
   destinationAddress: string,
   safeSDK: Safe,
   relayKit: GelatoRelayPack,
-  encodedData: string
+  encodedData: string,
+  value: string
 ) => {
   const safeTransactionData: MetaTransactionData[] = [
     {
       to: destinationAddress,
       data: encodedData, // leave blank for native token transfers
       operation: OperationType.Call,
-      value: "0",
+      value: value,
     },
   ];
 
@@ -234,10 +246,12 @@ export const sendTokenTransaction1Balance = async (
   );
 };
 
-const intializeSafeAPI = (signer: ethers.Signer) => {
+const intializeSafeAPI = (
+  signerOrProvider: ethers.Signer | ethers.providers.Provider
+) => {
   const ethAdapter = new EthersAdapter({
     ethers,
-    signerOrProvider: signer,
+    signerOrProvider: signerOrProvider,
   });
 
   const safeSAPIService = new SafeApiKit({
@@ -248,17 +262,15 @@ const intializeSafeAPI = (signer: ethers.Signer) => {
   return safeSAPIService;
 };
 
-export const getUserSafe = async (signer: ethers.Signer) => {
-  const userAddress = await signer.getAddress();
-
-  const safeService = intializeSafeAPI(signer);
+export const getUserSafe = async (userAddress: string) => {
+  const safeService = intializeSafeAPI(AppProvider);
 
   // console.log(userAddress)
   const safes = await safeService.getSafesByOwner(userAddress);
-  // console.log(safes);
+  console.log(safes);
 
   const safeAddress = safes.safes[0];
-  // console.log(safeAddress)
+  console.log(safeAddress);
   return safeAddress;
 };
 
@@ -272,28 +284,30 @@ export const enableModule = async (safeSdk: Safe, moduleAddress: string) => {
 };
 
 export const createSafeWallet = async (
-  signer: ethers.Signer,
+  userAddress: string,
   nonce: string // Auth Method Id
 ): Promise<Safe | undefined> => {
   try {
     const ethAdapter = new EthersAdapter({
       ethers,
-      signerOrProvider: signer,
+      signerOrProvider: AppSigner,
     });
 
     const safeFactory = await SafeFactory.create({
       ethAdapter: ethAdapter,
     });
 
-    const owners = [`${await signer.getAddress()}`];
+    const owners = [userAddress];
     const threshold = 1;
 
-    const safeAddress = await getUserSafe(signer);
+    const safeAddress = await getUserSafe(userAddress);
     console.log(safeAddress);
     if (safeAddress) {
       const safeSDK = await Safe.create({ ethAdapter, safeAddress });
       return safeSDK;
     }
+
+    console.log("Deploy required");
 
     const safeAccountConfig = {
       owners,
@@ -310,7 +324,7 @@ export const createSafeWallet = async (
     console.log("Creating and deploying the new safe");
 
     // / wait for the deployement to be completed
-    const newSafeAddress = safeSdk.getAddress();
+    const newSafeAddress = await safeSdk.getAddress();
 
     console.log(newSafeAddress);
 

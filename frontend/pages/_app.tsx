@@ -5,14 +5,19 @@ import { StytchProvider } from "@stytch/nextjs";
 import { AuthContext } from "@/context/authContext";
 import "@notifi-network/notifi-react-card/dist/index.css";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-import { WagmiConfig, createClient, goerli, configureChains } from "wagmi";
+import { WagmiConfig, configureChains } from "wagmi";
 import { createPublicClient, http } from "viem";
 import { Montserrat as FontLato } from "next/font/google";
 import { Navbar } from "@/components/ui/Navbar";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { AuthMethod, IRelayPKP, SessionSigsMap } from "@lit-protocol/types";
+import {
+  AuthMethod,
+  ClaimKeyResponse,
+  IRelayPKP,
+  SessionSigsMap,
+} from "@lit-protocol/types";
 import { BaseProvider } from "@lit-protocol/lit-auth-client";
 import { PKPEthersWallet } from "@lit-protocol/pkp-ethers";
 import {
@@ -24,6 +29,15 @@ import {
   prepareStytchAuthMethod,
 } from "@/utils/Lit";
 import { POLYGON_ZKEVM } from "@/constants/networks";
+import "@rainbow-me/rainbowkit/styles.css";
+import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { createConfig } from "wagmi";
+import { polygon, polygonZkEvm, polygonZkEvmTestnet } from "wagmi/chains";
+import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { ethers } from "ethers";
+import Safe from "@safe-global/protocol-kit";
 
 export const font = FontLato({
   weight: ["300", "400", "700"],
@@ -31,14 +45,23 @@ export const font = FontLato({
   subsets: ["latin"],
   variable: "--font-lato",
 });
-import { alchemyProvider } from "wagmi/providers/alchemy";
-import { publicProvider } from "wagmi/providers/public";
-import { InjectedConnector } from "wagmi/connectors/injected";
 
-const { chains } = configureChains(
-  [goerli],
-  [alchemyProvider({ apiKey: "yourAlchemyApiKey" }), publicProvider()]
+const { chains, publicClient } = configureChains(
+  [polygon, polygonZkEvm, polygonZkEvmTestnet],
+  [publicProvider()]
 );
+
+const { connectors } = getDefaultWallets({
+  appName: "My RainbowKit App",
+  projectId: "YOUR_PROJECT_ID",
+  chains,
+});
+
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors,
+  publicClient,
+});
 
 // const config = createClient({
 //   autoConnect: true,
@@ -75,9 +98,11 @@ export default function App({ Component, pageProps }: AppProps) {
   const [PKP, setPKP] = useState<IRelayPKP>();
   const [pkpWallet, setPkpWallet] = useState<PKPEthersWallet>();
   const [pkpClient, setPkpClient] = useState<pkpWalletConnect>();
+  const [provider, setProvider] = useState<ethers.providers.JsonRpcProvider>();
+  const [safeSDK, setSafeSDK] = useState<Safe>();
 
   //6. fetch the PKP and mint or Claim the new PKP in case if needed
-  const mintOrClaimPKP = async () => {
+  const mintOrClaimPKP = async (): Promise<ClaimKeyResponse | undefined> => {
     try {
       if (authMethod && authProvider) {
         const PKPs = await fetchPkps(authProvider, authMethod);
@@ -89,7 +114,10 @@ export default function App({ Component, pageProps }: AppProps) {
           // const mint = await authProvider?.mintPKPThroughRelayer(authMethod);
           // console.log(mint);
           // create Safe for the user
+          return claimRes;
         }
+      } else {
+        console.log("No Auth Method or Provider found");
       }
     } catch (error) {
       console.log(error);
@@ -97,7 +125,10 @@ export default function App({ Component, pageProps }: AppProps) {
   };
 
   //7. fetch PKPs for the Authmethod in case the
-  const fetchPKPsandPrepare = async () => {
+  const fetchPKPsandPrepare = async (
+    authMethod: AuthMethod,
+    authProvider: BaseProvider
+  ): Promise<IRelayPKP | undefined> => {
     try {
       if (authMethod && authProvider) {
         const PKPs = await fetchPkps(authProvider, authMethod);
@@ -105,6 +136,7 @@ export default function App({ Component, pageProps }: AppProps) {
         if (PKPs?.length) {
           const sigs = await generateSessionSigs(authMethod, PKPs[0]);
           setPKP(PKPs[0]);
+
           if (sigs) {
             setSessionSigs(sigs);
             const wallet = await preparePKPWallet(PKPs[0], sigs, POLYGON_ZKEVM);
@@ -115,6 +147,10 @@ export default function App({ Component, pageProps }: AppProps) {
             // console.log(pkpClient);
             // setPkpClient(pkpClient);
           }
+          return PKPs[0];
+        } else {
+          console.log("No PKPs found");
+          return;
         }
       }
     } catch (error) {
@@ -135,6 +171,10 @@ export default function App({ Component, pageProps }: AppProps) {
     setPkpWallet,
     pkpClient,
     setPkpClient,
+    provider,
+    setProvider,
+    safeSDK,
+    setSafeSDK,
     mintOrClaimPKP,
     fetchPKPsandPrepare,
   };
@@ -146,26 +186,28 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <WagmiConfig config={config}> */}
-      <AuthContext.Provider value={value}>
-        <StytchProvider stytch={stytchClient}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {/* , ,  */}
-            <div
-              className={`${font.className} dark:bg-fixed dark:bg-gradient-to-t from-[#070a12] via-[#0c0214] to-[#120131]`}
-            >
-              {router.asPath !== ("/get-started" ) && <Navbar />}
-              <Component {...pageProps} />
-            </div>
-          </ThemeProvider>
-        </StytchProvider>
-      </AuthContext.Provider>
-      {/* </WagmiConfig> */}
+      <WagmiConfig config={wagmiConfig}>
+        <RainbowKitProvider chains={chains}>
+          <AuthContext.Provider value={value}>
+            <StytchProvider stytch={stytchClient}>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                {/* , ,  */}
+                <div
+                  className={`${font.className} dark:bg-fixed dark:bg-gradient-to-t from-[#070a12] via-[#0c0214] to-[#120131]`}
+                >
+                  {router.asPath !== ("/get-started" ) && <Navbar />}
+                  <Component {...pageProps} />
+                </div>
+              </ThemeProvider>
+            </StytchProvider>
+          </AuthContext.Provider>
+        </RainbowKitProvider>
+      </WagmiConfig>
     </QueryClientProvider>
   );
 }

@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  handleDiscordRedirect,
-  handleGoogleRedirect,
-  prepareDiscordAuthMethod,
-  prepareGoogleAuthMethod,
-  prepareStytchAuthMethod,
-} from "@/utils/Lit";
+import { prepareStytchAuthMethod } from "@/utils/Lit";
 import { Icons } from "../icons";
 import { Button } from "../ui/button";
 import {
@@ -24,8 +18,8 @@ import { useCallback, useEffect, useState } from "react";
 import { authenticateOtp, stytchSendOTP } from "@/utils/StychUI";
 import { OTPsLoginOrCreateResponse } from "@stytch/vanilla-js";
 import { useAuth } from "@/context/authContext";
-import { AuthMethod, IRelayPKP } from "@lit-protocol/types";
-import { BaseProvider, isSignInRedirect } from "@lit-protocol/lit-auth-client";
+import { AuthMethod, ClaimKeyResponse, IRelayPKP } from "@lit-protocol/types";
+import { BaseProvider } from "@lit-protocol/lit-auth-client";
 import { useRouter } from "next/router";
 import { useStytchSession, useStytchUser } from "@stytch/nextjs";
 import { PKPEthersWallet } from "@lit-protocol/pkp-ethers";
@@ -36,16 +30,9 @@ import { TaskSuccessful } from "../invite-modal";
 import Image from "next/image";
 import check from "@/assets/check.gif";
 import Link from "next/link";
-import {
-  createSafeWallet,
-  getUserSafe,
-  intializeSDK,
-  predictSafeWalletAddress,
-  prepareSendNativeTransactionData,
-} from "@/utils/Safe";
+import { createSafeWallet, getUserSafe, intializeSDK } from "@/utils/Safe";
 import { addUser } from "../firebase/methods";
 import * as publicKeyToAddress from "ethereum-public-key-to-address";
-import { Client } from "@xmtp/xmtp-js";
 
 export function CreateAccount() {
   const [email, setEmail] = useState<string>();
@@ -64,13 +51,11 @@ export function CreateAccount() {
     authProvider,
     pkpWallet,
     PKP,
-    provider,
   }: {
     authMethod: AuthMethod;
     authProvider: BaseProvider;
     pkpWallet: PKPEthersWallet;
     PKP: IRelayPKP;
-    provider: ethers.providers.JsonRpcProvider;
   } = useAuth();
 
   const completeStytchAuth = async () => {
@@ -109,54 +94,6 @@ export function CreateAccount() {
     }
   };
 
-  //4. handle the redirect for Google or Discord Login
-  const handleRedirect = useCallback(async () => {
-    console.log("Redirect Called");
-    const queryParams = router.query;
-    if (queryParams.provider == "google") {
-      console.log("Redirect Called google");
-      const response = await handleGoogleRedirect();
-      setAuthMethod(response.authMethod);
-      setAuthProvider(response.authProvider);
-      const pkpData = await fetchPKPsandPrepare(
-        response.authMethod,
-        response.authProvider
-      );
-      // if (pkpData) {
-      //   setAccountCreated(true);
-      // } else {
-      //   setAccountCreated(null);
-      // }
-      setAccountCreated(null);
-    } else if (queryParams.provider == "discord") {
-      console.log("Redirect Called Discord");
-      const response = await handleDiscordRedirect();
-      setAuthMethod(response.authMethod);
-      setAuthProvider(response.authProvider);
-      const pkpData = await fetchPKPsandPrepare(
-        response.authMethod,
-        response.authProvider
-      );
-      if (pkpData) {
-        setAccountCreated(true);
-      } else {
-        setAccountCreated(null);
-      }
-    }
-    console.log(queryParams);
-  }, [router]);
-
-  useEffect(() => {
-    // Check if app has been redirected from Lit login server
-    // console.log(isSignInRedirect(REDIRECT_URI));
-    if (isSignInRedirect("http://localhost:3000/get-started")) {
-      console.log(true);
-      handleRedirect();
-    } else {
-      console.log(false);
-    }
-  }, [handleRedirect]);
-
   // Check Stytch Cookie and prepare
   const checkStytch = async () => {
     if (session && user) {
@@ -173,11 +110,11 @@ export function CreateAccount() {
     }
   };
 
-  // complete Signup after fetching the PKP , also creating a Safe Account for this address
   const completeNewUserSignup = async () => {
     try {
       console.log(PKP);
       if (!PKP) {
+        // Not needed all time , if user record is in firebase , just update
         // Add firebase Methods ( Name , Email , Pfp ,  )
         // addUser()
         console.log("PKP Not found");
@@ -218,6 +155,8 @@ export function CreateAccount() {
     }
   };
 
+  // complete Signup after fetching the PKP , also creating a Safe Account for this address
+
   const signMessage = async () => {
     try {
       if (pkpWallet) {
@@ -227,51 +166,14 @@ export function CreateAccount() {
         console.log(signature);
         console.log(pkpWallet?._isSigner);
 
-        const xmtp = await Client.create(pkpWallet, { env: "dev" });
-        console.log(xmtp);
         // const tx = await Payments();
         // const signature2 = await pkpWallet?.signTransaction(tx);
         // console.log(signature2);
-        // pkpWallet.rpcProvider;
-        // console.log(pkpWallet.rpcProvider);
+        pkpWallet.rpcProvider;
+
+        console.log(pkpWallet.rpcProvider);
+
         // pkpWallet.connect();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const signSafeMessage = async () => {
-    try {
-      if (pkpWallet) {
-        const provider = new ethers.providers.JsonRpcProvider(POLYGON_ZKEVM);
-        await pkpWallet.init();
-        await pkpWallet.setRpc(POLYGON_ZKEVM);
-        const userAddress = pkpWallet.address;
-        const safeAddress = await predictSafeWalletAddress(
-          provider,
-          userAddress,
-          `${authMethod.authMethodType}`
-        );
-        console.log(safeAddress);
-        if (safeAddress) {
-          const resData = await intializeSDK(
-            pkpWallet,
-            safeAddress,
-            true,
-            userAddress,
-            `${authMethod.authMethodType}`
-          );
-          console.log(resData);
-          const amount = ethers.utils.parseEther("1");
-          const response = await prepareSendNativeTransactionData(
-            "0x62C43323447899acb61C18181e34168903E033Bf",
-            `${amount}`,
-            resData.safeSDK
-          );
-
-          console.log(response);
-        }
       }
     } catch (error) {
       console.log(error);
@@ -282,10 +184,9 @@ export function CreateAccount() {
     <>
       {accountCreated === false && (
         <Tabs defaultValue="email" className="w-2/3">
-          <TabsList className="grid w-full grid-cols-2">
+          {/* <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="email">Account</TabsTrigger>
-            <TabsTrigger value="social">Social</TabsTrigger>
-          </TabsList>
+          </TabsList> */}
           <TabsContent value="email">
             <Card className="min-h-[300px]">
               <CardHeader>
@@ -332,62 +233,6 @@ export function CreateAccount() {
                   </Button>
                 )}
               </CardFooter>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="social">
-            <Card className=" min-h-[300px]">
-              <CardHeader>
-                <CardTitle>Social Login</CardTitle>
-                <CardDescription>
-                  Login using your social accounts like Google and Discord
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <div className="grid grid-cols-2 gap-6">
-                  <Button
-                    onClick={prepareGoogleAuthMethod}
-                    className=" col-span-2"
-                    variant="outline"
-                  >
-                    <Icons.google className="mr-2 h-4 w-4" />
-                    Google
-                  </Button>
-                  <div className=" col-span-2 relative">
-                    <div className="absolute inset-0 flex items-center">
-                      <span className="w-full border-t" />
-                    </div>
-                    <div className="relative flex justify-center text-xs uppercase">
-                      <span className="bg-background px-2 text-muted-foreground">
-                        Or continue with
-                      </span>
-                    </div>
-                  </div>
-                  <Button
-                    onClick={prepareDiscordAuthMethod}
-                    className=" col-span-2"
-                    variant="outline"
-                  >
-                    <Icons.discord className="mr-2 h-4 w-4" />
-                    Discord
-                  </Button>
-                </div>
-              </CardContent>
-              {/* <CardFooter>
-                <CardFooter>
-                  <Button
-                    onClick={() =>
-                      fetchPKPsandPrepare(authMethod, authProvider)
-                    }
-                    className=" w-full"
-                  >
-                    Complete Auth
-                  </Button>
-                  <Button onClick={signMessage} className=" w-full">
-                    Sign
-                  </Button>
-                </CardFooter>
-              </CardFooter> */}
             </Card>
           </TabsContent>
         </Tabs>
