@@ -12,7 +12,12 @@ import { Navbar } from "@/components/ui/Navbar";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { AuthMethod, IRelayPKP, SessionSigsMap } from "@lit-protocol/types";
+import {
+  AuthMethod,
+  ClaimKeyResponse,
+  IRelayPKP,
+  SessionSigsMap,
+} from "@lit-protocol/types";
 import { BaseProvider } from "@lit-protocol/lit-auth-client";
 import { PKPEthersWallet } from "@lit-protocol/pkp-ethers";
 import {
@@ -34,6 +39,7 @@ export const font = FontLato({
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import { InjectedConnector } from "wagmi/connectors/injected";
+import { ethers } from "ethers";
 
 const { chains } = configureChains(
   [goerli],
@@ -75,9 +81,10 @@ export default function App({ Component, pageProps }: AppProps) {
   const [PKP, setPKP] = useState<IRelayPKP>();
   const [pkpWallet, setPkpWallet] = useState<PKPEthersWallet>();
   const [pkpClient, setPkpClient] = useState<pkpWalletConnect>();
+  const [provider, setProvider] = useState<ethers.providers.JsonRpcProvider>();
 
   //6. fetch the PKP and mint or Claim the new PKP in case if needed
-  const mintOrClaimPKP = async () => {
+  const mintOrClaimPKP = async (): Promise<ClaimKeyResponse | undefined> => {
     try {
       if (authMethod && authProvider) {
         const PKPs = await fetchPkps(authProvider, authMethod);
@@ -89,7 +96,10 @@ export default function App({ Component, pageProps }: AppProps) {
           // const mint = await authProvider?.mintPKPThroughRelayer(authMethod);
           // console.log(mint);
           // create Safe for the user
+          return claimRes;
         }
+      } else {
+        console.log("No Auth Method or Provider found");
       }
     } catch (error) {
       console.log(error);
@@ -97,7 +107,10 @@ export default function App({ Component, pageProps }: AppProps) {
   };
 
   //7. fetch PKPs for the Authmethod in case the
-  const fetchPKPsandPrepare = async () => {
+  const fetchPKPsandPrepare = async (
+    authMethod: AuthMethod,
+    authProvider: BaseProvider
+  ): Promise<IRelayPKP | undefined> => {
     try {
       if (authMethod && authProvider) {
         const PKPs = await fetchPkps(authProvider, authMethod);
@@ -105,6 +118,7 @@ export default function App({ Component, pageProps }: AppProps) {
         if (PKPs?.length) {
           const sigs = await generateSessionSigs(authMethod, PKPs[0]);
           setPKP(PKPs[0]);
+
           if (sigs) {
             setSessionSigs(sigs);
             const wallet = await preparePKPWallet(PKPs[0], sigs, POLYGON_ZKEVM);
@@ -115,6 +129,10 @@ export default function App({ Component, pageProps }: AppProps) {
             // console.log(pkpClient);
             // setPkpClient(pkpClient);
           }
+          return PKPs[0];
+        } else {
+          console.log("No PKPs found");
+          return;
         }
       }
     } catch (error) {

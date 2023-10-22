@@ -24,7 +24,7 @@ import { useCallback, useEffect, useState } from "react";
 import { authenticateOtp, stytchSendOTP } from "@/utils/StychUI";
 import { OTPsLoginOrCreateResponse } from "@stytch/vanilla-js";
 import { useAuth } from "@/context/authContext";
-import { AuthMethod } from "@lit-protocol/types";
+import { AuthMethod, IRelayPKP } from "@lit-protocol/types";
 import { BaseProvider, isSignInRedirect } from "@lit-protocol/lit-auth-client";
 import { useRouter } from "next/router";
 import { useStytchSession, useStytchUser } from "@stytch/nextjs";
@@ -37,10 +37,12 @@ import Image from "next/image";
 import check from "@/assets/check.gif";
 import Link from "next/link";
 import {
+  createSafeWallet,
   intializeSDK,
   predictSafeWalletAddress,
   prepareSendNativeTransactionData,
 } from "@/utils/Safe";
+import { addUser } from "../firebase/methods";
 
 export function CreateAccount() {
   const [email, setEmail] = useState<string>();
@@ -50,7 +52,7 @@ export function CreateAccount() {
   const router = useRouter();
   const { user } = useStytchUser();
   const { session } = useStytchSession();
-  const [accountCreated, setAccountCreated] = useState<boolean | null>(null);
+  const [accountCreated, setAccountCreated] = useState<boolean | null>(false);
 
   const { setAuthMethod, setAuthProvider } = useAuth();
   const { mintOrClaimPKP, fetchPKPsandPrepare } = useAuth();
@@ -58,10 +60,12 @@ export function CreateAccount() {
     authMethod,
     authProvider,
     pkpWallet,
+    PKP,
   }: {
     authMethod: AuthMethod;
     authProvider: BaseProvider;
     pkpWallet: PKPEthersWallet;
+    PKP: IRelayPKP;
   } = useAuth();
 
   const completeStytchAuth = async () => {
@@ -84,7 +88,15 @@ export function CreateAccount() {
         console.log(response);
         setAuthMethod(response.authMethod);
         setAuthProvider(response.authProvider);
-
+        const pkpData = await fetchPKPsandPrepare(
+          response.authMethod,
+          response.authProvider
+        );
+        if (pkpData) {
+          setAccountCreated(true);
+        } else {
+          setAccountCreated(null);
+        }
         // Send to the final Auth and Acc creation page
       }
     } catch (error) {
@@ -101,11 +113,29 @@ export function CreateAccount() {
       const response = await handleGoogleRedirect();
       setAuthMethod(response.authMethod);
       setAuthProvider(response.authProvider);
+      const pkpData = await fetchPKPsandPrepare(
+        response.authMethod,
+        response.authProvider
+      );
+      if (pkpData) {
+        setAccountCreated(true);
+      } else {
+        setAccountCreated(null);
+      }
     } else if (queryParams.provider == "discord") {
       console.log("Redirect Called Discord");
       const response = await handleDiscordRedirect();
       setAuthMethod(response.authMethod);
       setAuthProvider(response.authProvider);
+      const pkpData = await fetchPKPsandPrepare(
+        response.authMethod,
+        response.authProvider
+      );
+      if (pkpData) {
+        setAccountCreated(true);
+      } else {
+        setAccountCreated(null);
+      }
     }
     console.log(queryParams);
   }, [router]);
@@ -134,6 +164,24 @@ export function CreateAccount() {
         setAuthMethod(response.authMethod);
         setAuthProvider(response.authProvider);
       }
+    }
+  };
+
+  const completeNewUserSignup = async () => {
+    try {
+      if (!PKP) {
+        // Add firebase Methods ( Name , Email , Pfp ,  )
+        // addUser()
+
+        // add the new user
+        const res = await mintOrClaimPKP();
+
+        // get the user Address and createASafeAddress
+        // createSafeWallet()
+      } else {
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -319,13 +367,14 @@ export function CreateAccount() {
           </Link>
         </Card>
       )}
+      {/* set this to null in case user don't have a PKP */}
       {accountCreated === null && (
         <Card className=" w-2/3 py-6 min-h-[300px] gap-y-6 flex flex-col items-center justify-center">
           <h1 className="  text-xl font-semibold tracking-wide">
             You need to mint your PKP to create your account
           </h1>
 
-          <Button>Mint</Button>
+          <Button onClick={completeNewUserSignup}>Mint</Button>
           <p className=" text-center text-gray-400 text-sm max-w-[90%]">
             PKP is blockchain Account associated with their your Social/Email
             Accounts
