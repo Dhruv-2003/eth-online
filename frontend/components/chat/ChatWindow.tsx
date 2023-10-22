@@ -23,14 +23,14 @@ import user3 from "@/assets/user3.webp";
 import user4 from "@/assets/user4.jpg";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import NotifiCard from "../notifiCard";
 
 const sender = " bg-black text-white dark:bg-white dark:text-black";
 const receiver = " bg-indigo-600 text-white";
 
 export default function ChatWindow() {
-  const [peerAddress, setPeerAddress] = useState<any>(
-    "0x62C43323447899acb61C18181e34168903E033Bf"
-  );
+  const [peerAddress, setPeerAddress] = useState<any>("");
   const convRef = useRef<any>(null);
   const clientRef = useRef<any>(null);
   const [xmtp_client, setxmtp_client] = useState<Client>();
@@ -79,7 +79,7 @@ export default function ChatWindow() {
     }
     if (xmtp_client) {
       listConverstaions();
-      fetchAllMessages(peerAddress);
+      // fetchAllMessages(peerAddress);
     } else {
       initXmtp();
     }
@@ -190,6 +190,21 @@ export default function ChatWindow() {
     }
   };
 
+  const sendMoneyMessage = async (amount: Number) => {
+    setOutgoingMessage(`Payed $${amount} to you`);
+  };
+
+  function extractAmount(text: any) {
+    const regex = /\$\d+\.\d{2}/;
+    const match = text.match(regex);
+
+    if (match) {
+      return match[0];
+    } else {
+      return null;
+    }
+  }
+
   return (
     // dark:bg-[#0a0811] border rounded-xl  border-slate-200 dark:border-slate-700
     <>
@@ -198,9 +213,13 @@ export default function ChatWindow() {
           {/* <UserList /> */}
           <div className=" border  w-72 max-h-[83vh] h-[83vh] overflow-auto scrollbar-hide  rounded-xl relative">
             {/* fixed w-60 mx-auto  */}
-            <div className=" px-4 py-2 text-lg font-semibold tracking-wide  bg-opacity-20 backdrop-blur-md bg-indigo-950  rounded-t-xl">
-              Users
+            <div className=" px-4 py-2 text-lg font-semibold tracking-wide flex justify-between bg-opacity-20 backdrop-blur-md bg-indigo-950  rounded-t-xl">
+              <div>Users</div>
+              <div className="mt-1">
+                <NotifiCard />
+              </div>
             </div>
+            {/* <ConnectButton /> */}
             <div className="px-4 py-3">
               {users &&
                 users.map((user: any, key: any) => {
@@ -223,6 +242,9 @@ export default function ChatWindow() {
                     </div>
                   );
                 })}
+              <div className="mt-auto self-end">
+                <InviteFriend />
+              </div>
             </div>
           </div>
           <div className=" min-w-[60vw] mx-auto flex flex-col max-h-[83vh] h-[83vh] border rounded-xl b-[#18181b] p-6">
@@ -237,7 +259,7 @@ export default function ChatWindow() {
                     </div>
                   );
                 })}
-              {messages &&
+              {messages ? (
                 messages.map((message, key) => {
                   return (
                     <div key={key} className="self-end">
@@ -246,12 +268,29 @@ export default function ChatWindow() {
                       )}
                     </div>
                   );
-                })}
+                })
+              ) : (
+                <p className="text-center items-center text-xl mx-auto mt-2">
+                  Select a chat
+                </p>
+              )}
               <div className="self-end">
-                <PayMessage status="S" color={sender} amount={300} />
-              </div>
-              <div className="self-start">
-                <PayMessage status="R" color={sender} amount={300} />
+                {messages &&
+                  messages.map((message, key) => {
+                    const amount = extractAmount(message.content);
+                    if (message.content.slice(0, 5) == "Payed") {
+                      return (
+                        <PayMessage
+                          key={key}
+                          status="S"
+                          color={amount}
+                          amount={300}
+                        />
+                      );
+                    } else {
+                      <p></p>;
+                    }
+                  })}
               </div>
             </div>
             {/* <div className=" mt-auto bg-black p-3 border rounded-md border-slate-700 "> */}
@@ -276,9 +315,18 @@ export default function ChatWindow() {
                 >
                   Send
                 </Button>
-                <Button className=" absolute right-3 top-2">Pay</Button>
+                <Button
+                  onClick={() => sendMoneyMessage(100)}
+                  className=" absolute right-3 top-2"
+                >
+                  Pay
+                </Button>
               </div>
-              <Select>
+              <Select
+                onValueChange={(e) => {
+                  console.log(e);
+                }}
+              >
                 <SelectTrigger className="w-[180px] py-7">
                   <SelectValue placeholder="Select a type" />
                 </SelectTrigger>

@@ -47,6 +47,7 @@ import { addUser } from "../firebase/methods";
 // @ts-ignore
 import * as publicKeyToAddress from "ethereum-public-key-to-address";
 import { Client } from "@xmtp/xmtp-js";
+import dynamic from "next/dynamic";
 
 export function CreateAccount() {
   const [email, setEmail] = useState<string>();
@@ -123,12 +124,12 @@ export function CreateAccount() {
         response.authMethod,
         response.authProvider
       );
-      // if (pkpData) {
-      //   setAccountCreated(true);
-      // } else {
-      //   setAccountCreated(null);
-      // }
-      setAccountCreated(null);
+      if (pkpData) {
+        setAccountCreated(true);
+      } else {
+        setAccountCreated(null);
+      }
+      // setAccountCreated(null);
     } else if (queryParams.provider == "discord") {
       console.log("Redirect Called Discord");
       const response = await handleDiscordRedirect();
