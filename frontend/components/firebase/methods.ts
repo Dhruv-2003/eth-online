@@ -5,7 +5,8 @@ export const addUser = async (
   address: string,
   name: string,
   email: string,
-  pfp: string
+  pfp: string,
+  safeAddress: string
 ) => {
   try {
     const docsRef = doc(db, "UserDetails", `${address}`);
@@ -13,8 +14,9 @@ export const addUser = async (
       name: name,
       email: email,
       pfp: pfp,
+      safeAddress: safeAddress,
     });
-    console.log(docsRef)
+    console.log(docsRef);
   } catch (error) {
     console.log(error);
   }

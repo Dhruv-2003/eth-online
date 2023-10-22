@@ -27,6 +27,8 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import NotifiCard from "../notifiCard";
 import { useAuth } from "@/context/authContext";
 import { PKPEthersWallet } from "@lit-protocol/pkp-ethers";
+import { Pay } from "../pay";
+import { Label } from "../ui/label";
 
 const sender = " bg-black text-white dark:bg-white dark:text-black";
 const receiver = " bg-indigo-600 text-white";
@@ -47,6 +49,7 @@ export default function ChatWindow() {
   const [userName, setUserName] = useState<any>();
 
   const { pkpWallet }: { pkpWallet: PKPEthersWallet } = useAuth();
+  const [amount, setAmount] = useState<number>();
 
   const initXmtp = async () => {
     // @ts-ignore
@@ -204,6 +207,21 @@ export default function ChatWindow() {
     }
   };
 
+  const sendMoneyMessage = async (amount: Number) => {
+    setOutgoingMessage(`Payed $${amount} to you`);
+  };
+
+  function extractAmount(text: any) {
+    const regex = /\$\d+\.\d{2}/;
+    const match = text.match(regex);
+
+    if (match) {
+      return match[0];
+    } else {
+      return null;
+    }
+  }
+
   return (
     // dark:bg-[#0a0811] border rounded-xl  border-slate-200 dark:border-slate-700
     <>
@@ -261,7 +279,7 @@ export default function ChatWindow() {
                     </div>
                   );
                 })}
-              {messages &&
+              {messages ? (
                 messages.map((message, key) => {
                   return (
                     <div key={key} className="self-end">
@@ -270,12 +288,29 @@ export default function ChatWindow() {
                       )}
                     </div>
                   );
-                })}
+                })
+              ) : (
+                <p className="text-center items-center text-xl mx-auto mt-2">
+                  Select a chat
+                </p>
+              )}
               <div className="self-end">
-                <PayMessage status="S" color={sender} amount={300} />
-              </div>
-              <div className="self-start">
-                <PayMessage status="R" color={sender} amount={300} />
+                {messages &&
+                  messages.map((message, key) => {
+                    const amount = extractAmount(message.content);
+                    if (message.content.slice(0, 5) == "Payed") {
+                      return (
+                        <PayMessage
+                          key={key}
+                          status="S"
+                          color={amount}
+                          amount={300}
+                        />
+                      );
+                    } else {
+                      <p></p>;
+                    }
+                  })}
               </div>
             </div>
             {/* <div className=" mt-auto bg-black p-3 border rounded-md border-slate-700 "> */}
@@ -300,7 +335,34 @@ export default function ChatWindow() {
                 >
                   Send
                 </Button>
-                <Button className=" absolute right-3 top-2">Pay</Button>
+                <div className=" absolute right-3 top-2">
+                  <Pay>
+                    <div className="grid gap-4 py-4">
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="name" className="text-">
+                          Enter amount
+                        </Label>
+                        <Input
+                          onChange={(e) => {
+                            // @ts-ignore
+                            setAmount(e.target.value);
+                          }}
+                          value={amount}
+                          id="amount"
+                          type="number"
+                          placeholder="Enter Amount"
+                          className="col-span-4"
+                        />
+                      </div>
+                      <Button
+                        onClick={() => sendMoneyMessage(100)}
+                        className=" right-3 top-2"
+                      >
+                        Pay
+                      </Button>
+                    </div>
+                  </Pay>
+                </div>
               </div>
               <Select
                 onValueChange={(e) => {

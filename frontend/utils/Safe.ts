@@ -24,7 +24,7 @@ const SAFE_API_SERVICE_URL = "https://safe-transaction-zkevm.safe.global/";
 const APP_PRIVATE_KEY: string | undefined = process.env.NEXT_PUBLIC_PRIVATE_KEY;
 
 if (!APP_PRIVATE_KEY) {
-  throw Error("Could not find priv Key in enviorment");
+  console.log("Could not find priv Key in enviorment");
 }
 
 const AppProvider = new ethers.providers.JsonRpcProvider(POLYGON_ZKEVM);

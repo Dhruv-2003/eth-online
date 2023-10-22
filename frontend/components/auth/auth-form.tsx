@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from "clsx";
 import {
   handleDiscordRedirect,
   handleGoogleRedirect,
@@ -33,7 +34,7 @@ import { POLYGON_ZKEVM } from "@/constants/networks";
 import { Payments } from "@/utils/payments";
 import { ethers } from "ethers";
 import { TaskSuccessful } from "../invite-modal";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import check from "@/assets/check.gif";
 import Link from "next/link";
 import {
@@ -44,9 +45,16 @@ import {
   prepareSendNativeTransactionData,
 } from "@/utils/Safe";
 import { addUser } from "../firebase/methods";
+// @ts-ignore
 import * as publicKeyToAddress from "ethereum-public-key-to-address";
 import { Client } from "@xmtp/xmtp-js";
 import dynamic from "next/dynamic";
+import user from "@/assets/panda.jpg";
+import user2 from "@/assets/user2.jpg";
+import user3 from "@/assets/user3.webp";
+import user4 from "@/assets/user4.jpg";
+
+const images = [user, user2, user3, user4];
 
 export function CreateAccount() {
   const [email, setEmail] = useState<string>();
@@ -56,7 +64,23 @@ export function CreateAccount() {
   const router = useRouter();
   const { user } = useStytchUser();
   const { session } = useStytchSession();
-  const [accountCreated, setAccountCreated] = useState<boolean | null>(false);
+  const [accountCreated, setAccountCreated] = useState<boolean | null>(null);
+  const [name, setName] = useState<string>("");
+  const [selectedImage, setSelectedImage] = useState<
+    StaticImageData | null | string
+  >(null);
+
+  const handleImageClick = (image: StaticImageData) => {
+    setSelectedImage(image);
+  };
+
+  const handleSavePfp = () => {
+    if (selectedImage) {
+      // Save the selected image as the user's profile picture
+      // You can send this information to your server or store it in a user context.
+      console.log("Selected Image:", selectedImage);
+    }
+  };
 
   const { setAuthMethod, setAuthProvider, setProvider, setSafeSDK } = useAuth();
   const { mintOrClaimPKP, fetchPKPsandPrepare } = useAuth();
@@ -411,9 +435,53 @@ export function CreateAccount() {
             You need to mint your PKP to create your account
           </h1>
 
-          <Button onClick={completeNewUserSignup}>Mint</Button>
+          <div className=" w-2/3 flex flex-col gap-y-4 justify-center  items-start">
+            <div className="">Select your avatar</div>
+            <div className="w-full flex items-center justify-normal gap-x-8">
+              {images.map((image, index) => (
+                <Image
+                  key={index}
+                  src={image}
+                  alt={`Image ${index + 1}`}
+                  onClick={() => handleImageClick(image)}
+                  className={clsx(
+                    selectedImage === image
+                      ? " scale-110 border-4 border-white "
+                      : "",
+                    " cursor-pointer w-14 rounded-full transition-all ease-in-out"
+                  )}
+                />
+              ))}
+            </div>
+            {/* {selectedImage && (
+              <div>
+                <p>You&#39;ve selected:</p>
+                <Image src={selectedImage} alt="Selected Profile Picture" />
+                <button onClick={handleSavePfp}>Save as Profile Picture</button>
+              </div>
+            )} */}
+            <Input
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+              type="text"
+              placeholder="Your Name"
+            />
+            <Input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              placeholder="Email"
+            />
+            <Button className=" w-full" onClick={handleSavePfp}>
+              Save PFP
+            </Button>
+            <Button className=" w-full" onClick={completeNewUserSignup}>
+              Mint PKP
+            </Button>
+          </div>
+
           <p className=" text-center text-gray-400 text-sm max-w-[90%]">
-            PKP is blockchain Account associated with their your Social/Email
+            *PKP is blockchain Account associated with their your Social/Email
             Accounts
           </p>
         </Card>
