@@ -14,7 +14,7 @@ import Confetti from "react-confetti";
 import Image from "next/image";
 import success from "@/assets/popper.gif";
 import check from "@/assets/check.gif";
-import { useState } from "react";
+import React, { useState } from "react";
 import { computePublicKey } from "@/utils/Lit";
 import { createSafeWallet } from "@/utils/Safe";
 import { addUser } from "./firebase/methods";
@@ -25,7 +25,13 @@ const STYTCH_PROJECT_ID: string | undefined =
 const DISCORD_CLIENT_ID: string | undefined =
   process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID;
 
-export function InviteFriend({ modalTrigger }: { modalTrigger?: JSX.Element }) {
+export function InviteFriend({
+  modalTrigger,
+  children,
+}: {
+  modalTrigger?: JSX.Element;
+  children: React.ReactNode;
+}) {
   const [inviteSuccess, setInviteSuccess] = useState<boolean>(false);
   const [email, setEmail] = useState<string>();
   const [mobile, setMobile] = useState<string>();
@@ -33,74 +39,8 @@ export function InviteFriend({ modalTrigger }: { modalTrigger?: JSX.Element }) {
   const [userAddress, setUserAddress] = useState<string>();
   const [safeAddress, setSafeAddress] = useState<string>();
 
-  const completeInvite = async () => {
-    try {
-      // take the inputs
-      // calculate the user address
-      const data = await getPubKey();
-      console.log(data);
 
-      if (!data) {
-        console.log("Pub Key can't be calculate");
-        return;
-      }
-      setUserAddress(data.address);
-      // create safeFortheUser
-      const safeSDK = await createSafeWallet(data?.address, "9");
-      // safe SDK instance is provider & safeAddress
-      const safeAddress = await safeSDK?.getAddress();
-      setSafeAddress(safeAddress);
 
-      // store data on firebase , add(name , email , pkpAddress, safeAddress) => new Person
-      // addUser();
-
-      // add pending invite to the current user => old Person (current)
-      // pending message
-
-      // initiate an email invite  , with inviting user to the platform
-      // sendEmail()
-      // sendInviteEmail(email , )
-
-      setInviteSuccess(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getPubKey = async (): Promise<
-    { address: string; pubKey: string } | undefined
-  > => {
-    try {
-      if (email) {
-        const res = await fetch("/api/getUser", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ mobile, email }),
-        });
-        const result = await res.json();
-        const user_id = result.user[0].user_id;
-        console.log(user_id);
-
-        if (!STYTCH_PROJECT_ID) {
-          throw Error(
-            "Could not find stytch project secret or id in enviorment"
-          );
-        }
-
-        // compute public Key
-        //   console.log(user_id, STYTCH_PROJECT_ID);
-        const data = await computePublicKey(user_id, STYTCH_PROJECT_ID);
-        console.log(data);
-        return data;
-      } else {
-        console.log("No Input found");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <Dialog>
@@ -117,43 +57,7 @@ export function InviteFriend({ modalTrigger }: { modalTrigger?: JSX.Element }) {
                 let them kickstart their journey of claiming amazing rewards
               </DialogDescription>
             </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-right">
-                  Friend&#39;s Name
-                </Label>
-                <Input
-                  onChange={(e) => {
-                    setName(e.target.value);
-                  }}
-                  id="name"
-                  placeholder="Alice"
-                  className="col-span-3"
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="username" className="text-right">
-                  Email
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                  placeholder="friend@example.com"
-                  className="col-span-3"
-                />
-              </div>
-            </div>
-            <DialogFooter>
-              {/* <Button type="submit" onClick={getPubKey}>
-                Get User address
-              </Button> */}
-              <Button type="submit" onClick={completeInvite}>
-                Send Invitataion
-              </Button>
-            </DialogFooter>
+            {children}
           </>
         ) : (
           <TaskSuccessful
