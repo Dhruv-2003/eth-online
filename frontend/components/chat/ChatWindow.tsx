@@ -25,6 +25,8 @@ import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import NotifiCard from "../notifiCard";
+import { Pay } from "../pay";
+import { Label } from "../ui/label";
 
 const sender = " bg-black text-white dark:bg-white dark:text-black";
 const receiver = " bg-indigo-600 text-white";
@@ -43,6 +45,7 @@ export default function ChatWindow() {
   const [userAddress, setUserAddress] = useState<any>();
   const [showChat, setShowChat] = useState<boolean>(true);
   const [userName, setUserName] = useState<any>();
+  const [amount, setAmount] = useState<number>();
 
   const initXmtp = async () => {
     // @ts-ignore
@@ -315,12 +318,34 @@ export default function ChatWindow() {
                 >
                   Send
                 </Button>
-                <Button
-                  onClick={() => sendMoneyMessage(100)}
-                  className=" absolute right-3 top-2"
-                >
-                  Pay
-                </Button>
+                <div className=" absolute right-3 top-2">
+                  <Pay>
+                    <div className="grid gap-4 py-4">
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="name" className="text-">
+                          Enter amount
+                        </Label>
+                        <Input
+                          onChange={(e) => {
+                            // @ts-ignore
+                            setAmount(e.target.value);
+                          }}
+                          value={amount}
+                          id="amount"
+                          type="number"
+                          placeholder="Enter Amount"
+                          className="col-span-4"
+                        />
+                      </div>
+                      <Button
+                        onClick={() => sendMoneyMessage(100)}
+                        className=" right-3 top-2"
+                      >
+                        Pay
+                      </Button>
+                    </div>
+                  </Pay>
+                </div>
               </div>
               <Select
                 onValueChange={(e) => {
