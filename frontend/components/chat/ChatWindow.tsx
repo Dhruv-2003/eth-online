@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { providers } from "ethers";
-import { Client, DecodedMessage } from "@xmtp/xmtp-js";
+import { Client, DecodedMessage, Signer } from "@xmtp/xmtp-js";
 import { Card, CardTitle } from "../ui/card";
 import { InviteFriend } from "../invite-modal";
 import { callGenerateEndpoint } from "@/utils/intent";
@@ -25,6 +25,8 @@ import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import NotifiCard from "../notifiCard";
+import { useAuth } from "@/context/authContext";
+import { PKPEthersWallet } from "@lit-protocol/pkp-ethers";
 import { Pay } from "../pay";
 import { Label } from "../ui/label";
 import { createSafeWallet } from "@/utils/Safe";
@@ -52,6 +54,8 @@ export default function ChatWindow() {
   const [userAddress, setUserAddress] = useState<any>();
   const [showChat, setShowChat] = useState<boolean>(true);
   const [userName, setUserName] = useState<any>();
+
+  const { pkpWallet }: { pkpWallet: PKPEthersWallet } = useAuth();
   const [amount, setAmount] = useState<number>();
 
   const [inviteSuccess, setInviteSuccess] = useState<boolean>(false);
@@ -63,10 +67,20 @@ export default function ChatWindow() {
 
   const initXmtp = async () => {
     // @ts-ignore
-    const provider = new providers.Web3Provider(window?.ethereum);
-    const [address] = await provider.listAccounts();
-    const signer = provider.getSigner(address);
-    setUserAddress(address);
+    // const provider = new providers.Web3Provider(window?.ethereum);
+    // const [address] = await provider.listAccounts();
+    // const signer = provider.getSigner(address);
+    // setUserAddress(address);
+    // console.log(pkpWallet);
+    // const signer: Signer = {
+    //   getAddress() {
+    //     return pkpWallet.getAddress();
+    //   },
+    //   signMessage(message) {
+    //     return pkpWallet.signMessage(message);
+    //   },
+    // };
+
     const xmtp = await Client.create(signer, { env: "dev" });
     console.log(xmtp);
 
@@ -90,17 +104,17 @@ export default function ChatWindow() {
     setxmtp_client(xmtp);
   };
 
-  useEffect(() => {
-    if (clientRef) {
-      setIsOnNetwork(true);
-    }
-    if (xmtp_client) {
-      listConverstaions();
-      // fetchAllMessages(peerAddress);
-    } else {
-      initXmtp();
-    }
-  }, [xmtp_client]);
+  // useEffect(() => {
+  //   if (clientRef) {
+  //     setIsOnNetwork(true);
+  //   }
+  //   if (xmtp_client) {
+  //     listConverstaions();
+  //     // fetchAllMessages(peerAddress);
+  //   } else {
+  //     initXmtp();
+  //   }
+  // }, [xmtp_client]);
 
   const startAConversation = async function () {
     const xmtpClient = await xmtp_client;
@@ -305,7 +319,7 @@ export default function ChatWindow() {
                 <NotifiCard />
               </div>
             </div>
-            {/* <ConnectButton /> */}
+            <ConnectButton />
             <div className="px-4 py-3">
               {users &&
                 users.map((user: any, key: any) => {

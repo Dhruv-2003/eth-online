@@ -1,6 +1,6 @@
 import DashboardNavigation from "@/components/ui/sidebar";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import user from "@/assets/panda.jpg";
 import user2 from "@/assets/user2.jpg";
 import user3 from "@/assets/user3.webp";
@@ -9,8 +9,38 @@ import { InviteFriend } from "@/components/invite-modal";
 import { StaticImageData } from "next/dist/shared/lib/get-img-props";
 import rewards_dribbble from "@/assets/rewards_banner.png";
 import RewardCard from "@/components/rewards/reward-card";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { PKPEthersWallet } from "@lit-protocol/pkp-ethers";
+import { pkpWalletConnect } from "@/utils/Lit";
+import { useAuth } from "@/context/authContext";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function Dashboard() {
+  const {
+    pkpWallet,
+    pkpClient,
+  }: { pkpWallet: PKPEthersWallet; pkpClient: pkpWalletConnect } = useAuth();
+  const { connectAndInitWallet } = useAuth();
+
+  const [connectURI, setConnectURI] = useState<string>();
+
+  const remove = async () => {
+    try {
+      const data = await pkpClient.pkpWcClient.getActiveSessions();
+      console.log(data);
+      await pkpClient.pkpWcClient.disconnectSession({
+        topic: "disconnect",
+        reason: {
+          code: 400,
+          message: "invalid",
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <DashboardNavigation>
       <div className=" w-[80vw] mx-auto  rounded-2xl h-full px-8 py-4">
@@ -25,6 +55,22 @@ export default function Dashboard() {
           src={rewards_dribbble}
           alt="rewards"
         />
+        {/* <div>
+          <ConnectButton />
+          <Input
+            value={connectURI}
+            onChange={(e) => setConnectURI(e.target.value)}
+            className="  py-7 px-4"
+            placeholder=" uri"
+          />
+          <Button
+            // onClick={() => connectAndInitWallet(connectURI)}
+            onClick={remove}
+            className=" absolute right-3 top-2"
+          >
+            connect
+          </Button>
+        </div> */}
         <div className=" flex items-center justify-between">
           <h1 className=" text-2xl font-semibold tracking-wide">Friends</h1>
         </div>
