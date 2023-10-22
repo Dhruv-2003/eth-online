@@ -37,6 +37,7 @@ import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { ethers } from "ethers";
+import Safe from "@safe-global/protocol-kit";
 import {
   Dialog,
   DialogContent,
@@ -107,6 +108,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [pkpWallet, setPkpWallet] = useState<PKPEthersWallet>();
   const [pkpClient, setPkpClient] = useState<pkpWalletConnect>();
   const [provider, setProvider] = useState<ethers.providers.JsonRpcProvider>();
+  const [safeSDK, setSafeSDK] = useState<Safe>();
 
   //6. fetch the PKP and mint or Claim the new PKP in case if needed
   const mintOrClaimPKP = async (): Promise<ClaimKeyResponse | undefined> => {
@@ -178,6 +180,10 @@ export default function App({ Component, pageProps }: AppProps) {
     setPkpWallet,
     pkpClient,
     setPkpClient,
+    provider,
+    setProvider,
+    safeSDK,
+    setSafeSDK,
     mintOrClaimPKP,
     fetchPKPsandPrepare,
   };
@@ -203,7 +209,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 <div
                   className={`${font.className} dark:bg-fixed dark:bg-gradient-to-t from-[#070a12] via-[#0c0214] to-[#120131]`}
                 >
-                  {router.asPath !== "/get-started" && <Navbar />}
+                  {router.asPath !== ("/get-started" ) && <Navbar />}
                   <Component {...pageProps} />
                 </div>
               </ThemeProvider>

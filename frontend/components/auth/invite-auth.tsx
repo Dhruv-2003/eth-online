@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  handleDiscordRedirect,
-  handleGoogleRedirect,
-  prepareDiscordAuthMethod,
-  prepareGoogleAuthMethod,
-  prepareStytchAuthMethod,
-} from "@/utils/Lit";
+import { prepareStytchAuthMethod } from "@/utils/Lit";
 import { Icons } from "../icons";
 import { Button } from "../ui/button";
 import {
@@ -24,8 +18,8 @@ import { useCallback, useEffect, useState } from "react";
 import { authenticateOtp, stytchSendOTP } from "@/utils/StychUI";
 import { OTPsLoginOrCreateResponse } from "@stytch/vanilla-js";
 import { useAuth } from "@/context/authContext";
-import { AuthMethod, IRelayPKP } from "@lit-protocol/types";
-import { BaseProvider, isSignInRedirect } from "@lit-protocol/lit-auth-client";
+import { AuthMethod, ClaimKeyResponse, IRelayPKP } from "@lit-protocol/types";
+import { BaseProvider } from "@lit-protocol/lit-auth-client";
 import { useRouter } from "next/router";
 import { useStytchSession, useStytchUser } from "@stytch/nextjs";
 import { PKPEthersWallet } from "@lit-protocol/pkp-ethers";
@@ -36,13 +30,9 @@ import { TaskSuccessful } from "../invite-modal";
 import Image from "next/image";
 import check from "@/assets/check.gif";
 import Link from "next/link";
-import {
-  createSafeWallet,
-  intializeSDK,
-  predictSafeWalletAddress,
-  prepareSendNativeTransactionData,
-} from "@/utils/Safe";
+import { createSafeWallet, getUserSafe, intializeSDK } from "@/utils/Safe";
 import { addUser } from "../firebase/methods";
+import * as publicKeyToAddress from "ethereum-public-key-to-address";
 
 export function CreateAccount() {
   const [email, setEmail] = useState<string>();
@@ -54,7 +44,7 @@ export function CreateAccount() {
   const { session } = useStytchSession();
   const [accountCreated, setAccountCreated] = useState<boolean | null>(false);
 
-  const { setAuthMethod, setAuthProvider } = useAuth();
+  const { setAuthMethod, setAuthProvider, setProvider, setSafeSDK } = useAuth();
   const { mintOrClaimPKP, fetchPKPsandPrepare } = useAuth();
   const {
     authMethod,
@@ -104,53 +94,6 @@ export function CreateAccount() {
     }
   };
 
-  //4. handle the redirect for Google or Discord Login
-  const handleRedirect = useCallback(async () => {
-    console.log("Redirect Called");
-    const queryParams = router.query;
-    if (queryParams.provider == "google") {
-      console.log("Redirect Called google");
-      const response = await handleGoogleRedirect();
-      setAuthMethod(response.authMethod);
-      setAuthProvider(response.authProvider);
-      const pkpData = await fetchPKPsandPrepare(
-        response.authMethod,
-        response.authProvider
-      );
-      if (pkpData) {
-        setAccountCreated(true);
-      } else {
-        setAccountCreated(null);
-      }
-    } else if (queryParams.provider == "discord") {
-      console.log("Redirect Called Discord");
-      const response = await handleDiscordRedirect();
-      setAuthMethod(response.authMethod);
-      setAuthProvider(response.authProvider);
-      const pkpData = await fetchPKPsandPrepare(
-        response.authMethod,
-        response.authProvider
-      );
-      if (pkpData) {
-        setAccountCreated(true);
-      } else {
-        setAccountCreated(null);
-      }
-    }
-    console.log(queryParams);
-  }, [router]);
-
-  useEffect(() => {
-    // Check if app has been redirected from Lit login server
-    // console.log(isSignInRedirect(REDIRECT_URI));
-    if (isSignInRedirect("http://localhost:3000/get-started")) {
-      console.log(true);
-      handleRedirect();
-    } else {
-      console.log(false);
-    }
-  }, [handleRedirect]);
-
   // Check Stytch Cookie and prepare
   const checkStytch = async () => {
     if (session && user) {
@@ -169,16 +112,43 @@ export function CreateAccount() {
 
   const completeNewUserSignup = async () => {
     try {
+      console.log(PKP);
       if (!PKP) {
+        // Not needed all time , if user record is in firebase , just update
         // Add firebase Methods ( Name , Email , Pfp ,  )
         // addUser()
+        console.log("PKP Not found");
 
         // add the new user
         const res = await mintOrClaimPKP();
+        const provider = new ethers.providers.JsonRpcProvider(POLYGON_ZKEVM);
+        setProvider(provider);
 
-        // get the user Address and createASafeAddress
-        // createSafeWallet()
+        // get the user Address and find the safeAddress
+        const address = await publicKeyToAddress(res.pubkey);
+        const safeSDK = await createSafeWallet(
+          address,
+          authMethod.authMethodType.toString()
+        );
+        // safe SDK instance is provider & safeAddress
+        console.log(safeSDK);
+        setSafeSDK(safeSDK);
+        setAccountCreated(true);
       } else {
+        console.log("PKP found");
+        const provider = new ethers.providers.JsonRpcProvider(POLYGON_ZKEVM);
+        setProvider(provider);
+
+        // get the user Address and find the safeAddress
+        const address = PKP.ethAddress;
+        const safeSDK = await createSafeWallet(
+          address,
+          authMethod.authMethodType.toString()
+        );
+        // safe SDK instance is provider & safeAddress
+        console.log(safeSDK);
+        setSafeSDK(safeSDK);
+        setAccountCreated(true);
       }
     } catch (error) {
       console.log(error);
@@ -210,51 +180,13 @@ export function CreateAccount() {
     }
   };
 
-  const signSafeMessage = async () => {
-    try {
-      if (pkpWallet) {
-        const provider = new ethers.providers.JsonRpcProvider(POLYGON_ZKEVM);
-        await pkpWallet.init();
-        await pkpWallet.setRpc(POLYGON_ZKEVM);
-        const userAddress = pkpWallet.address;
-        const safeAddress = await predictSafeWalletAddress(
-          provider,
-          userAddress,
-          `${authMethod.authMethodType}`
-        );
-        console.log(safeAddress);
-        if (safeAddress) {
-          const resData = await intializeSDK(
-            pkpWallet,
-            safeAddress,
-            true,
-            userAddress,
-            `${authMethod.authMethodType}`
-          );
-          console.log(resData);
-          const amount = ethers.utils.parseEther("1");
-          const response = await prepareSendNativeTransactionData(
-            "0x62C43323447899acb61C18181e34168903E033Bf",
-            `${amount}`,
-            resData.safeSDK
-          );
-
-          console.log(response);
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <>
       {accountCreated === false && (
         <Tabs defaultValue="email" className="w-2/3">
-          <TabsList className="grid w-full grid-cols-2">
+          {/* <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="email">Account</TabsTrigger>
-            <TabsTrigger value="social">Social</TabsTrigger>
-          </TabsList>
+          </TabsList> */}
           <TabsContent value="email">
             <Card className="min-h-[300px]">
               <CardHeader>

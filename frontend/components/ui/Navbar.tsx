@@ -16,7 +16,7 @@ import { ModeToggle } from "./toggle-theme";
 
 export function Navbar() {
   return (
-    <div className=" border-slate-200 border-b dark:border-slate-700 flex items-center justify-between px-12 py-3">
+    <div className=" z-50 border-slate-200 border-b bg-[#110e15] dark:border-slate-700 flex items-center justify-between px-12 py-3">
       <Link className=" text-xl tracking-wide font-semibold" href={"/"}>
         OnBoardr
       </Link>

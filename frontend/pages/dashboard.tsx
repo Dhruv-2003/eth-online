@@ -52,7 +52,7 @@ export default function Dashboard() {
           </h1>
         </div>
         <div>
-          <div className=" relative grid grid-cols-5 items-center justify-between gap-y-4">
+          <div className=" relative grid laptop:grid-cols-4 desktop:grid-cols-5 items-center justify-between gap-y-4">
             <div>
               <RewardCard image={user} />
             </div>
