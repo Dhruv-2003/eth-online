@@ -37,6 +37,7 @@ import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { ethers } from "ethers";
+import Safe from "@safe-global/protocol-kit";
 
 export const font = FontLato({
   weight: ["300", "400", "700"],
@@ -98,6 +99,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [pkpWallet, setPkpWallet] = useState<PKPEthersWallet>();
   const [pkpClient, setPkpClient] = useState<pkpWalletConnect>();
   const [provider, setProvider] = useState<ethers.providers.JsonRpcProvider>();
+  const [safeSDK, setSafeSDK] = useState<Safe>();
 
   //6. fetch the PKP and mint or Claim the new PKP in case if needed
   const mintOrClaimPKP = async (): Promise<ClaimKeyResponse | undefined> => {
@@ -169,6 +171,10 @@ export default function App({ Component, pageProps }: AppProps) {
     setPkpWallet,
     pkpClient,
     setPkpClient,
+    provider,
+    setProvider,
+    safeSDK,
+    setSafeSDK,
     mintOrClaimPKP,
     fetchPKPsandPrepare,
   };

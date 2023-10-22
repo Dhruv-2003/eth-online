@@ -38,11 +38,14 @@ import check from "@/assets/check.gif";
 import Link from "next/link";
 import {
   createSafeWallet,
+  getUserSafe,
   intializeSDK,
   predictSafeWalletAddress,
   prepareSendNativeTransactionData,
 } from "@/utils/Safe";
 import { addUser } from "../firebase/methods";
+import * as publicKeyToAddress from "ethereum-public-key-to-address";
+import { Client } from "@xmtp/xmtp-js";
 
 export function CreateAccount() {
   const [email, setEmail] = useState<string>();
@@ -54,18 +57,20 @@ export function CreateAccount() {
   const { session } = useStytchSession();
   const [accountCreated, setAccountCreated] = useState<boolean | null>(false);
 
-  const { setAuthMethod, setAuthProvider } = useAuth();
+  const { setAuthMethod, setAuthProvider, setProvider, setSafeSDK } = useAuth();
   const { mintOrClaimPKP, fetchPKPsandPrepare } = useAuth();
   const {
     authMethod,
     authProvider,
     pkpWallet,
     PKP,
+    provider,
   }: {
     authMethod: AuthMethod;
     authProvider: BaseProvider;
     pkpWallet: PKPEthersWallet;
     PKP: IRelayPKP;
+    provider: ethers.providers.JsonRpcProvider;
   } = useAuth();
 
   const completeStytchAuth = async () => {
@@ -117,11 +122,12 @@ export function CreateAccount() {
         response.authMethod,
         response.authProvider
       );
-      if (pkpData) {
-        setAccountCreated(true);
-      } else {
-        setAccountCreated(null);
-      }
+      // if (pkpData) {
+      //   setAccountCreated(true);
+      // } else {
+      //   setAccountCreated(null);
+      // }
+      setAccountCreated(null);
     } else if (queryParams.provider == "discord") {
       console.log("Redirect Called Discord");
       const response = await handleDiscordRedirect();
@@ -167,25 +173,50 @@ export function CreateAccount() {
     }
   };
 
+  // complete Signup after fetching the PKP , also creating a Safe Account for this address
   const completeNewUserSignup = async () => {
     try {
+      console.log(PKP);
       if (!PKP) {
         // Add firebase Methods ( Name , Email , Pfp ,  )
         // addUser()
+        console.log("PKP Not found");
 
         // add the new user
         const res = await mintOrClaimPKP();
+        const provider = new ethers.providers.JsonRpcProvider(POLYGON_ZKEVM);
+        setProvider(provider);
 
-        // get the user Address and createASafeAddress
-        // createSafeWallet()
+        // get the user Address and find the safeAddress
+        const address = await publicKeyToAddress(res.pubkey);
+        const safeSDK = await createSafeWallet(
+          address,
+          authMethod.authMethodType.toString()
+        );
+        // safe SDK instance is provider & safeAddress
+        console.log(safeSDK);
+        setSafeSDK(safeSDK);
+        setAccountCreated(true);
       } else {
+        console.log("PKP found");
+        const provider = new ethers.providers.JsonRpcProvider(POLYGON_ZKEVM);
+        setProvider(provider);
+
+        // get the user Address and find the safeAddress
+        const address = PKP.ethAddress;
+        const safeSDK = await createSafeWallet(
+          address,
+          authMethod.authMethodType.toString()
+        );
+        // safe SDK instance is provider & safeAddress
+        console.log(safeSDK);
+        setSafeSDK(safeSDK);
+        setAccountCreated(true);
       }
     } catch (error) {
       console.log(error);
     }
   };
-
-  // complete Signup after fetching the PKP , also creating a Safe Account for this address
 
   const signMessage = async () => {
     try {
@@ -196,13 +227,13 @@ export function CreateAccount() {
         console.log(signature);
         console.log(pkpWallet?._isSigner);
 
+        const xmtp = await Client.create(pkpWallet, { env: "dev" });
+        console.log(xmtp);
         // const tx = await Payments();
         // const signature2 = await pkpWallet?.signTransaction(tx);
         // console.log(signature2);
-        pkpWallet.rpcProvider;
-
-        console.log(pkpWallet.rpcProvider);
-
+        // pkpWallet.rpcProvider;
+        // console.log(pkpWallet.rpcProvider);
         // pkpWallet.connect();
       }
     } catch (error) {
@@ -342,16 +373,21 @@ export function CreateAccount() {
                   </Button>
                 </div>
               </CardContent>
-              <CardFooter>
+              {/* <CardFooter>
                 <CardFooter>
-                  <Button onClick={fetchPKPsandPrepare} className=" w-full">
+                  <Button
+                    onClick={() =>
+                      fetchPKPsandPrepare(authMethod, authProvider)
+                    }
+                    className=" w-full"
+                  >
                     Complete Auth
                   </Button>
-                  <Button onClick={signSafeMessage} className=" w-full">
+                  <Button onClick={signMessage} className=" w-full">
                     Sign
                   </Button>
                 </CardFooter>
-              </CardFooter>
+              </CardFooter> */}
             </Card>
           </TabsContent>
         </Tabs>
